@@ -8,10 +8,15 @@ class AuthorisedSystemService {
 
     def isAuthorisedSystem(HttpServletRequest request){
         def host = request.getHeader("x-forwarded-for")
-        def hostMatched = AuthorisedSystem.findByHost(host)
-        if(hostMatched)
-            true
+        if(host == null){
+          host = request.getRemoteHost()
+        }
+        println("host: " + request.getRemoteHost())
+        println("host: " + request.getRemoteAddr())
+        println("host using: " + host)
+        if(host != null && AuthorisedSystem.findByHost(host))
+          true
         else
-            false
+          false
     }
 }

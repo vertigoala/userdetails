@@ -12,11 +12,10 @@ class User {
         userName column:  'username'
         firstName column:  'firstname'
         lastName column:  'lastname'
-        id generator:'assigned', name:'userName'
+        id column: 'userid'
         version false
 
     }
 
-    static constraints = {
-    }
+    static constraints = {}
 }
