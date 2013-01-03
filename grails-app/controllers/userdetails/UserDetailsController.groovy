@@ -2,32 +2,20 @@ package userdetails
 
 class UserDetailsController {
 
-    static allowedMethods = [getUserDetails: "POST", getUserByIdOrEmail: "GET", getUserList: "POST", getUserListWithIds: "POST"]
+    static allowedMethods = [getUserDetails: "POST", getUserList: "POST", getUserListWithIds: "POST", getUserListFull: "POST"]
+
     def authorisedSystemService
 
-    def getUserDetails() { 
-       // println("Getting details for username: " + params.userName)
-        
-        User user = User.findByUserName(params.userName)
-        if (user == null) {
-         //   println("No record for username:" + params.userName)
-            response.sendError(404)
-        } else {
-           // println("Username: " + user.userName + ", First name: " + user.firstName + ", Last name: " + user.lastName)
-            [userName: user.userName, firstName: user.firstName, lastName: user.lastName]
-        }
-    }
-
-    def getUserByIdOrEmail(){
-        User user = User.findByUserNameOrId(params.q)
-        if (user == null) {
-         //   println("No record for username:" + params.userName)
-            response.sendError(404)
-        } else {
-        //    println("Username: " + user.userName + ", First name: " + user.firstName + ", Last name: " + user.lastName)
-            render(contentType: "text/json"){
-                [userName: user.userName, firstName: user.firstName, lastName: user.lastName]
+    def getUserDetails() {
+        if(params.userName){
+            User user = User.findByUserName(params.userName)
+            if (user == null) {
+                response.sendError(404)
+            } else {
+                render(contentType: "text/json"){ [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName] }
             }
+        } else {
+            response.sendError(400, "Missing parameter userName")
         }
     }
 

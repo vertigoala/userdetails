@@ -14,7 +14,6 @@ class User {
         lastName column:  'lastname'
         id column: 'userid'
         version false
-
     }
 
     static constraints = {}
