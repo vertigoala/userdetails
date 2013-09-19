@@ -1,17 +1,80 @@
-// locations to search for config files that get merged into the main config
-// config files can either be Java properties files or ConfigSlurper scripts
+/******************************************************************************\
+ *  CONFIG MANAGEMENT
+\******************************************************************************/
+def appName = "userdetails"
+def ENV_NAME = "USERDETAILS_CONFIG"
+def default_config = "/data/${appName}/config/${appName}-config.properties"
+if(!grails.config.locations || !(grails.config.locations instanceof List)) {
+    grails.config.locations = []
+}
+if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
+    println "[${appName}] Including configuration file specified in environment: " + System.getenv(ENV_NAME);
+    grails.config.locations = ["file:" + System.getenv(ENV_NAME)]
+} else if(System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
+    println "[${appName}] Including configuration file specified on command line: " + System.getProperty(ENV_NAME);
+    grails.config.locations = ["file:" + System.getProperty(ENV_NAME)]
+} else if(new File(default_config).exists()) {
+    println "[${appName}] Including default configuration file: " + default_config;
+    def loc = ["file:" + default_config]
+    println "[${appName}]  loc = " + loc
+    grails.config.locations = loc
+    println "grails.config.locations = " + grails.config.locations
+} else {
+    println "[${appName}] No external configuration file defined."
+}
+println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 
-// grails.config.locations = [ "classpath:${appName}-config.properties",
-//                             "classpath:${appName}-config.groovy",
-//                             "file:${userHome}/.grails/${appName}-config.properties",
-//                             "file:${userHome}/.grails/${appName}-config.groovy"]
+/******************************************************************************\
+ *  SECURITY
+\******************************************************************************/
+if (!security.cas.uriFilterPattern) {
+    security.cas.uriFilterPattern = "/admin/.*,/registration/editAccount, /myprofile, /admin/, /admin"
+}
+if (!security.cas.loginUrl) {
+    security.cas.loginUrl = "https://auth.ala.org.au/cas/login"
+}
+if (!security.cas.logoutUrl) {
+    security.cas.logoutUrl = "https://auth.ala.org.au/cas/logout"
+}
+if (!security.apikey.serviceUrl) {
+    security.apikey.serviceUrl = "http://auth.ala.org.au/apikey/ws/check?apikey="
+}
+if(!security.cas.appServerName){
+    security.cas.appServerName = "http://devt.ala.org.au:8080"
+}
+if(!security.cas.contextPath ){
+    security.cas.contextPath = "/${appName}"
+}
+if(!security.cas.casServerName){
+    security.cas.casServerName = "https://auth.ala.org.au"
+}
+if(!security.cas.uriExclusionFilterPattern){
+    security.cas.uriExclusionFilterPattern = '/images.*,/css.*,/js.*,/less.*'
+}
+if(!security.cas.authenticateOnlyIfLoggedInPattern){
+    security.cas.authenticateOnlyIfLoggedInPattern = "" // pattern for pages that can optionally display info about the logged-in user
+}
+if(!security.cas.casServerUrlPrefix){
+    security.cas.casServerUrlPrefix = 'https://auth.ala.org.au/cas'
+}
+if(!security.cas.bypass){
+    security.cas.bypass = false
+}
+if(!supportEmail){
+    supportEmail = 'support@ala.org.au'
+}
+if(!mainTitle){
+    mainTitle = 'Atlas of Living Australia'
+}
+if(!emailSenderTitle){
+    emailSenderTitle = 'Atlas of Living Australia'
+}
+if(!emailSender){
+    emailSender = 'support@ala.org.au'
+}
+/******************************************************************************/
 
-// if (System.properties["${appName}.config.location"]) {
-//    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-// }
-
-
-grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
+grails.project.groupId = 'au.org.ala.userdetails' // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
@@ -63,31 +126,75 @@ grails.hibernate.cache.queries = true
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails {
+          mail {
+            host = "localhost"
+            port = 1025
+            username = postie.emailSender
+          }
+        }
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails {
+          mail {
+            host = "localhost"
+            port = 25
+            username = postie.emailSender
+          }
+        }
     }
 }
 
-// log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        environments {
+            production {
+                rollingFile name: "${appName}-prod",
+                    maxFileSize: 104857600,
+                    file: "/var/log/tomcat6/${appName}.log",
+                    threshold: org.apache.log4j.Level.DEBUG,
+                    layout: pattern(conversionPattern: "%d [%c{1}]  %m%n")
+                rollingFile name: "stacktrace", maxFileSize: 1024, file: "/var/log/tomcat6/${appName}-stacktrace.log"
+            }
+            development{
+                console name: "stdout", layout: pattern(conversionPattern: "%d [%c{1}]  %m%n"), threshold: org.apache.log4j.Level.DEBUG
+            }
+        }
+    }
+
+    root {
+        debug  '${appName}-prod'
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
-           'org.codehaus.groovy.grails.web.pages', //  GSP
-           'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping', // URL mapping
-           'org.codehaus.groovy.grails.commons', // core / classloading
-           'org.codehaus.groovy.grails.plugins', // plugins
-           'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+            'org.codehaus.groovy.grails.web.pages', //  GSP
+            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+            'org.codehaus.groovy.grails.web.mapping', // URL mapping
+            'org.codehaus.groovy.grails.commons', // core / classloading
+            'org.codehaus.groovy.grails.plugins', // plugins
+            'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+            'org.springframework',
+            'org.hibernate',
+            'net.sf.ehcache.hibernate',
+            'org.codehaus.groovy.grails.plugins.orm.auditable',
+            'org.mortbay.log', 'org.springframework.webflow',
+            'grails.app',
+            'org.apache',
+            'org',
+            'com',
+            'au',
+            'grails.app',
+            'net',
+            'grails.util.GrailsUtil',
+            'grails.app.service.org.grails.plugin.resource',
+            'grails.app.service.org.grails.plugin.resource.ResourceTagLib',
+            'grails.app',
+            'grails.plugin.springcache',
+            'au.org.ala.cas.client',
+            'grails.spring.BeanBuilder',
+            'grails.plugin.webxml',
+            'grails.plugin.cache.web.filter'
+    debug  'ala'
 }
