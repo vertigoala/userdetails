@@ -1,7 +1,9 @@
 package au.org.ala.userdetails
 
+import au.org.ala.auth.PreAuthorise
 import org.springframework.dao.DataIntegrityViolationException
 
+@PreAuthorise
 class UserRoleController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -44,7 +46,7 @@ class UserRoleController {
 
     def addRole() {
 
-        println params.userId.toLong() + " - " + params.role.id
+        log.debug(params.userId.toLong() + " - " + params.role.id)
 
         def user = User.get(params.userId.toLong())
         def role = Role.findByRole(params.role.id)
@@ -55,6 +57,29 @@ class UserRoleController {
         ur.save(flush:true)
 
         redirect(action: "show", controller: 'user', id: user.id)
+    }
+
+    def deleteRole() {
+
+        def user = User.get(params.userId.toLong())
+        def role = Role.get(params.role)
+
+        def userRoleInstance = UserRole.findByUserAndRole(user, role)
+        if (!userRoleInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'userRole.label', default: 'UserRole'), role.role])
+            redirect(controller:"user", action: "edit", id:user.id)
+            return
+        }
+
+        try {
+            userRoleInstance.delete(flush: true)
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'userRole.label', default: 'UserRole'), role.role])
+            redirect(controller:"user", action: "edit", id:user.id)
+        }
+        catch (DataIntegrityViolationException e) {
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'userRole.label', default: 'UserRole'), role.role])
+            redirect(action: "show", id: id)
+        }
     }
 
     def show(Long id) {
@@ -108,22 +133,22 @@ class UserRoleController {
         redirect(action: "show", id: userRoleInstance.id)
     }
 
-    def delete(Long id) {
-        def userRoleInstance = UserRole.get(id)
-        if (!userRoleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'userRole.label', default: 'UserRole'), id])
-            redirect(action: "list")
-            return
-        }
-
-        try {
-            userRoleInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'userRole.label', default: 'UserRole'), id])
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'userRole.label', default: 'UserRole'), id])
-            redirect(action: "show", id: id)
-        }
-    }
+//    def delete(Long id) {
+//        def userRoleInstance = UserRole.get(id)
+//        if (!userRoleInstance) {
+//            flash.message = message(code: 'default.not.found.message', args: [message(code: 'userRole.label', default: 'UserRole'), id])
+//            redirect(action: "list")
+//            return
+//        }
+//
+//        try {
+//            userRoleInstance.delete(flush: true)
+//            flash.message = message(code: 'default.deleted.message', args: [message(code: 'userRole.label', default: 'UserRole'), id])
+//            redirect(action: "list")
+//        }
+//        catch (DataIntegrityViolationException e) {
+//            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'userRole.label', default: 'UserRole'), id])
+//            redirect(action: "show", id: id)
+//        }
+//    }
 }

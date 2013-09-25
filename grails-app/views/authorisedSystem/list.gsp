@@ -1,4 +1,3 @@
-
 <%@ page import="au.org.ala.userdetails.AuthorisedSystem" %>
 <!DOCTYPE html>
 <html>
@@ -20,32 +19,35 @@
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
+            <div class="row-fluid">
+                <div class="span6">
+                    <table>
+                    <thead>
+                        <tr>
 
-            <p class="well">
-                Below is a list of IP address that can access the webservices providing user information.
-            </p>
+                            <g:sortableColumn property="host" title="${message(code: 'authorisedSystem.host.label', default: 'Host')}" />
 
-			<table>
-				<thead>
-					<tr>
-					
-						<g:sortableColumn property="host" title="${message(code: 'authorisedSystem.host.label', default: 'Host')}" />
-					
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${authorisedSystemInstanceList}" status="i" var="authorisedSystemInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${authorisedSystemInstance.id}">${fieldValue(bean: authorisedSystemInstance, field: "host")}</g:link></td>
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${authorisedSystemInstanceTotal}" />
-			</div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${authorisedSystemInstanceList}" status="i" var="authorisedSystemInstance">
+                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+                            <td><g:link action="show" id="${authorisedSystemInstance.id}">${fieldValue(bean: authorisedSystemInstance, field: "host")}</g:link></td>
+
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+                    <div class="pagination">
+                        <g:paginate total="${authorisedSystemInstanceTotal}" />
+                    </div>
+                </div>
+                <div class="span6 well">
+                    This is a list of IP address that can access the web services providing user information.
+                    Requests from IP addresses no listed here will get a HTTP 403 Forbidden response.
+                </div>
+            </div>
 		</div>
 	</body>
 </html>

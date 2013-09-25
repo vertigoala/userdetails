@@ -2,12 +2,31 @@ class UrlMappings {
 
   static mappings = {
 
+    "/my-profile/" {
+       controller = 'profile'
+    }
+    "/my-profile" {
+       controller = 'profile'
+    }
+    "/myprofile/" {
+       controller = 'profile'
+    }
+    "/myprofile" {
+       controller = 'profile'
+    }
+    "/profile/$action?" {
+       controller = 'profile'
+    }
+
+    "/external/flickr"(controller: 'externalSite', action: 'flickr')
+
     "/registration/$action?/$id?" {
        controller = 'registration'
        constraints {
            controller:'registration'
        }
     }
+
     "/registration/activateAccount/$userId/$authKey"(controller:'registration', action: 'activateAccount')
     "/registration/resetPassword/$userId/$authKey"(controller:'registration', action: 'passwordReset')
 

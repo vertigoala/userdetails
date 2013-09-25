@@ -4,14 +4,13 @@
     <meta name="layout" content="main"/>
     <meta name="section" content="home"/>
     <r:require module="jqueryValidationEngine"/>
-    <title>
-        <g:if test="${!alreadyRegistered && edit}">
-            Edit your account
-        </g:if>
-        <g:else>
-            Create your account
-        </g:else>
-    </title>
+    <g:if test="${!alreadyRegistered && edit}">
+        <g:set var="title">Edit your account</g:set>
+    </g:if>
+    <g:else>
+        <g:set var="title">Create your account</g:set>
+    </g:else>
+    <title>${title}</title>
     <r:script>
         $(function(){
             $('.typeahead').typeahead();
@@ -28,16 +27,21 @@
     </r:script>
 </head>
 <body>
-<div class="row-fluid">
-    <h1>
-        <g:if test="${!alreadyRegistered && edit}">
-            Edit your account
-        </g:if>
-        <g:else>
-            Create your account
-        </g:else>
-    </h1>
 
+<div class="inner row-fluid">
+    <div id="breadcrumb" class="span12">
+        <ol class="breadcrumb">
+            <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class=" icon icon-arrow-right"></span></li>
+            <g:if test="${edit}">
+                <li><g:link controller="profile">My profile</g:link> <span class=" icon icon-arrow-right"></span></li>
+            </g:if>
+            <li class="active">${title}</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <h1>${title}</h1>
     <g:if test="${alreadyRegistered}">
     <div class="row-fluid warning well">
         <p class="text-error">A user is already registered with the email address <b>${params.email}</b>. </p>
@@ -50,9 +54,8 @@
 
     <div class="row-fluid">
         <div class="span4">
-            <!--  -->
             <div class="validationEngineContainer" id="validation-container">
-            <g:form id="updateAccountForm" method="POST" action="register" controller="registration" >
+            <g:form id="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" >
 
                     <label for="firstName">First name</label>
                     <input id="firstName" name="firstName" type="text" class="input-xlarge" value="${user?.firstName}" data-validation-engine="validate[required]"/>
@@ -60,18 +63,22 @@
                     <label for="lastName">Last name</label>
                     <input id="lastName" name="lastName" type="text" class="input-xlarge" value="${user?.lastName}"  data-validation-engine="validate[required]"/>
 
+                    <g:if test="${!edit}">
                     <label for="email">Email address</label>
                     <input id="email" name="email" type="text" class="input-xlarge" value="${user?.email}"
                            data-validation-engine="validate[required,custom[email]]"
                            data-errormessage-value-missing="Email is required!"
                     />
+                    </g:if>
 
+                    <g:if test="${!edit}">
                     <label for="password">Password</label>
                     <input id="password" name="password" class="input-xlarge" value=""
                            data-validation-engine="validate[required, minSize[8]]"
                            data-errormessage-value-missing="Password is required!"
                            type="password"
                     />
+                    </g:if>
 
                     <label for="organisation">Organisation</label>
                     <input id="organisation" name="organisation" type="text" class="input-xlarge" value="${props?.organisation}"/>

@@ -1,13 +1,24 @@
 package au.org.ala.userdetails
 
-class Password {
+import java.sql.Timestamp
+
+class Password implements Serializable {
     User user
     String password //md5 hash and salted
-    Date created
-    Date expiry
+    Timestamp created
+//    Timestamp expiry
     String status
+
+    static mapping = {
+        table 'passwords'
+        id composite: ['user', 'password']
+        user column:  'userid'
+        created sqlType: 'DATETIME'
+//        expiry sqlType: 'DATETIME'
+        version false
+    }
     static constraints = {
-        expiry nullable: true
+//        expiry nullable: true
         status nullable: true
     }
 }

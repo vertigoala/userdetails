@@ -1,34 +1,62 @@
+import org.scribe.builder.api.FlickrApi
+
 /******************************************************************************\
  *  CONFIG MANAGEMENT
 \******************************************************************************/
-def appName = "userdetails"
-def ENV_NAME = "USERDETAILS_CONFIG"
+
+def appName = 'userdetails'
+def ENV_NAME = "${appName.toUpperCase()}_CONFIG"
 def default_config = "/data/${appName}/config/${appName}-config.properties"
 if(!grails.config.locations || !(grails.config.locations instanceof List)) {
     grails.config.locations = []
 }
+
+// add ala skin conf (needed for version >= 0.1.10)
+//grails.config.locations.add("classpath:ala-config.groovy")
+
 if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
     println "[${appName}] Including configuration file specified in environment: " + System.getenv(ENV_NAME);
-    grails.config.locations = ["file:" + System.getenv(ENV_NAME)]
+    grails.config.locations.add "file:" + System.getenv(ENV_NAME)
 } else if(System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
     println "[${appName}] Including configuration file specified on command line: " + System.getProperty(ENV_NAME);
-    grails.config.locations = ["file:" + System.getProperty(ENV_NAME)]
+    grails.config.locations.add "file:" + System.getProperty(ENV_NAME)
 } else if(new File(default_config).exists()) {
     println "[${appName}] Including default configuration file: " + default_config;
-    def loc = ["file:" + default_config]
-    println "[${appName}]  loc = " + loc
-    grails.config.locations = loc
-    println "grails.config.locations = " + grails.config.locations
+    grails.config.locations.add "file:" + default_config
 } else {
     println "[${appName}] No external configuration file defined."
 }
+
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
+
+//def appName = "userdetails"
+//def ENV_NAME = "USERDETAILS_CONFIG"
+//def default_config = "/data/${appName}/config/${appName}-config.properties"
+//if(!grails.config.locations || !(grails.config.locations instanceof List)) {
+//    grails.config.locations = []
+//}
+//if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
+//    println "[${appName}] Including configuration file specified in environment: " + System.getenv(ENV_NAME);
+//    grails.config.locations = ["file:" + System.getenv(ENV_NAME)]
+//} else if(System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
+//    println "[${appName}] Including configuration file specified on command line: " + System.getProperty(ENV_NAME);
+//    grails.config.locations = ["file:" + System.getProperty(ENV_NAME)]
+//} else if(new File(default_config).exists()) {
+//    println "[${appName}] Including default configuration file: " + default_config;
+//    def loc = ["file:" + default_config]
+//    println "[${appName}]  loc = " + loc
+//    grails.config.locations = loc
+//    println "grails.config.locations = " + grails.config.locations
+//} else {
+//    println "[${appName}] No external configuration file defined."
+//}
+//println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 
 /******************************************************************************\
  *  SECURITY
 \******************************************************************************/
 if (!security.cas.uriFilterPattern) {
-    security.cas.uriFilterPattern = "/admin/.*,/registration/editAccount, /myprofile, /admin/, /admin"
+    security.cas.uriFilterPattern = "/admin/.*,/registration/editAccount, /myprofile, /profile/.*, /admin/, /admin, /registration/update, /registration/update/.*"
 }
 if (!security.cas.loginUrl) {
     security.cas.loginUrl = "https://auth.ala.org.au/cas/login"
@@ -63,6 +91,9 @@ if(!security.cas.bypass){
 if(!supportEmail){
     supportEmail = 'support@ala.org.au'
 }
+if(!homeUrl){
+    homeUrl = 'http://www.ala.org.au'
+}
 if(!mainTitle){
     mainTitle = 'Atlas of Living Australia'
 }
@@ -72,8 +103,20 @@ if(!emailSenderTitle){
 if(!emailSender){
     emailSender = 'support@ala.org.au'
 }
-/******************************************************************************/
+if(!adminRoles){
+    adminRoles = ['ROLE_ADMIN']
+}
+if(!encoding.algorithm){
+    encoding.algorithm = "xxxxxxxxxxxxxxxxxxxxx"
+}
+if(!encoding.salt){
+    encoding.salt = "xxxxxxxxxxxxxxxxxxxxx"
+}
+if(!redirectAfterFirstLogin){
+    redirectAfterFirstLogin = "http://www.ala.org.au/my-profile"
+}
 
+/******************************************************************************/
 grails.project.groupId = 'au.org.ala.userdetails' // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -96,7 +139,6 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
 
 // What URL patterns should be processed by the resources plugin
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
-
 
 // The default codec used to encode data with ${}
 grails.views.default.codec = "none" // none, html, base64
@@ -197,4 +239,18 @@ log4j = {
             'grails.plugin.webxml',
             'grails.plugin.cache.web.filter'
     debug  'ala'
+}
+
+oauth {
+    providers {
+        flickr {
+            api = FlickrApi
+            key = "xxxxxxxxxxxxxxxxxxxxx"
+            secret = "xxxxxxxxxxxxxxxxxxxxx"
+            successUri = '/profile/flickrSuccess'
+            failureUri = '/profile/flickrFail'
+            callback = security.cas.appServerName + security.cas.contextPath + "/profile/flickrCallback"
+        }
+    }
+//   debug = true
 }

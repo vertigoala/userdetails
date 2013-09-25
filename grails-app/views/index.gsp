@@ -3,12 +3,21 @@
 <head>
     <meta name="layout" content="main"/>
     <meta name="section" content="home"/>
-    <title>User management</title>
+    <title>ALA accounts</title>
 </head>
 <body>
-%{--<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>--}%
 <div class="row-fluid">
     <div class="span12" id="page-body" role="main">
+
+        <g:if test="${flash.errorMessage || flash.message}">
+            <div class="span12">
+                <div class="alert alert-error">
+                    <button class="close" onclick="$('.alert').fadeOut();" href="#">×</button>
+                    ${flash.errorMessage?:flash.message}
+                </div>
+            </div>
+        </g:if>
+
         <h1>ALA accounts</h1>
         <ul>
             <li><g:link controller="registration" action="createAccount">Create a new account</g:link></li>

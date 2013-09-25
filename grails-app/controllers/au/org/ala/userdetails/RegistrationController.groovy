@@ -1,7 +1,5 @@
 package au.org.ala.userdetails
 
-import au.org.ala.cas.encoding.MyPasswordEncoder
-
 /**
  * Controller that handles the interactions with general public.
  * Supports:
@@ -16,6 +14,8 @@ class RegistrationController {
     def simpleCaptchaService
     def emailService
     def authService
+    def passwordService
+    def userService
 
     def index() {
         redirect(action:'createAccount')
@@ -32,10 +32,10 @@ class RegistrationController {
 
     def passwordReset = {
         User user = User.get(params.userId?.toLong())
-        if(user.tempAuthKey != params.authKey){
-            render(view:'accountError')
-        } else {
+        if(user.tempAuthKey == params.authKey){
             render(view:'passwordReset', model:[user:user, authKey:params.authKey])
+        } else {
+            render(view:'accountError')
         }
     }
 
@@ -45,16 +45,12 @@ class RegistrationController {
            //check the authKey for the user
            if(user.tempAuthKey == params.authKey){
                //update the password
-               //store the password
-               def password = new Password()
-               password.user = user
-               def encoder = new MyPasswordEncoder()
-               encoder.setAlgorithm("MD5")
-               encoder.setSalt("nXg798dr60987Hgb")
-               encoder.setBase64Encoding(true)
-               password.password = encoder.encode(params.password)
-               password.save(flush:true)
-               redirect(controller: 'registration', action:'passwordResetSuccess')
+               def success = passwordService.resetPassword(user, params.password)
+               if(success){
+                   redirect(controller: 'registration', action:'passwordResetSuccess')
+               } else {
+                   render(view:'accountError')
+               }
            } else {
                render(view:'accountError')
            }
@@ -72,8 +68,10 @@ class RegistrationController {
         //check for human
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
         if(!captchaValid){
+
             //send password reset link
             render(view:'forgottenPassword', model:[email: params.email, captchaInvalid: true])
+
         } else {
 
             def user = User.findByEmail(params.email)
@@ -82,7 +80,12 @@ class RegistrationController {
                 user.tempAuthKey = UUID.randomUUID().toString()
                 user.save(flush: true)
                 //send the email
-                emailService.sendPasswordReset(user, user.tempAuthKey)
+                try {
+                    emailService.sendPasswordReset(user, user.tempAuthKey)
+                } catch (Exception e){
+                    log.error(e.getMessage(), e)
+                    render(view:'accountError')
+                }
             } else {
                 //send password reset link
                 render(view:'forgottenPassword', model:[email: params.email, captchaInvalid: false, invalidEmail:true])
@@ -91,62 +94,42 @@ class RegistrationController {
     }
 
     def update = {
-        def userId = authService.getUserId()
-        def user = User.get(userId)
-        user.setProperties(params)
-        user.userName = params.email
-        user.activated = true
-        user.locked = false
-        user.save(flush:true)
-        updateProperties(user, params)
-        redirect(controller: 'profile')
+        def user = User.get(authService.getUserId().toLong())
+        def success = userService.updateUser(user, params)
+        if(success){
+            redirect(controller: 'profile')
+        } else {
+            render(view:"accountError")
+        }
     }
 
     def register = {
+
         //create user account...
-        if(isEmailRegistered(params.email)){
+        if(userService.isEmailRegistered(params.email)){
+
             render(view:'createAccount', model:[edit:false, user:params, props:params, alreadyRegistered: true])
+
         } else {
 
             try {
                 //does a user with the supplied email address exist
-                def user = new User(params)
-                user.userName = params.email
-                user.activated = false
-                user.locked = false
-                user.created = new Date().toTimestamp()
-                user.tempAuthKey = UUID.randomUUID().toString()
-                def createdUser = user.save(flush: true)
-                updateProperties(createdUser, params)
-                println("Newly created user: " + createdUser.id)
+                def user = userService.registerUser(params)
 
                 //store the password
-                def password = new Password()
-                password.user = user
-                def encoder = new MyPasswordEncoder()
-                encoder.setAlgorithm("MD5")
-                encoder.setSalt("nXg798dr60987Hgb")
-                encoder.setBase64Encoding(true)
-                password.password = encoder.encode(params.password)
-                password.save(flush:true)
-
-                //store the password
-                emailService.sendAccountActivation(createdUser, user.tempAuthKey)
-                redirect(action:'accountCreated', id: createdUser.id)
+                def success = passwordService.resetPassword(user, params.password)
+                if(success){
+                    //store the password
+                    emailService.sendAccountActivation(user, user.tempAuthKey)
+                    redirect(action:'accountCreated', id: user.id)
+                } else {
+                    render(view:"accountError")
+                }
             } catch(Exception e) {
                 log.error(e.getMessage(), e)
                 render(view:"accountError")
             }
         }
-    }
-
-    private void updateProperties(user, params) {
-        (new UserProperty(user: user, property: 'city', value: params.city ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'organisation', value: params.organisation ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'telephone', value: params.telephone ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'state', value: params.state ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'primaryUserType', value: params.primaryUserType ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'secondaryUserType', value: params.secondaryUserType ?: '')).save(flush: true)
     }
 
     def accountCreated = {
@@ -160,23 +143,11 @@ class RegistrationController {
         def user = User.get(params.userId)
         //check the activation key
         if(user.tempAuthKey == params.authKey){
-            user.activated = true
-            user.save(flush:true)
-            //TODO create alerts...
-            //TODO log the user in
-            redirect(url: grailsApplication.config.security.cas.loginUrl + "?email=" + user.email)
+            userService.activateAccount(user)
+            redirect(url: grailsApplication.config.security.cas.loginUrl + "?email=" + user.email + "&service=" + grailsApplication.config.redirectAfterFirstLogin)
         } else {
-            log.error(e.getMessage(), e)
+            log.error('Auth keys did not match for user : ' + params.userId + ", supplied: " + params.authKey + ", stored: " + user.tempAuthKey)
             render(view:"accountError")
-        }
-    }
-
-    private def isEmailRegistered(email){
-        def user = User.findByEmail(email.toLowerCase())
-        if(user){
-            true
-        } else {
-            false
         }
     }
 }

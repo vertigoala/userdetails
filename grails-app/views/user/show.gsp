@@ -138,7 +138,7 @@
         <g:if test="${userInstance?.userRoles}">
                 <g:each in="${userInstance.userRoles}" var="u">
                     <span class="property-value" aria-labelledby="userRoles-label">
-                        <g:link controller="userRole" action="show" id="${u.id}">${u?.encodeAsHTML()}</g:link>
+                        <g:link controller="userRole" action="list" params="[role:u?.encodeAsHTML()]">${u?.encodeAsHTML()}</g:link>
                     </span>
                     <br/>
                 </g:each>
@@ -155,9 +155,9 @@
             <g:hiddenField name="id" value="${userInstance?.id}"/>
             <g:link class="edit" action="edit" id="${userInstance?.id}"><g:message code="default.button.edit.label"
                                                                                    default="Edit"/></g:link>
-            <g:actionSubmit class="delete" action="delete"
-                            value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+            %{--<g:actionSubmit class="delete" action="delete"--}%
+                            %{--value="${message(code: 'default.button.delete.label', default: 'Delete')}"--}%
+                            %{--onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>--}%
         </fieldset>
     </g:form>
 </div>

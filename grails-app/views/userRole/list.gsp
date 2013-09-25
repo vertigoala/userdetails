@@ -23,6 +23,7 @@
 			<table>
 				<thead>
 					<tr>
+						<th><g:message code="userRole.user.label" default="ID" /></th>
 						<th><g:message code="userRole.user.label" default="User" /></th>
 						<th><g:message code="userRole.role.label" default="Role" /></th>
 					</tr>
@@ -30,7 +31,13 @@
 				<tbody>
 				<g:each in="${userRoleInstanceList}" status="i" var="userRoleInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
+
+						<td>
+                            <g:link controller="user" action="show" id="${fieldValue(bean: userRoleInstance, field: "user.id")}">
+                            ${fieldValue(bean: userRoleInstance, field: "user.id")}
+                            </g:link>
+                        </td>
+
 						<td>${fieldValue(bean: userRoleInstance, field: "user")}</td>
 
 						<td>${fieldValue(bean: userRoleInstance, field: "role")}</td>

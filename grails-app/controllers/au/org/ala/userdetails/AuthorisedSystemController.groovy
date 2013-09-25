@@ -1,7 +1,9 @@
 package au.org.ala.userdetails
 
+import au.org.ala.auth.PreAuthorise
 import org.springframework.dao.DataIntegrityViolationException
 
+@PreAuthorise
 class AuthorisedSystemController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]

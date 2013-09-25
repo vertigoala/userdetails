@@ -108,11 +108,14 @@
     <table class="table">
         <g:each in="${userInstance?.userRoles ?}" var="u">
             <tr>
-                <td><g:link controller="userRole" action="show" id="${u.id}">${u?.encodeAsHTML()}</g:link></td>
-                <td><g:actionSubmit controller="userRole" action="deleteRole"
+                <td><g:link controller="userRole" action="list" params="[role:u?.encodeAsHTML()]">${u?.encodeAsHTML()}</g:link></td>
+                <td><g:link controller="userRole"
+                            action="deleteRole"
                             class="btn btn-warning btn-mini"
-                            value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                            params="[userId:u.user.id,role:u.role.role]"
+                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+                        ${message(code: 'default.button.delete.label', default: 'Delete')}
+                    </g:link>
                 </td>
             </tr>
         </g:each>

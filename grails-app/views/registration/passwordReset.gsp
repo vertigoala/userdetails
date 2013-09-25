@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main"/>
     <meta name="section" content="home"/>
-    <title>Please check your email</title>
+    <title>Please supply your new password</title>
 </head>
 <body>
 <div class="row-fluid">
