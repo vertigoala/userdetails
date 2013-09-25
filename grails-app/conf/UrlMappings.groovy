@@ -50,6 +50,7 @@ class UrlMappings {
      constraints {}
     }
 
+    "/logout/logout"(controller: "logout", action: 'logout')
     "/"(view:"/index")
     "500"(view:'/error')
   }
