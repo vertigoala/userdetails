@@ -140,7 +140,7 @@ grails.hibernate.cache.queries = true
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
-        grails.serverURL = "http://devt.ala.org.au:8080"
+        grails.serverURL = "http://devt.ala.org.au:8080/userdetails"
         grails.logging.jul.usebridge = true
         grails {
           mail {
