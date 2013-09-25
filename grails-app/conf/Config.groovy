@@ -29,7 +29,7 @@ println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
  *  SECURITY
 \******************************************************************************/
 if (!security.cas.uriFilterPattern) {
-    security.cas.uriFilterPattern = "/admin/.*,/registration/editAccount, /myprofile, /profile/.*, /admin/, /admin, /registration/update, /registration/update/.*"
+    security.cas.uriFilterPattern = "/admin/.*,/registration/editAccount, /my-profile, /my-profile/, /myprofile/, /myprofile, /profile/.*, /admin/, /admin, /registration/update, /registration/update/.*"
 }
 if (!security.cas.loginUrl) {
     security.cas.loginUrl = "https://auth.ala.org.au/cas/login"
