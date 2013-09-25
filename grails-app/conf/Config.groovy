@@ -3,16 +3,12 @@ import org.scribe.builder.api.FlickrApi
 /******************************************************************************\
  *  CONFIG MANAGEMENT
 \******************************************************************************/
-
 def appName = 'userdetails'
 def ENV_NAME = "${appName.toUpperCase()}_CONFIG"
 def default_config = "/data/${appName}/config/${appName}-config.properties"
 if(!grails.config.locations || !(grails.config.locations instanceof List)) {
     grails.config.locations = []
 }
-
-// add ala skin conf (needed for version >= 0.1.10)
-//grails.config.locations.add("classpath:ala-config.groovy")
 
 if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
     println "[${appName}] Including configuration file specified in environment: " + System.getenv(ENV_NAME);
@@ -28,29 +24,6 @@ if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
 }
 
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
-
-//def appName = "userdetails"
-//def ENV_NAME = "USERDETAILS_CONFIG"
-//def default_config = "/data/${appName}/config/${appName}-config.properties"
-//if(!grails.config.locations || !(grails.config.locations instanceof List)) {
-//    grails.config.locations = []
-//}
-//if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
-//    println "[${appName}] Including configuration file specified in environment: " + System.getenv(ENV_NAME);
-//    grails.config.locations = ["file:" + System.getenv(ENV_NAME)]
-//} else if(System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
-//    println "[${appName}] Including configuration file specified on command line: " + System.getProperty(ENV_NAME);
-//    grails.config.locations = ["file:" + System.getProperty(ENV_NAME)]
-//} else if(new File(default_config).exists()) {
-//    println "[${appName}] Including default configuration file: " + default_config;
-//    def loc = ["file:" + default_config]
-//    println "[${appName}]  loc = " + loc
-//    grails.config.locations = loc
-//    println "grails.config.locations = " + grails.config.locations
-//} else {
-//    println "[${appName}] No external configuration file defined."
-//}
-//println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 
 /******************************************************************************\
  *  SECURITY
@@ -167,6 +140,7 @@ grails.hibernate.cache.queries = true
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
+        grails.serverURL = "http://devt.ala.org.au:8080"
         grails.logging.jul.usebridge = true
         grails {
           mail {
@@ -177,6 +151,8 @@ environments {
         }
     }
     production {
+        grails.serverURL = "http://auth.ala.org.au/userdetails"
+        security.cas.appServerName = "http://auth.ala.org.au"
         grails.logging.jul.usebridge = false
         grails {
           mail {
@@ -195,7 +171,7 @@ log4j = {
                 rollingFile name: "${appName}-prod",
                     maxFileSize: 104857600,
                     file: "/var/log/tomcat6/${appName}.log",
-                    threshold: org.apache.log4j.Level.DEBUG,
+                    threshold: org.apache.log4j.Level.INFO,
                     layout: pattern(conversionPattern: "%d [%c{1}]  %m%n")
                 rollingFile name: "stacktrace", maxFileSize: 1024, file: "/var/log/tomcat6/${appName}-stacktrace.log"
             }

@@ -1,7 +1,7 @@
 dataSource {
     pooled = true
-    driverClassName = "org.h2.Driver"
-    username = "root"
+    driverClassName = "com.mysql.jdbc.Driver"
+    username = ""
     password = ""
 }
 hibernate {
@@ -14,31 +14,15 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "update"
-            driverClassName = "com.mysql.jdbc.Driver"
+            dbCreate = "none"
             url = "jdbc:mysql://localhost/emmet"
             username = "root"
             password = "password"
-            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
-        }
-    }
-    test {
-        dataSource {
-            dbCreate = "update"
-            driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:mysql://localhost/emmet"
-            username = "emmet"
-            password = ""
         }
     }
     production {
         dataSource {
-            dbCreate = "update"
-            driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:mysql://localhost/emmet"
-            username = "emmet"
-            password = "Kllhj789879978Gkjh"
-            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            dbCreate = "none"
         }
     }
 }
