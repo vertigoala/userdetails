@@ -40,7 +40,7 @@
             <g:render template="form"/>
         </fieldset>
         <fieldset class="buttons">
-            <g:actionSubmit class="save" action="update"
+            <g:actionSubmit class="btn btn-ala" action="update"
                             value="${message(code: 'default.button.update.label', default: 'Update')}"/>
             %{--<g:actionSubmit class="delete" action="delete"--}%
                             %{--value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate=""--}%
