@@ -4,8 +4,8 @@ modules = {
     }
 
     alaSkin {
-        resource url: [dir:'less', file:'bootstrap.less', plugin: "ala-web-theme"], attrs:[rel: "stylesheet/less", type:'css'], bundle:'bundle_alaSkin'
-        resource url: '/less/userdetails.less',attrs:[rel: "stylesheet/less", type:'css'], bundle:'bundle_alaSkin'
+//        resource url: [dir:'less', file:'bootstrap.less', plugin: "ala-web-theme"], attrs:[rel: "stylesheet/less", type:'css'], bundle:'bundle_alaSkin'
+//        resource url: '/less/userdetails.less',attrs:[rel: "stylesheet/less", type:'css'], bundle:'bundle_alaSkin', dependsOn('bootstrap')
     }
 
     jqueryValidationEngine {

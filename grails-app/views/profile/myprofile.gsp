@@ -28,14 +28,14 @@
                 </li>
                 <li>
                     <a href="http://sightings.ala.org.au/mine">
-                         View sightings recorded through the Atlas
+                         View your timeline of sightings recorded through the Atlas
                     </a>
                 </li>
-                %{--<li>--}%
-                    %{--<a href="http://spatial.ala.org.au/actions/dashboard">--}%
-                        %{--Tabulate and graph all functions you've used in the Spatial Portal (species, areas, layers, tools, imports and exports).--}%
-                    %{--</a>--}%
-                %{--</li>--}%
+                <li>
+                    <a href="http://spatial.ala.org.au/actions/dashboard">
+                        Tabulate and graph all functions you've used in the Spatial Portal
+                    </a>
+                </li>
                 <li>
                     <a href="http://volunteer.ala.org.au/user/myStats">
                         View your tasks on the Biodiversity Volunteer Portal
@@ -51,13 +51,11 @@
                         View records you have annotated
                     </a>
                 </li>
-
                 <li>
                     <a href="http://alerts.ala.org.au/">
                         Manage your alerts
                     </a>
                 </li>
-
                 <g:if test="${isAdmin}">
                 <li>
                     <g:link controller="admin">
