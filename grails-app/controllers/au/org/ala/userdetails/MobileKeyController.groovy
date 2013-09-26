@@ -19,7 +19,7 @@ class MobileKeyController {
         log.info("Authenticate request received for....." +params.userName)
         try {
             HttpClient http = new DefaultHttpClient()
-            HttpPost post = new HttpPost("https://auth.ala.org.au/cas/v1/tickets")
+            HttpPost post = new HttpPost(grailsApplication.config.security.cas.casServerUrlPrefix + "/v1/tickets")
             String userName = params.userName.toString().toLowerCase()
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
             nvps.add(new BasicNameValuePair("username", userName));
@@ -63,7 +63,7 @@ class MobileKeyController {
         AuthKey authKey = AuthKey.findByKeyAndMobileUser(params.authKey, user)
         if (authKey == null) {
          //   println("Unable to add an observation.")
-            log.info("Sending error for check key requets. Key combination not recognised")
+            log.info("Sending error for check key request. Key combination not recognised")
             response.sendError(403)
         }
     }

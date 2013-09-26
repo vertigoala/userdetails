@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    def userService
 
     def index() {
         redirect(action: "list", params: params)
@@ -32,14 +33,6 @@ class UserController {
         [userInstance: new User(params)]
     }
 
-    private void updateProperties(user, params) {
-        (new UserProperty(user: user, property: 'city', value: params.city ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'organisation', value: params.organisation ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'telephone', value: params.telephone ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'state', value: params.state ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'primaryUserType', value: params.primaryUserType ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'secondaryUserType', value: params.secondaryUserType ?: '')).save(flush: true)
-    }
 
     def save() {
         def userInstance = new User(params)
@@ -48,7 +41,7 @@ class UserController {
             return
         }
 
-        updateProperties(userInstance, params)
+        userService.updateProperties(userInstance, params)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
         redirect(action: "show", id: userInstance.id)
@@ -100,7 +93,7 @@ class UserController {
             return
         }
 
-        updateProperties(userInstance, params)
+        userService.updateProperties(userInstance, params)
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
         redirect(action: "show", id: userInstance.id)

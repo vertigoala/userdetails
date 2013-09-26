@@ -31,24 +31,24 @@
                          View sightings recorded through the Atlas
                     </a>
                 </li>
-                <li>
-                    <a href="http://spatial.ala.org.au/actions/dashboard">
-                        Tabulate and graph all functions you've used in the Spatial Portal (species, areas, layers, tools, imports and exports).
-                    </a>
-                </li>
+                %{--<li>--}%
+                    %{--<a href="http://spatial.ala.org.au/actions/dashboard">--}%
+                        %{--Tabulate and graph all functions you've used in the Spatial Portal (species, areas, layers, tools, imports and exports).--}%
+                    %{--</a>--}%
+                %{--</li>--}%
                 <li>
                     <a href="http://volunteer.ala.org.au/user/myStats">
-                        View your tasks on the Biodiversity Volunteer Portal.
+                        View your tasks on the Biodiversity Volunteer Portal
                     </a>
                 </li>
                 <li>
                     <a href="http://lists.ala.org.au/speciesList/list">
-                        View your uploaded species lists.
+                        View your uploaded species lists
                     </a>
                 </li>
                 <li>
                     <a href="http://biocache.ala.org.au/occurrences/search?q=*%3A*&fq=assertion_user_id%3A%22${user.id}%22">
-                        View records you have annotated.
+                        View records you have annotated
                     </a>
                 </li>
 
@@ -78,7 +78,7 @@
                     Linking with Flick enables images shared through Flickr to be linked to your Atlas account
                     so they can be attributed to you.
                     </p>
-                    <g:link controller="profile" class="btn" action="removeFlickrLink" target="_blank">Remove link to flickr account</g:link>.
+                    <g:link controller="profile" class="btn" action="removeFlickrLink" target="_blank">Remove link to flickr account</g:link>
                 </g:if>
                 <g:else>
                     <p>
