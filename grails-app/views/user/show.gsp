@@ -29,16 +29,6 @@
 
 <div class="row-fluid">
 <div class="span8">
-        <g:if test="${userInstance?.email}">
-            <li class="fieldcontain">
-                <span id="email-label" class="property-label"><g:message code="user.email.label"
-                                                                         default="Email"/></span>
-
-                <span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${userInstance}"
-                                                                                         field="email"/></span>
-
-            </li>
-        </g:if>
 
         <g:if test="${userInstance?.firstName}">
             <li class="fieldcontain">
@@ -62,27 +52,17 @@
             </li>
         </g:if>
 
-        <g:if test="${userInstance?.activated}">
+        <g:if test="${userInstance?.email}">
             <li class="fieldcontain">
-                <span id="activated-label" class="property-label"><g:message code="user.activated.label"
-                                                                             default="Activated"/></span>
+                <span id="email-label" class="property-label"><g:message code="user.email.label"
+                                                                         default="Email"/></span>
 
-                <span class="property-value" aria-labelledby="activated-label"><g:formatBoolean
-                        boolean="${userInstance?.activated}"/></span>
+                <span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${userInstance}"
+                                                                                         field="email"/></span>
 
             </li>
         </g:if>
 
-        <g:if test="${userInstance?.locked}">
-            <li class="fieldcontain">
-                <span id="locked-label" class="property-label"><g:message code="user.locked.label"
-                                                                          default="Locked"/></span>
-
-                <span class="property-value" aria-labelledby="locked-label"><g:formatBoolean
-                        boolean="${userInstance?.locked}"/></span>
-
-            </li>
-        </g:if>
 
         <g:if test="${userInstance?.created}">
             <li class="fieldcontain">
@@ -132,8 +112,22 @@
 </div>
 <div class="span4 well ">
 
-        <span id="userRoles-label" class="property-label"><g:message code="user.userRoles.label"
-                                                                             default="Roles"/></span>
+            <span id="activated-label" class="property-label"><g:message code="user.activated.label"
+                                                                         default="Activated"/>:</span>
+
+            <span class="property-value" aria-labelledby="activated-label"><g:formatBoolean
+                    boolean="${userInstance?.activated}"/></span>
+            <br/>
+
+            <span id="locked-label" class="property-label"><g:message code="user.locked.label"
+                                                                      default="Locked"/>:</span>
+
+            <span class="property-value" aria-labelledby="locked-label"><g:formatBoolean
+                    boolean="${userInstance?.locked}"/></span>
+            <br/>
+
+        <h4><g:message code="user.userRoles.label"
+                                                                             default="Roles"/></h4>
         <br/>
         <g:if test="${userInstance?.userRoles}">
                 <g:each in="${userInstance.userRoles}" var="u">
