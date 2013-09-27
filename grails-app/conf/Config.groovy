@@ -86,7 +86,7 @@ if(!encoding.salt){
     encoding.salt = "xxxxxxxxxxxxxxxxxxxxx"
 }
 if(!redirectAfterFirstLogin){
-    redirectAfterFirstLogin = "http://www.ala.org.au/my-profile"
+    redirectAfterFirstLogin = security.cas.appServerName + security.cas.contextPath + "/myprofile"
 }
 
 /******************************************************************************/

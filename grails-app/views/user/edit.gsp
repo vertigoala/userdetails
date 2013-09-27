@@ -42,9 +42,9 @@
         <fieldset class="buttons">
             <g:actionSubmit class="btn btn-ala" action="update"
                             value="${message(code: 'default.button.update.label', default: 'Update')}"/>
-            %{--<g:actionSubmit class="delete" action="delete"--}%
-                            %{--value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate=""--}%
-                            %{--onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>--}%
+            <g:actionSubmit class="delete" action="delete"
+                            value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate=""
+                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure want to delete this user? This may have serious implications if the user has used systems.')}');"/>
         </fieldset>
     </g:form>
 </div>

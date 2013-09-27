@@ -31,10 +31,17 @@ class UrlMappings {
     "/registration/resetPassword/$userId/$authKey"(controller:'registration', action: 'passwordReset')
 
     "/registration/forgottenPassword"(controller:'registration', action: 'forgottenPassword')
-    "/userdetails/getUserDetails"(controller:'userDetails', action: 'getUserDetails')
-    "/userdetails/getUserList"(controller:'userDetails', action: 'getUserList')
-    "/userdetails/getUserListFull"(controller:'userDetails', action: 'getUserListFull')
-    "/userdetails/getUserListWithIds"(controller:'userDetails', action: 'getUserListWithIds')
+
+    "/userDetails/getUserDetails"(controller:'userDetails', action: 'getUserDetails')
+    "/userDetails/getUserList"(controller:'userDetails', action: 'getUserList')
+    "/userDetails/getUserListFull"(controller:'userDetails', action: 'getUserListFull')
+    "/userDetails/getUserListWithIds"(controller:'userDetails', action: 'getUserListWithIds')
+
+//    "/userdetails/getUserDetails"(controller:'userDetails', action: 'getUserDetails')
+//    "/userdetails/getUserList"(controller:'userDetails', action: 'getUserList')
+//    "/userdetails/getUserListFull"(controller:'userDetails', action: 'getUserListFull')
+//    "/userdetails/getUserListWithIds"(controller:'userDetails', action: 'getUserListWithIds')
+
     "/myprofile"(controller:'profile', action: 'index')
     "/simpleCaptcha/captcha"(controller:'simpleCaptcha', action:'captcha')
     "/simpleCaptcha/*"(controller:'simpleCaptcha')

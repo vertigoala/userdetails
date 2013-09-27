@@ -12,6 +12,21 @@ class UserRoleController {
         redirect(action: "list", params: params)
     }
 
+    def create() {
+        User user = User.get(params['user.id'].toLong())
+        def roles = au.org.ala.userdetails.Role.list()
+
+        //remove existing roles this user has
+        def usersRoles = user.getUserRoles()
+
+        def acquiredRoles = []
+        usersRoles.each { acquiredRoles << it.role}
+
+        roles.removeAll(acquiredRoles)
+
+        [user: user, roles:roles]
+    }
+
     def list(Integer max) {
 
         if(params.role){
