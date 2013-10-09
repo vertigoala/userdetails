@@ -89,10 +89,10 @@
                     <label for="state">State/territory</label>
                     <g:select id="state" name="state"
                               value="${props?.state}"
-                              keys="['N/A', 'ACT', 'NSW', 'WA', 'VIC', 'SA', 'TAS', 'NT']"
+                              keys="['N/A', 'ACT', 'NSW', 'WA', 'VIC', 'SA', 'TAS', 'NT', 'QLD']"
                               from="['N/A', 'Australian Capital Territory', 'New South Wales',
                                       'Western Australia', 'Victoria', 'South Australia', 'Tasmania',
-                                      'Northern Territory']"
+                                      'Northern Territory', 'Queensland']"
                     />
 
                     <label for="telephone">Telephone</label>

@@ -25,7 +25,11 @@ class UserDetailsController {
         if(authorisedSystemService.isAuthorisedSystem(request)){
             def users = User.findAll()
             def map = [:]
-            users.each { map.put(it.email.toLowerCase(), it.firstName + " " + it.lastName) }
+            users.each {
+                if(it.email){
+                    map.put(it.email.toLowerCase(), it.firstName + " " + it.lastName)
+                }
+            }
             render(contentType: "text/json"){ map }
         } else {
             response.sendError(403)

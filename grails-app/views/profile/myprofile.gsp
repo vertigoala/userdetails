@@ -69,13 +69,19 @@
             <div class="well well-small">
                 <h4>Flickr</h4>
                 <g:if test="${props.flickrUsername}">
-                    <strong>You have connect to flickr account with username:
+                    <strong>You have connected to flickr account with username:
                         <a href="http://www.flickr.com/photos/${props.flickrId}">${props.flickrUsername}</a>.
                     </strong>
                     <p>
-                    Linking with Flick enables images shared through Flickr to be linked to your Atlas account
-                    so they can be attributed to you.
+                    Linking with Flickr enables images shared through
+
+                    <a href="http://www.flickr.com/groups/encyclopedia_of_life/">Flickr EOL Group</a>
+
+                    to be linked to your Atlas account so they can be attributed to you.
                     </p>
+
+
+
                     <g:link controller="profile" class="btn" action="removeFlickrLink" target="_blank">Remove link to flickr account</g:link>
                 </g:if>
                 <g:else>
