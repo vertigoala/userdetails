@@ -32,4 +32,21 @@ class PasswordService {
            false
        }
     }
+
+    String generatePassword(user){
+       //generate a new password
+       def start = UUID.randomUUID().toString()
+       def encoder = new MyPasswordEncoder()
+       encoder.setAlgorithm(grailsApplication.config.encoding.algorithm)
+       encoder.setSalt(grailsApplication.config.encoding.salt)
+       encoder.setBase64Encoding(true)
+       def newPassword = encoder.encode(start).toLowerCase().replaceAll(/[^A-Za-z0-9]/, "");
+
+       //make it 10 characters
+       newPassword = newPassword.substring(0,10)
+
+       //remove nonalphnumerics
+       resetPassword(user, newPassword)
+       newPassword
+    }
 }

@@ -26,9 +26,7 @@
 				<g:if test="${authorisedSystemInstance?.host}">
 				<li class="fieldcontain">
 					<span id="host-label" class="property-label"><g:message code="authorisedSystem.host.label" default="Host" /></span>
-					
-						<span class="property-value" aria-labelledby="host-label"><g:fieldValue bean="${authorisedSystemInstance}" field="host"/></span>
-					
+                    <span class="property-value" aria-labelledby="host-label"><g:fieldValue bean="${authorisedSystemInstance}" field="host"/></span>
 				</li>
 				</g:if>
 			

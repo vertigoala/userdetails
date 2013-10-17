@@ -54,6 +54,7 @@ class RegistrationController {
            } else {
                render(view:'accountError')
            }
+           log.info("Password successfully reset for user: " + params.userId)
         } else {
            //back to the original form
            render(view:'passwordReset', model: [user:user, authKey:params.authKey, passwordMatchFail:true])
@@ -68,12 +69,10 @@ class RegistrationController {
         //check for human
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
         if(!captchaValid){
-
             //send password reset link
             render(view:'forgottenPassword', model:[email: params.email, captchaInvalid: true])
-
         } else {
-
+            log.info("Starting password reset for email address: " + params.email)
             def user = User.findByEmail(params.email)
             if(user){
                 //set the temp auth key
@@ -83,6 +82,7 @@ class RegistrationController {
                 try {
                     emailService.sendPasswordReset(user, user.tempAuthKey)
                 } catch (Exception e){
+                    log.error("Problem starting password reset for email address: " + params.email)
                     log.error(e.getMessage(), e)
                     render(view:'accountError')
                 }
@@ -106,10 +106,8 @@ class RegistrationController {
     def register = {
 
         //create user account...
-        if(userService.isEmailRegistered(params.email)){
-
+        if(!params.email || userService.isEmailRegistered(params.email)){
             render(view:'createAccount', model:[edit:false, user:params, props:params, alreadyRegistered: true])
-
         } else {
 
             try {

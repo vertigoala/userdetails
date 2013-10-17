@@ -11,6 +11,7 @@
         <h1>User Administration</h1>
         <ul>
             <li><g:link controller="user">Find a user</g:link></li>
+            <li><g:link controller="admin" action="resetPasswordForUser">Reset user password</g:link></li>
             <li><g:link controller="role">Roles</g:link></li>
             <li><g:link controller="authorisedSystem">Authorised systems</g:link></li>
         </ul>

@@ -56,6 +56,12 @@
                         Manage your alerts
                     </a>
                 </li>
+                <li>
+                    <g:link controller="registration" action="forgottenPassword">
+                        Reset my password
+                    </g:link>
+                </li>
+
                 <g:if test="${isAdmin}">
                 <li>
                     <g:link controller="admin">

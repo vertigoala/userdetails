@@ -15,12 +15,24 @@
         $(function(){
             $('.typeahead').typeahead();
             $('#validation-container').validationEngine('attach', {scroll: false});
-            $("#updateAccountForm").submit(function() {
-                alert('submitting...');
-               console.log("Submitting....")
-               var valid = $('#validation-container').validationEngine('validate');
-               if(!valid) {
+            $("#updateAccountSubmit").click(function() {
+
+                $('#updateAccountSubmit').attr('disabled','disabled');
+               var pm = $('#password').val() == $('#reenteredPassword').val();
+               if(!pm){
+                 alert("The supplied passwords do not match!");
                  event.preventDefault();
+                 $('#updateAccountSubmit').removeAttr('disabled');
+               }
+
+               var valid = $('#validation-container').validationEngine('validate');
+               if(!valid){
+                  event.preventDefault();
+                  $('#updateAccountSubmit').removeAttr('disabled');
+               }
+
+               if(valid && pm){
+                  $("form[name='updateAccountForm']").submit();
                }
             });
         });
@@ -55,7 +67,7 @@
     <div class="row-fluid">
         <div class="span4">
             <div class="validationEngineContainer" id="validation-container">
-            <g:form id="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" >
+            <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" >
 
                     <label for="firstName">First name</label>
                     <input id="firstName" name="firstName" type="text" class="input-xlarge" value="${user?.firstName}" data-validation-engine="validate[required]"/>
@@ -73,7 +85,20 @@
 
                     <g:if test="${!edit}">
                     <label for="password">Password</label>
-                    <input id="password" name="password" class="input-xlarge" value=""
+                    <input id="password"
+                           name="password"
+                           class="input-xlarge"
+                           value=""
+                           data-validation-engine="validate[required, minSize[8]]"
+                           data-errormessage-value-missing="Password is required!"
+                           type="password"
+                    />
+
+                    <label for="reenteredPassword">Reentered password</label>
+                    <input id="reenteredPassword"
+                           name="reenteredPassword"
+                           class="input-xlarge"
+                           value=""
                            data-validation-engine="validate[required, minSize[8]]"
                            data-errormessage-value-missing="Password is required!"
                            type="password"
@@ -116,10 +141,10 @@
                     />
                 <br/>
                 <g:if test="${edit}">
-                    <g:submitButton class="btn btn-ala" name="submit" value="Update account"  />
+                    <button id="updateAccountSubmit" class="btn btn-ala">Update account</button>
                 </g:if>
                 <g:else>
-                    <g:submitButton class="btn btn-ala" name="submit" value="Create account" />
+                    <button id="updateAccountSubmit" class="btn btn-ala">Create account</button>
                 </g:else>
             </g:form>
             </div>
