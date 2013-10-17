@@ -22,7 +22,7 @@ class AdminController {
            emailService.sendGeneratedPassword(user, password)
            render(view:'userPasswordResetSuccess', model:[email:params.email])
        } else {
-           render(view:'resetPasswordForUser', model:[emailNotRecognised:true])
+           render(view:'resetPasswordForUser', model:[email:params.email, emailNotRecognised:true])
        }
     }
 }

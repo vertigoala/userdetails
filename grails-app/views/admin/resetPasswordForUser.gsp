@@ -8,6 +8,13 @@
 <body>
 <div class="row-fluid">
     <h1>Reset password for user</h1>
+
+    <g:if test="${emailNotRecognised}">
+    <div class="row-fluid warning well">
+        <p class="text-error">Email address <b>${email}</b> not recognised.</p>
+    </div>
+    </g:if>
+
     <div class="row-fluid">
         <div class="span6">
             <g:form action="sendPasswordResetEmail" method="POST">
