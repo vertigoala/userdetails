@@ -75,12 +75,8 @@ class RegistrationController {
             log.info("Starting password reset for email address: " + params.email)
             def user = User.findByEmail(params.email)
             if(user){
-                //set the temp auth key
-                user.tempAuthKey = UUID.randomUUID().toString()
-                user.save(flush: true)
-                //send the email
                 try {
-                    emailService.sendPasswordReset(user, user.tempAuthKey)
+                    userService.resetAndSendTemporaryPassword(user)
                 } catch (Exception e){
                     log.error("Problem starting password reset for email address: " + params.email)
                     log.error(e.getMessage(), e)

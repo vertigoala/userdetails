@@ -1,20 +1,27 @@
 package au.org.ala.userdetails
 
+import au.org.ala.auth.PasswordResetFailedException
+
 class EmailService {
 
     def grailsApplication
 
-    def serviceMethod() {}
+    static transactional = false
 
-    def sendPasswordReset(user, authKey){
-        sendMail {
-          from grailsApplication.config.emailSenderTitle+"<" + grailsApplication.config.emailSender + ">"
-          subject "Reset you password"
-          to user.email
-          body (view: '/email/resetPassword',
-                plugin:"email-confirmation",
-                model:[link:getServerUrl() + "resetPassword/" +  user.id +  "/"  + authKey ]
-          )
+    def sendPasswordReset(user, authKey) throws PasswordResetFailedException {
+
+        try {
+            sendMail {
+              from grailsApplication.config.emailSenderTitle+"<" + grailsApplication.config.emailSender + ">"
+              subject "Reset your password"
+              to user.email
+              body (view: '/email/resetPassword',
+                    plugin:"email-confirmation",
+                    model:[link:getServerUrl() + "resetPassword/" +  user.id +  "/"  + authKey ]
+              )
+            }
+        } catch (Exception ex) {
+            throw new PasswordResetFailedException(ex)
         }
     }
 

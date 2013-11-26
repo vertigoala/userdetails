@@ -28,6 +28,7 @@ grails.project.dependency.resolution = {
     }
     dependencies {
 //        compile "com.github.inspektr:inspektr-audit:1.0.7.GA"
+        runtime 'postgresql:postgresql:9.1-901.jdbc4'
         runtime 'mysql:mysql-connector-java:5.1.18'
         build 'org.apache.httpcomponents:httpcore:4.1.2'
         build 'org.apache.httpcomponents:httpclient:4.1.2'
@@ -46,6 +47,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.7.1"
         runtime ":resources:1.2.1"
         runtime ":ala-web-theme:0.1.12"
+        compile ":csv:0.3.1"
         test ":spock:0.7"
         build ":tomcat:$grailsVersion"
     }
