@@ -36,7 +36,7 @@ class UserService {
         user.save(flush:true)
     }
 
-    public BulkUserLoadResults bulkRegisterUsersFromFile(InputStream stream, Boolean firstRowContainsFieldNames, String primaryUsage) {
+    public BulkUserLoadResults bulkRegisterUsersFromFile(InputStream stream, Boolean firstRowContainsFieldNames, String primaryUsage, String emailSubject, String emailTitle, String emailBody) {
 
         def results = new BulkUserLoadResults()
 
@@ -125,7 +125,7 @@ class UserService {
 
                     // Now send a temporary password to the user...
                     try {
-                        resetAndSendTemporaryPassword(userInstance)
+                        resetAndSendTemporaryPassword(userInstance, emailSubject, emailTitle, emailBody)
                     } catch (PasswordResetFailedException ex) {
                         // Catching the checked exception should prevent the transaction from failing
                         log.error("Failed to send temporary password via email!", ex)
@@ -201,19 +201,25 @@ class UserService {
                 userRole.delete()
             }
 
+            // Delete password
+            def passwords = Password.findAllByUser(user)
+            passwords.each { password ->
+                password.delete()
+            }
+
             // and finally delete the use object
             user.delete()
         }
 
     }
 
-    def resetAndSendTemporaryPassword(User user) throws PasswordResetFailedException {
+    def resetAndSendTemporaryPassword(User user, String emailSubject, String emailTitle, String emailBody) throws PasswordResetFailedException {
         if (user) {
             //set the temp auth key
             user.tempAuthKey = UUID.randomUUID().toString()
             user.save(flush: true)
             //send the email
-            emailService.sendPasswordReset(user, user.tempAuthKey)
+            emailService.sendPasswordReset(user, user.tempAuthKey, emailSubject, emailTitle, emailBody)
         }
     }
 }

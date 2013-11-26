@@ -1,12 +1,10 @@
 <%@ page contentType="text/html"%>
 <html>
-  <head><title>Reset your password</title></head>
+  <head><title>${emailTitle}</title></head>
   <body>
-    <h1>Reset your password</h1>
+    <h1>${emailTitle}</h1>
     <p>
-        Please click the link below to reset your ALA password.
-        This will take you to a form where you can provide a new
-        password for your account.
+        ${emailBody}
     </p>
     <p>
        <a href="${link}">${link}</a>

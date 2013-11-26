@@ -8,16 +8,32 @@ class EmailService {
 
     static transactional = false
 
-    def sendPasswordReset(user, authKey) throws PasswordResetFailedException {
+    def sendPasswordReset(user, authKey, emailSubject=null, emailTitle = null, emailBody=null) throws PasswordResetFailedException {
 
+        if (!emailSubject) {
+            emailSubject = "Reset your password"
+        }
+        if (!emailTitle) {
+            emailTitle = "Reset your password"
+        }
+
+        if (!emailBody) {
+            emailBody =
+"""
+        Please click the link below to reset your ALA password.
+        This will take you to a form where you can provide a new
+        password for your account.
+
+"""
+        }
         try {
             sendMail {
               from grailsApplication.config.emailSenderTitle+"<" + grailsApplication.config.emailSender + ">"
-              subject "Reset your password"
+              subject emailSubject
               to user.email
               body (view: '/email/resetPassword',
                     plugin:"email-confirmation",
-                    model:[link:getServerUrl() + "resetPassword/" +  user.id +  "/"  + authKey ]
+                    model:[link:getServerUrl() + "resetPassword/" +  user.id +  "/"  + authKey, emailTitle: emailTitle, emailBody: emailBody ]
               )
             }
         } catch (Exception ex) {

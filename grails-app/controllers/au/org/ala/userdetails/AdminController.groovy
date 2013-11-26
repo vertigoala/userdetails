@@ -43,7 +43,13 @@ class AdminController {
                     return
                 }
 
-                def results = userService.bulkRegisterUsersFromFile(f.inputStream, (boolean) params.firstRowHasFieldNames, params.primaryUsage as String)
+                def firstRow = (boolean) params.firstRowHasFieldNames
+                def primaryUsage = params.primaryUsage as String
+                def subject = params.emailSubject as String
+                def title = params.emailTitle as String
+                def body = params.emailBody as String
+
+                def results = userService.bulkRegisterUsersFromFile(f.inputStream, firstRow, primaryUsage, subject, title, body)
                 render(view:'loadUsersResults', model:[results: results])
                 return
             } else {

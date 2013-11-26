@@ -14,16 +14,6 @@
             </ul>
         </div>
 
-        %{--<div class="inner row-fluid">--}%
-            %{--<div id="breadcrumb" class="span12">--}%
-                %{--<ol class="breadcrumb">--}%
-                    %{--<li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class=" icon icon-arrow-right"></span></li>--}%
-                    %{--<li><a href="${createLink(controller:'admin', action:'index')}">User Details Administration</a> <span class=" icon icon-arrow-right"></span></li>--}%
-                    %{--<li class="active">${title}</li>--}%
-                %{--</ol>--}%
-            %{--</div>--}%
-        %{--</div>--}%
-
         <g:if test="${flash.message}">
             <div class="alert alert-danger">
                 ${flash.message}
@@ -45,7 +35,7 @@
                 Where <code>roles</code> is an optional space separated list of the roles that the user should have.
                 </p>
                 <p>
-                    <em>Note:</em> If an email address in the file already exists in the database then that user will not be created.
+                    <em>Note:</em> If an email address in the file already exists in the database then that user will not be created, but any missing roles will be added to the existing account.
                 </p>
             </div>
         </div>
@@ -69,6 +59,39 @@
 
                 <div class="controls">
                     <g:textField name="primaryUsage" />
+                </div>
+            </div>
+
+            <h4>Password Reset Email</h4>
+            <div class="control-group">
+            An email will be sent out to each user created, prompting them to reset their password.
+            You can customize the content of this email by filling out the fields below, or you can leave them blank to use the default wording.
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="emailSubject">
+                    Subject
+                </label>
+                <div class="controls">
+                    <g:textField name="emailSubject" class="input-xlarge" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="emailTitle">
+                    Title
+                </label>
+                <div class="controls">
+                    <g:textField name="emailTitle" class="input-xlarge"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="emailBody">
+                    Body
+                </label>
+                <div class="controls">
+                    <g:textArea name="emailBody" class="input-xxlarge" rows="5"/>
                 </div>
             </div>
 
