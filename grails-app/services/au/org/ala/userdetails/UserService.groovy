@@ -6,6 +6,7 @@ import au.org.ala.auth.PasswordResetFailedException
 class UserService {
 
     def emailService
+    def passwordService
 
     def updateUser(user, params){
         try {
@@ -102,8 +103,11 @@ class UserService {
                     }
                 }
 
+                String password = null
+
                 if (isNewUser) {
                     userInstance.save(failOnError: true)
+                    password = passwordService.generatePassword(userInstance)
                     results.userAccountsCreated++
                 }
 
@@ -125,7 +129,8 @@ class UserService {
 
                     // Now send a temporary password to the user...
                     try {
-                        resetAndSendTemporaryPassword(userInstance, emailSubject, emailTitle, emailBody)
+                        resetAndSendTemporaryPassword(userInstance, emailSubject, emailTitle, emailBody, password)
+                        passwordService
                     } catch (PasswordResetFailedException ex) {
                         // Catching the checked exception should prevent the transaction from failing
                         log.error("Failed to send temporary password via email!", ex)
@@ -213,13 +218,13 @@ class UserService {
 
     }
 
-    def resetAndSendTemporaryPassword(User user, String emailSubject, String emailTitle, String emailBody) throws PasswordResetFailedException {
+    def resetAndSendTemporaryPassword(User user, String emailSubject, String emailTitle, String emailBody, String password = null) throws PasswordResetFailedException {
         if (user) {
             //set the temp auth key
             user.tempAuthKey = UUID.randomUUID().toString()
             user.save(flush: true)
             //send the email
-            emailService.sendPasswordReset(user, user.tempAuthKey, emailSubject, emailTitle, emailBody)
+            emailService.sendPasswordReset(user, user.tempAuthKey, emailSubject, emailTitle, emailBody, password)
         }
     }
 }

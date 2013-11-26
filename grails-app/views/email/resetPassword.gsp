@@ -6,6 +6,9 @@
     <p>
         ${emailBody}
     </p>
+    <g:if test="${password}">
+        Your generated password is <b>${password}</b>. If you would like to change it, click the link below.
+    </g:if>
     <p>
        <a href="${link}">${link}</a>
     </p>

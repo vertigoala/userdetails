@@ -8,7 +8,7 @@ class EmailService {
 
     static transactional = false
 
-    def sendPasswordReset(user, authKey, emailSubject=null, emailTitle = null, emailBody=null) throws PasswordResetFailedException {
+    def sendPasswordReset(user, authKey, emailSubject=null, emailTitle = null, emailBody=null, password=null) throws PasswordResetFailedException {
 
         if (!emailSubject) {
             emailSubject = "Reset your password"
@@ -33,7 +33,7 @@ class EmailService {
               to user.email
               body (view: '/email/resetPassword',
                     plugin:"email-confirmation",
-                    model:[link:getServerUrl() + "resetPassword/" +  user.id +  "/"  + authKey, emailTitle: emailTitle, emailBody: emailBody ]
+                    model:[link:getServerUrl() + "resetPassword/" +  user.id +  "/"  + authKey, emailTitle: emailTitle, emailBody: emailBody, password: password ]
               )
             }
         } catch (Exception ex) {
