@@ -17,7 +17,7 @@
             $('#validation-container').validationEngine('attach', {scroll: false});
             $("#updateAccountSubmit").click(function() {
 
-                $('#updateAccountSubmit').attr('disabled','disabled');
+               $('#updateAccountSubmit').attr('disabled','disabled');
                var pm = $('#password').val() == $('#reenteredPassword').val();
                if(!pm){
                  alert("The supplied passwords do not match!");
@@ -154,8 +154,8 @@
                 To create your new account, fill in the fields opposite and click "Create".
             </p>
             <p>
-                In the Primary and Secondary Usage fields you can enter your own text or
-                select a value from the drop-down list.
+                In the Primary and Secondary Usage fields you can enter your own text to describe your
+                intended usage of the site. Examples include: "Amateur naturalist", "Photographer", "Ecologist".
             </p>
             <p>
                 For the Atlas' policy on the collection and use of personal information see our
@@ -164,8 +164,6 @@
             <p>
                 Your email address will be your ALA account id.  An account activation link will be
                 emailed to the address provided.
-                If you do not wish your actual name to be displayed with your occurrence records or
-                annotations, please enter an alias.
             </p>
         </div>
    </div>
