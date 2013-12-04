@@ -11,21 +11,32 @@ class PasswordService {
     Boolean resetPassword(user,newPassword){
        //update the password
        try {
-           Password.findByUserAndStatus(user, "CURRENT").each {
+           Password.findAllByUserAndStatus(user, 'CURRENT').each {
                it.status = "INACTIVE"
                it.save(flush:true)
            }
 
-           def password = new Password()
-           password.user = user
            def encoder = new MyPasswordEncoder()
            encoder.setAlgorithm(grailsApplication.config.encoding.algorithm)
            encoder.setSalt(grailsApplication.config.encoding.salt)
            encoder.setBase64Encoding(true)
-           password.password = encoder.encode(newPassword)
-           password.created = new Date().toTimestamp()
-           password.status = "CURRENT"
-           password.save(flush:true)
+
+           def encodedPassword = encoder.encode(newPassword)
+
+           //reuse object if old password
+           def found = Password.findByUserAndPassword(user, encodedPassword)
+           if(found){
+               found.password = encodedPassword
+               found.status = "CURRENT"
+               found.save(flush:true)
+           } else {
+               def password = new Password()
+               password.user = user
+               password.password = encodedPassword
+               password.created = new Date().toTimestamp()
+               password.status = "CURRENT"
+               password.save(flush:true)
+           }
            true
        } catch(Exception e){
            log.error(e.getMessage(),e)
