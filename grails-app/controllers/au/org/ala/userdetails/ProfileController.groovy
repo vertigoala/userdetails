@@ -13,14 +13,26 @@ import org.springframework.web.context.request.RequestContextHolder
 class ProfileController {
 
     def authService
-
     def oauthService
+    def emailService
 
     def index() {
-        User user = User.get(authService.getUserId().toLong())
-        def props = user.propsAsMap()
-        def isAdmin = RequestContextHolder.currentRequestAttributes()?.isUserInRole("ROLE_ADMIN")
-        render(view:"myprofile", model:[user:user, props:props, isAdmin:isAdmin])
+        def userId = authService.getUserId()
+        User user = null
+        if(userId.toString().isLong()){
+             user = User.get(userId.toLong())
+        } else {
+             user = User.findByEmail(userId)
+        }
+        if(user){
+            def props = user.propsAsMap()
+            def isAdmin = RequestContextHolder.currentRequestAttributes()?.isUserInRole("ROLE_ADMIN")
+            render(view:"myprofile", model:[user:user, props:props, isAdmin:isAdmin])
+        } else {
+            def loginUrl = grailsApplication.config.security.cas.loginUrl  +
+                    "&service=" + URLEncoder.encode(emailService.getMyProfileUrl(),"UTF-8")
+            redirect(url: loginUrl)
+        }
     }
 
     def flickrCallback(){
