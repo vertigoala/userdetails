@@ -9,15 +9,20 @@ class UserDetailsController {
     def index(){}
 
     def getUserDetails() {
-        if(params.userName){
-            User user = User.findByUserName(params.userName)
-            if (user == null) {
-                response.sendError(404)
-            } else {
-                render(contentType: "text/json"){ [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName] }
-            }
+        def user
+        String userName = params.userName as String
+
+        if (userName){
+            user = User.findByUserNameOrEmail(userName, userName)
         } else {
-            response.sendError(400, "Missing parameter userName")
+            render status:400, text: "Missing parameter: userName"
+            return
+        }
+
+        if (user == null) {
+            render status:404, text: "No user found for: ${userName}"
+        } else {
+            render(contentType: "text/json"){ [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName] }
         }
     }
 
