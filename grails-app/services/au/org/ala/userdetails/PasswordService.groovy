@@ -11,9 +11,8 @@ class PasswordService {
     Boolean resetPassword(user,newPassword){
        //update the password
        try {
-           Password.findAllByUserAndStatus(user, 'CURRENT').each {
-               it.status = "INACTIVE"
-               it.save(flush:true)
+           Password.findAllByUser(user).each {
+               it.delete(flush:true)
            }
 
            def encoder = new MyPasswordEncoder()
@@ -24,19 +23,12 @@ class PasswordService {
            def encodedPassword = encoder.encode(newPassword)
 
            //reuse object if old password
-           def found = Password.findByUserAndPassword(user, encodedPassword)
-           if(found){
-               found.password = encodedPassword
-               found.status = "CURRENT"
-               found.save(flush:true)
-           } else {
-               def password = new Password()
-               password.user = user
-               password.password = encodedPassword
-               password.created = new Date().toTimestamp()
-               password.status = "CURRENT"
-               password.save(flush:true)
-           }
+           def password = new Password()
+           password.user = user
+           password.password = encodedPassword
+           password.created = new Date().toTimestamp()
+           password.status = "CURRENT"
+           password.save(flush:true)
            true
        } catch(Exception e){
            log.error(e.getMessage(),e)
@@ -56,7 +48,7 @@ class PasswordService {
        //make it 10 characters
        newPassword = newPassword.substring(0,10)
 
-       //remove nonalphnumerics
+       //remove non-alpha numerics
        resetPassword(user, newPassword)
        newPassword
     }

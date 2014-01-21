@@ -32,10 +32,13 @@ class RegistrationController {
 
     def passwordReset = {
         User user = User.get(params.userId?.toLong())
-        if(user.tempAuthKey == params.authKey){
+        if(!user){
+            render(view:'accountError')
+        } else if(user.tempAuthKey == params.authKey){
+            //keys match, so lets reset password
             render(view:'passwordReset', model:[user:user, authKey:params.authKey])
         } else {
-            render(view:'accountError')
+            render(view:'authKeyExpired')
         }
     }
 
