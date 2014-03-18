@@ -9,23 +9,28 @@ class UserDetailsController {
     def index(){}
 
     def getUserDetails() {
-        def user
-        String userName = params.userName as String
-        if (userName) {
-            if (userName.isLong()) {
-                user = User.findById(userName.toLong())
+
+        if (authorisedSystemService.isAuthorisedSystem(request)){
+            def user
+            String userName = params.userName as String
+            if (userName) {
+                if (userName.isLong()) {
+                    user = User.findById(userName.toLong())
+                } else {
+                    user = User.findByUserNameOrEmail(userName, userName)
+                }
             } else {
-                user = User.findByUserNameOrEmail(userName, userName)
+                render status:400, text: "Missing parameter: userName"
+                return
+            }
+
+            if (user == null) {
+                render status:404, text: "No user found for: ${userName}"
+            } else {
+                render(contentType: "text/json"){ [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName] }
             }
         } else {
-            render status:400, text: "Missing parameter: userName"
-            return
-        }
-
-        if (user == null) {
-            render status:404, text: "No user found for: ${userName}"
-        } else {
-            render(contentType: "text/json"){ [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName] }
+            response.sendError(403)
         }
     }
 

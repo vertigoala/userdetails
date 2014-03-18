@@ -4,8 +4,6 @@ import javax.servlet.http.HttpServletRequest
 
 class AuthorisedSystemService {
 
-    def serviceMethod() {}
-
     def isAuthorisedSystem(HttpServletRequest request){
         def host = request.getHeader("x-forwarded-for")
         if(host == null){
