@@ -11,9 +11,12 @@ class UserDetailsController {
     def getUserDetails() {
         def user
         String userName = params.userName as String
-
-        if (userName){
-            user = User.findByUserNameOrEmail(userName, userName)
+        if (userName) {
+            if (userName.isLong()) {
+                user = User.findById(userName.toLong())
+            } else {
+                user = User.findByUserNameOrEmail(userName, userName)
+            }
         } else {
             render status:400, text: "Missing parameter: userName"
             return
