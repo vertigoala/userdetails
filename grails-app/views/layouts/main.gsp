@@ -8,11 +8,12 @@
     <meta name="description" content="Atlas of Living Australia"/>
     <meta name="author" content="Atlas of Living Australia">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://www.ala.org.au/wp-content/themes/ala2011/images/favicon.ico" rel="shortcut icon"  type="image/x-icon"/>
 
     <title><g:layoutTitle /> | ${grailsApplication.config.mainTitle}</title>
 
-    <%-- Do not include JS & CSS files here - add them to your app's "application" module (in "Configuration/ApplicationResources.groovy") --%>
-    <r:require modules="bootstrap, application, alaSkin"/>
+<%-- Do not include JS & CSS files here - add them to your app's "application" module (in "Configuration/ApplicationResources.groovy") --%>
+    <r:require modules="bootstrap"/>
 
     <r:script disposition='head'>
         // initialise plugins
@@ -24,7 +25,7 @@
                 parse: function(data) {
                     var rows = new Array();
                     data = data.autoCompleteList;
-                    for(var i=0; i < data.length; i++){
+                    for(var i=0; i<data.length; i++) {
                         rows[i] = {
                             data:data[i],
                             value: data[i].matchedNames[0],
@@ -66,16 +67,16 @@
     <g:layoutHead />
 </head>
 <body class="${pageProperty(name:'body.class')}" id="${pageProperty(name:'body.id')}" onload="${pageProperty(name:'body.onload')}">
+<g:set var="fluidLayout" value="${grailsApplication.config.skin.fluidLayout}"/>
+<hf:banner logoutUrl="${grailsApplication.config.grails.serverURL}/logout/logout" fluidLayout="${fluidLayout}"/>
 
-<hf:banner logoutUrl="${grailsApplication.config.grails.serverURL}/logout/logout"/>
+<hf:menu fluidLayout="${fluidLayout}"/>
 
-<hf:menu/>
-
-<div class="container" id="main-content">
+<div class="${fluidLayout?'container-fluid':'container'}" id="main-content">
     <g:layoutBody />
 </div><!--/.container-->
 
-<div class="container hidden-desktop">
+<div class="${fluidLayout?'container-fluid':'container'} hidden-desktop">
     <%-- Borrowed from http://marcusasplund.com/optout/ --%>
     <a class="btn btn-small toggleResponsive"><i class="icon-resize-full"></i> <span>Desktop</span> version</a>
     %{--<a class="btn btn-small toggleResponsive"><i class="icon-resize-full"></i> Desktop version</a>--}%

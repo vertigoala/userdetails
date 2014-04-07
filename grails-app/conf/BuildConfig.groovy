@@ -28,27 +28,33 @@ grails.project.dependency.resolution = {
     }
     dependencies {
 //        compile "com.github.inspektr:inspektr-audit:1.0.7.GA"
-        runtime 'postgresql:postgresql:9.1-901.jdbc4'
+//        runtime 'postgresql:postgresql:9.1-901.jdbc4'
         runtime 'mysql:mysql-connector-java:5.1.18'
         build 'org.apache.httpcomponents:httpcore:4.1.2'
         build 'org.apache.httpcomponents:httpclient:4.1.2'
-        runtime 'org.apache.httpcomponents:httpcore:4.1.2'
-        runtime 'org.apache.httpcomponents:httpclient:4.1.2'
-        runtime 'org.apache.httpcomponents:httpmime:4.1.2'
+        build 'org.apache.httpcomponents:httpmime:4.1.2'
+//        runtime 'org.apache.httpcomponents:httpcore:4.1.2'
+//        runtime 'org.apache.httpcomponents:httpclient:4.1.2'
+//        runtime 'org.apache.httpcomponents:httpmime:4.1.2'
         build 'org.apache.commons:commons-lang3:3.1'
-        runtime 'org.apache.commons:commons-lang3:3.1'
+//        runtime 'org.apache.commons:commons-lang3:3.1'
 //        compile 'org.jasig.cas:cas-server-support-generic:3.4.2'
 //        compile 'org.jasig.cas:cas-server-core:3.4.2'
 //        compile 'org.jasig.cas:cas-server-support-jdbc:3.4.2'
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
-        runtime ":jquery:1.7.1"
+        runtime ":hibernate:3.6.10.7"
+//        runtime ":jquery:1.7.1"
         runtime ":resources:1.2.1"
-        runtime ":ala-web-theme:0.1.12"
+        runtime ":ala-web-theme:0.2.4"
         compile ":csv:0.3.1"
-        test ":spock:0.7"
-        build ":tomcat:$grailsVersion"
+//        test ":spock:0.7"
+        build ":tomcat:7.0.50"
+
+        compile ":lesscss-resources:1.3.3"
+        compile ":mail:1.0.4"
+        compile ":oauth:2.1.0"
+        compile ":simple-captcha:0.9.9"
     }
 }
