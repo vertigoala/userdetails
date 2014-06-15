@@ -47,6 +47,7 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:3.6.10.7"
 //        runtime ":jquery:1.7.1"
         runtime ":resources:1.2.1"
+        build ":release:3.0.1"
         runtime ":ala-web-theme:0.2.4"
         compile ":csv:0.3.1"
 //        test ":spock:0.7"
