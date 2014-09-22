@@ -3,6 +3,8 @@ package au.org.ala.userdetails
 import au.org.ala.auth.PreAuthorise
 import org.springframework.dao.DataIntegrityViolationException
 
+import java.sql.Timestamp
+
 @PreAuthorise
 class UserController {
 
@@ -36,6 +38,11 @@ class UserController {
 
     def save() {
         def userInstance = new User(params)
+        userInstance.created = new Timestamp(System.currentTimeMillis())
+        if (params.locked == null) userInstance.locked = false
+        if (params.activated == null) userInstance.activated = false
+        if (!params.userName) userInstance.userName = userInstance.email
+
         if (!userInstance.save(flush: true)) {
             render(view: "create", model: [userInstance: userInstance])
             return
