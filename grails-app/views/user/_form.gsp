@@ -94,7 +94,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'locked', 'error')} ">
     <label class="checkbox">
-      <g:checkBox name="activated" value="${userInstance?.locked}"/> Locked
+      <g:checkBox name="locked" value="${userInstance?.locked}"/> Locked
     </label>
 </div>
 
