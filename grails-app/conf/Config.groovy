@@ -5,7 +5,7 @@ import org.scribe.builder.api.FlickrApi
 \******************************************************************************/
 def appName = 'userdetails'
 def ENV_NAME = "${appName.toUpperCase()}_CONFIG"
-def default_config = "/data/${appName}/config/${appName}-config.properties"
+default_config = "/data/${appName}/config/${appName}-config.properties"
 if(!grails.config.locations || !(grails.config.locations instanceof List)) {
     grails.config.locations = []
 }
