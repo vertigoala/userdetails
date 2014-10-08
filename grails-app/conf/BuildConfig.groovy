@@ -57,5 +57,8 @@ grails.project.dependency.resolution = {
         compile ":mail:1.0.4"
         compile ":oauth:2.1.0"
         compile ":simple-captcha:0.9.9"
+        build ':release:2.2.1', ':rest-client-builder:1.0.3', {
+            export = false
+        }
     }
 }
