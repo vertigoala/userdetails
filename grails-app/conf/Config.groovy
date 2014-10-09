@@ -90,7 +90,7 @@ if(!redirectAfterFirstLogin){
 }
 
 /******************************************************************************/
-grails.project.groupId = 'au.org.ala.userdetails' // change this to alter the default package name and Maven publishing destination
+grails.project.groupId = 'au.org.ala' // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
