@@ -81,13 +81,12 @@
                     <label for="lastName">Last name</label>
                     <input id="lastName" name="lastName" type="text" class="input-xlarge" value="${user?.lastName}"  data-validation-engine="validate[required]"/>
 
-                    <g:if test="${!edit}">
+
                     <label for="email">Email address</label>
                     <input id="email" name="email" type="text" class="input-xlarge" value="${user?.email}"
                            data-validation-engine="validate[required,custom[email]]"
                            data-errormessage-value-missing="Email is required!"
                     />
-                    </g:if>
 
                     <g:if test="${!edit}">
                     <label for="password">Password</label>
