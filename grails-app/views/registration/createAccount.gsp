@@ -14,21 +14,27 @@
     <r:script>
         $(function(){
             $('.typeahead').typeahead();
-            $('#validation-container').validationEngine('attach', {scroll: false});
+
+            var options = {
+                scroll: false
+            };
+
+            $('#updateAccountForm').validationEngine('attach', options);
+
             $("#updateAccountSubmit").click(function() {
 
-               $('#updateAccountSubmit').attr('disabled','disabled');
+               // $('#updateAccountSubmit').attr('disabled','disabled');
                var pm = $('#password').val() == $('#reenteredPassword').val();
                if(!pm){
                  alert("The supplied passwords do not match!");
                  event.preventDefault();
-                 $('#updateAccountSubmit').removeAttr('disabled');
+                 // $('#updateAccountSubmit').removeAttr('disabled');
                }
 
                var valid = $('#validation-container').validationEngine('validate');
                if(!valid){
                   event.preventDefault();
-                  $('#updateAccountSubmit').removeAttr('disabled');
+                  // $('#updateAccountSubmit').removeAttr('disabled');
                }
 
                if(valid && pm){
@@ -66,7 +72,7 @@
 
     <div class="row-fluid">
         <div class="span4">
-            <div class="validationEngineContainer" id="validation-container">
+            <div>
             <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" >
 
                     <label for="firstName">First name</label>
