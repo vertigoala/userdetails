@@ -13,7 +13,7 @@ class Password implements Serializable {
         table 'passwords'
         id composite: ['user', 'password']
         user column:  'userid'
-        created sqlType: 'DATETIME'
+        created sqlType: 'timestamp'
 //        expiry sqlType: 'DATETIME'
         version false
     }

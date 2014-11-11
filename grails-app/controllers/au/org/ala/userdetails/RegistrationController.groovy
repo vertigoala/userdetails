@@ -94,6 +94,8 @@ class RegistrationController {
 
     def update = {
         def user = User.get(authService.getUserId().toLong())
+
+
         def success = userService.updateUser(user, params)
         if(success){
             redirect(controller: 'profile')

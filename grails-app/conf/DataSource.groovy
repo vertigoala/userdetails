@@ -14,10 +14,15 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "none"
-            url = "jdbc:mysql://localhost/emmet"
-            username = "root"
-            password = "password"
+            driverClassName = "org.postgresql.Driver"
+            username="postgres"
+            password="password"
+            url = "jdbc:postgresql://localhost/emmet"
+
+            dbCreate = "update"
+//            url = "jdbc:mysql://localhost/emmet"
+//            username = "root"
+//            password = "password"
         }
     }
     production {

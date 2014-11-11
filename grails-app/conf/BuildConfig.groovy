@@ -29,7 +29,8 @@ grails.project.dependency.resolution = {
     dependencies {
 //        compile "com.github.inspektr:inspektr-audit:1.0.7.GA"
 //        runtime 'postgresql:postgresql:9.1-901.jdbc4'
-        runtime 'mysql:mysql-connector-java:5.1.18'
+        runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+  //      runtime 'mysql:mysql-connector-java:5.1.18'
         build 'org.apache.httpcomponents:httpcore:4.1.2'
         build 'org.apache.httpcomponents:httpclient:4.1.2'
         build 'org.apache.httpcomponents:httpmime:4.1.2'
