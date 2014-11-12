@@ -24,10 +24,8 @@ class RegistrationController {
     def createAccount = {}
 
     def editAccount = {
-        def userId = authService.getUserId()
-        def user = User.get(userId)
-        user.getUserProperties()
-        render(view:'createAccount', model: [edit:true, user:user, props:user.propsAsMap()])
+        def user = userService.currentUser
+        render(view:'createAccount', model: [edit:true, user:user, props:user?.propsAsMap()])
     }
 
     def passwordReset = {
@@ -93,7 +91,7 @@ class RegistrationController {
     }
 
     def update = {
-        def user = User.get(authService.getUserId().toLong())
+        def user = userService.currentUser
 
         if (user) {
             if (params.email != user.email) {

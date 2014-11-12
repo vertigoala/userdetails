@@ -24,6 +24,7 @@
             <li><g:link controller="registration" action="forgottenPassword">Reset my password</g:link></li>
             <li><g:link controller="profile">My profile</g:link></li>
         </ul>
+        ${"FilterPattern: " + grailsApplication.config.security.cas.uriFilterPattern}
     </div>
     <div style="color:white;" class="pull-right">
         <g:link style="color:#DDDDDD; font-weight:bold;" controller="admin">Admin tools (Atlas administrators only)</g:link>
