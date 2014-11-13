@@ -2,11 +2,11 @@ package au.org.ala.userdetails
 
 class UserDetailsController {
 
-    static allowedMethods = [getUserDetails: "POST", getUserList: "POST", getUserListWithIds: "POST", getUserListFull: "POST"]
+    static allowedMethods = [getUserDetails: "POST", getUserList: "POST", getUserListWithIds: "POST", getUserListFull: "POST", getUserDetailsFromIdList: "POST"]
 
     def authorisedSystemService
 
-    def index(){}
+    def index() {}
 
     def getUserDetails() {
 
@@ -27,7 +27,7 @@ class UserDetailsController {
             if (user == null) {
                 render status:404, text: "No user found for: ${userName}"
             } else {
-                render(contentType: "text/json"){ [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName] }
+                render(contentType: "text/json") { makeUserdetailsMap(user) }
             }
         } else {
             response.sendError(403)
@@ -63,6 +63,47 @@ class UserDetailsController {
     def getUserListFull(){
         if(authorisedSystemService.isAuthorisedSystem(request)){
             render(contentType: "text/json"){ User.findAll() }
+        } else {
+            response.sendError(403)
+        }
+    }
+
+    private static Map makeUserdetailsMap(User user) {
+        return [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName, email: user.email]
+    }
+
+    def getUserDetailsFromIdList() {
+        if(authorisedSystemService.isAuthorisedSystem(request)){
+            def req = request.JSON
+
+            if (req && req.userIds) {
+
+                try {
+                    List<Long> idList = req.userIds.collect { userId -> userId as long }
+
+                    def c = User.createCriteria()
+                    def results = c.list() {
+                        'in'("id", idList)
+                    }
+
+                    def resultsMap = [users:[:], invalidIds:[], success: true]
+                    results.each { user ->
+                        resultsMap.users[user.id] = makeUserdetailsMap(user)
+                    }
+
+                    idList.each {
+                        if (!resultsMap.users[it]) {
+                            resultsMap.invalidIds << it
+                        }
+                    }
+
+                    render(contentType: "text/json") { resultsMap }
+                } catch (Exception ex) {
+                    render(contentType: "text/json") { [success: false, message: "Exception: ${ex.toString()}"] }
+                }
+            } else {
+                render(contentType: "text/json") { [success: false, message: "Body must contain JSON map payload with 'userIds' key that contains a list of user ids"] }
+            }
         } else {
             response.sendError(403)
         }
