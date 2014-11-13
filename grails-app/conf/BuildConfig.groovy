@@ -37,8 +37,8 @@ grails.project.dependency.resolution = {
         mavenRepo "http://developer.jasig.org/repo/content/groups/m2-legacy/"
     }
     dependencies {
-        runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
-  //      runtime 'mysql:mysql-connector-java:5.1.18'
+        //runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+        runtime 'mysql:mysql-connector-java:5.1.18'
         build 'org.apache.httpcomponents:httpcore:4.1.2'
         build 'org.apache.httpcomponents:httpclient:4.1.2'
         build 'org.apache.httpcomponents:httpmime:4.1.2'
