@@ -1,6 +1,7 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.PreAuthorise
+import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
 
 @PreAuthorise
@@ -14,7 +15,24 @@ class AuthorisedSystemController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [authorisedSystemInstanceList: AuthorisedSystem.list(params), authorisedSystemInstanceTotal: AuthorisedSystem.count()]
+        def list = []
+        def count = 0
+        def query = params.q as String
+        if (query) {
+            def c = AuthorisedSystem.createCriteria()
+            list = c.list(params) {
+                or {
+                    ilike('host', "%${query}%")
+                    ilike('description', "%${query}%")
+                }
+            }
+            count = list.totalCount
+        } else {
+            list = AuthorisedSystem.list(params)
+            count = AuthorisedSystem.count()
+        }
+
+        [authorisedSystemInstanceList: list, authorisedSystemInstanceTotal: count]
     }
 
     def create() {
@@ -100,5 +118,24 @@ class AuthorisedSystemController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'authorisedSystem.label', default: 'AuthorisedSystem'), id])
             redirect(action: "show", id: id)
         }
+    }
+
+    def ajaxResolveHostName() {
+
+        def host = params.host as String
+
+        def hostname = "?"
+        def reachable = false
+        if (host) {
+            try {
+                InetAddress addr = InetAddress.getByName(host);
+                hostname = addr.getHostName();
+                reachable = addr.isReachable(2000);
+            } catch (Exception ex) {
+                ex.printStackTrace()
+            }
+        }
+
+        render([host:host, hostname: hostname, reachable: reachable] as JSON)
     }
 }

@@ -3,6 +3,9 @@ package au.org.ala.userdetails
 class AuthorisedSystem {
 
     String host
+    String description
 
-    static constraints = {}
+    static constraints = {
+        description nullable: true
+    }
 }
