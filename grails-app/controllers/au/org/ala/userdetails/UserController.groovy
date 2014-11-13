@@ -41,7 +41,8 @@ class UserController {
         userInstance.created = new Timestamp(System.currentTimeMillis())
         if (params.locked == null) userInstance.locked = false
         if (params.activated == null) userInstance.activated = false
-        if (!params.userName) userInstance.userName = userInstance.email
+        // Keep the username and email address in sync
+        userInstance.userName = userInstance.email
 
         if (!userInstance.save(flush: true)) {
             render(view: "create", model: [userInstance: userInstance])
@@ -91,6 +92,10 @@ class UserController {
                 render(view: "edit", model: [userInstance: userInstance])
                 return
             }
+        }
+
+        if (userInstance.email != params.email) {
+            params.userName = params.email
         }
 
         userInstance.properties = params

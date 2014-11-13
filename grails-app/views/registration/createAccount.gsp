@@ -21,25 +21,23 @@
 
             $('#updateAccountForm').validationEngine('attach', options);
 
-            $("#updateAccountSubmit").click(function() {
+            $("#updateAccountSubmit").click(function(e) {
 
-               // $('#updateAccountSubmit').attr('disabled','disabled');
-               var pm = $('#password').val() == $('#reenteredPassword').val();
-               if(!pm){
-                 alert("The supplied passwords do not match!");
-                 event.preventDefault();
-                 // $('#updateAccountSubmit').removeAttr('disabled');
-               }
+                $("#updateAccountSubmit").attr('disabled','disabled');
 
-               var valid = $('#validation-container').validationEngine('validate');
-               if(!valid){
-                  event.preventDefault();
-                  // $('#updateAccountSubmit').removeAttr('disabled');
-               }
+                var pm = $('#password').val() == $('#reenteredPassword').val();
+                if(!pm){
+                  alert("The supplied passwords do not match!");
+                }
 
-               if(valid && pm){
-                  $("form[name='updateAccountForm']").submit();
-               }
+                var valid = $('#updateAccountForm').validationEngine('validate');
+
+                if (valid && pm) {
+                    $("form[name='updateAccountForm']").submit();
+                } else {
+                    $('#updateAccountSubmit').removeAttr('disabled');
+                    e.preventDefault();
+                }
             });
         });
     </r:script>
