@@ -29,7 +29,12 @@
                     <span class="property-value" aria-labelledby="host-label"><g:fieldValue bean="${authorisedSystemInstance}" field="host"/></span>
 				</li>
 				</g:if>
-			
+
+				<li class="fieldcontain">
+					<span id="description-label" class="property-label"><g:message code="authorisedSystem.description.label" default="Description" /></span>
+					<span class="property-value" aria-labelledby="description-label"><g:fieldValue bean="${authorisedSystemInstance}" field="description"/></span>
+				</li>
+
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

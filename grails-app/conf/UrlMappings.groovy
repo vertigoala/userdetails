@@ -36,6 +36,7 @@ class UrlMappings {
     "/userDetails/getUserList"(controller:'userDetails', action: 'getUserList')
     "/userDetails/getUserListFull"(controller:'userDetails', action: 'getUserListFull')
     "/userDetails/getUserListWithIds"(controller:'userDetails', action: 'getUserListWithIds')
+    "/userDetails/getUserDetailsFromIdList"(controller:'userDetails', action: 'getUserDetailsFromIdList')
 
 //    "/userdetails/getUserDetails"(controller:'userDetails', action: 'getUserDetails')
 //    "/userdetails/getUserList"(controller:'userDetails', action: 'getUserList')

@@ -14,26 +14,30 @@
     <r:script>
         $(function(){
             $('.typeahead').typeahead();
-            $('#validation-container').validationEngine('attach', {scroll: false});
-            $("#updateAccountSubmit").click(function() {
 
-               $('#updateAccountSubmit').attr('disabled','disabled');
-               var pm = $('#password').val() == $('#reenteredPassword').val();
-               if(!pm){
-                 alert("The supplied passwords do not match!");
-                 event.preventDefault();
-                 $('#updateAccountSubmit').removeAttr('disabled');
-               }
+            var options = {
+                scroll: false
+            };
 
-               var valid = $('#validation-container').validationEngine('validate');
-               if(!valid){
-                  event.preventDefault();
-                  $('#updateAccountSubmit').removeAttr('disabled');
-               }
+            $('#updateAccountForm').validationEngine('attach', options);
 
-               if(valid && pm){
-                  $("form[name='updateAccountForm']").submit();
-               }
+            $("#updateAccountSubmit").click(function(e) {
+
+                $("#updateAccountSubmit").attr('disabled','disabled');
+
+                var pm = $('#password').val() == $('#reenteredPassword').val();
+                if(!pm){
+                  alert("The supplied passwords do not match!");
+                }
+
+                var valid = $('#updateAccountForm').validationEngine('validate');
+
+                if (valid && pm) {
+                    $("form[name='updateAccountForm']").submit();
+                } else {
+                    $('#updateAccountSubmit').removeAttr('disabled');
+                    e.preventDefault();
+                }
             });
         });
     </r:script>
@@ -66,7 +70,7 @@
 
     <div class="row-fluid">
         <div class="span4">
-            <div class="validationEngineContainer" id="validation-container">
+            <div>
             <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" >
 
                     <label for="firstName">First name</label>
@@ -75,13 +79,12 @@
                     <label for="lastName">Last name</label>
                     <input id="lastName" name="lastName" type="text" class="input-xlarge" value="${user?.lastName}"  data-validation-engine="validate[required]"/>
 
-                    <g:if test="${!edit}">
+
                     <label for="email">Email address</label>
                     <input id="email" name="email" type="text" class="input-xlarge" value="${user?.email}"
                            data-validation-engine="validate[required,custom[email]]"
                            data-errormessage-value-missing="Email is required!"
                     />
-                    </g:if>
 
                     <g:if test="${!edit}">
                     <label for="password">Password</label>

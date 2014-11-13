@@ -1,5 +1,7 @@
 package au.org.ala.userdetails
 
+import au.org.ala.cas.util.AuthenticationCookieUtils
+import au.org.ala.cas.util.AuthenticationUtils
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.FlickrApi
 import org.scribe.model.OAuthRequest
@@ -10,32 +12,32 @@ import org.scribe.model.Verifier
 import org.scribe.oauth.OAuthService
 import org.springframework.web.context.request.RequestContextHolder
 
+import javax.servlet.http.Cookie
+
 class ProfileController {
 
     def authService
     def oauthService
     def emailService
+    def userService
 
     def index() {
-        def userId = authService.getUserId()
-        User user = null
-        if(userId.toString().isLong()){
-             user = User.get(userId.toLong())
-        } else {
-             user = User.findByEmail(userId)
-        }
-        if(user){
+
+        def user = userService.currentUser
+
+        if (user) {
             def props = user.propsAsMap()
             def isAdmin = RequestContextHolder.currentRequestAttributes()?.isUserInRole("ROLE_ADMIN")
             render(view:"myprofile", model:[user:user, props:props, isAdmin:isAdmin])
         } else {
-            def loginUrl = grailsApplication.config.security.cas.loginUrl  +
-                    "&service=" + URLEncoder.encode(emailService.getMyProfileUrl(),"UTF-8")
+            String baseUrl = grailsApplication.config.security.cas.loginUrl
+            def separator = baseUrl.contains("?") ? "&" : "?"
+            def loginUrl = "${baseUrl}${separator}service=" + URLEncoder.encode(emailService.getMyProfileUrl(),"UTF-8")
             redirect(url: loginUrl)
         }
     }
 
-    def flickrCallback(){
+    def flickrCallback() {
 
         Token token = session.getAt("flickr:oasRequestToken")
         OAuthService service = new ServiceBuilder().
@@ -58,11 +60,15 @@ class ProfileController {
         }
 
         //store the user's flickr ID.
-        User user = User.get(authService.getUserId().toLong())
+        User user = userService.currentUser
 
-        //store flickrID & flickrUsername
-        UserProperty.addOrUpdateProperty(user, 'flickrId', URLDecoder.decode(model.get("user_nsid"), "UTF-8"))
-        UserProperty.addOrUpdateProperty(user, 'flickrUsername', model.get("username"))
+        if (user) {
+            //store flickrID & flickrUsername
+            UserProperty.addOrUpdateProperty(user, 'flickrId', URLDecoder.decode(model.get("user_nsid"), "UTF-8"))
+            UserProperty.addOrUpdateProperty(user, 'flickrUsername', model.get("username"))
+        } else {
+            flash.message = "Failed to retrieve user details!"
+        }
 
         redirect(controller:'profile')
     }
@@ -75,10 +81,14 @@ class ProfileController {
 
     def flickrFail(){}
 
-    def removeFlickrLink(){
-        User user = User.get(authService.getUserId().toLong())
-        UserProperty.findByUserAndProperty(user, 'flickrUsername').delete(flush:true)
-        UserProperty.findByUserAndProperty(user, 'flickrId').delete(flush:true)
+    def removeFlickrLink() {
+        User user = userService.currentUser
+        if (user) {
+            UserProperty.findByUserAndProperty(user, 'flickrUsername').delete(flush: true)
+            UserProperty.findByUserAndProperty(user, 'flickrId').delete(flush: true)
+        } else {
+            flash.message = "Failed to retrieve user details!"
+        }
         redirect(controller:'profile')
     }
 }

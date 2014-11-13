@@ -21,34 +21,81 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
             <div class="row-fluid">
-                <div class="span6">
-                    <table>
+                <div class="span8">
+                    <div class="form-horizontal pull-right" style="margin-bottom: 10px">
+                        <g:textField name="q" value="${params.q}" /> <button type="button" class="btn" id="btnSearch">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span8">
+                    <table class="table table-bordered table-striped table-condensed">
                     <thead>
                         <tr>
-
                             <g:sortableColumn property="host" title="${message(code: 'authorisedSystem.host.label', default: 'Host')}" />
-
+                            <th>Hostname</th>
+                            <th>Description</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                     <g:each in="${authorisedSystemInstanceList}" status="i" var="authorisedSystemInstance">
-                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
+                        <tr>
                             <td><g:link action="show" id="${authorisedSystemInstance.id}">${fieldValue(bean: authorisedSystemInstance, field: "host")}</g:link></td>
-
+                            <td><div class="hostname" host="${authorisedSystemInstance.host}"><img src="${resource(dir:'images', file:'spinner.gif')}"/></div></td>
+                            <td>${authorisedSystemInstance.description}</td>
+                            <td>
+                                <a href="${createLink(action:'edit', id:authorisedSystemInstance.id)}" class="btn btn-small"><i class="icon-edit"></i></a>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>
                 </table>
                     <div class="pagination">
-                        <g:paginate total="${authorisedSystemInstanceTotal}" />
+                        <g:paginate total="${authorisedSystemInstanceTotal}" params="${params}" />
                     </div>
                 </div>
-                <div class="span6 well">
+                <div class="span4 well">
                     This is a list of IP address that can access the web services providing user information.
-                    Requests from IP addresses no listed here will get a HTTP 403 Forbidden response.
+                    Requests from IP addresses not listed here will get a HTTP 403 Forbidden response.
                 </div>
             </div>
 		</div>
 	</body>
+    <r:script>
+
+    function doSearch() {
+        var query = $("#q").val();
+        window.location = "${createLink(action:'list')}?q=" + query
+    }
+
+    $(document).ready(function() {
+
+        $("#q").keydown(function(e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                doSearch();
+            }
+        }).focus();
+
+        $("#btnSearch").click(function(e) {
+            e.preventDefault();
+            doSearch();
+        });
+
+        $(".hostname").each(function() {
+            var host = $(this).attr("host");
+            var target = $(this); // create a copy of current scope
+            if (host) {
+                $.ajax("${createLink(action:'ajaxResolveHostName')}?host=" + host).done(function(results) {
+                    var iconClass= results.reachable ? "icon-ok" : "icon-warning-sign";
+                    var tooltip = results.reachable ? "Host is reachable" : "Host is not currently reachable";
+                    target.html(results.hostname + "&nbsp;<i title='" + tooltip + "' class='" +  iconClass + "'></i>");
+                });
+            }
+        });
+
+    });
+
+    </r:script>
 </html>

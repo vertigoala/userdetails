@@ -12,7 +12,6 @@ class User implements Serializable {
     String userName
     String email
 
-//    Timestamp expiry
     Timestamp created
 
     Boolean activated
@@ -26,7 +25,6 @@ class User implements Serializable {
         userName column:  'username'
         firstName column:  'firstname'
         lastName column:  'lastname'
-//        expiry type: Timestamp, sqlType: "timestamp"
         created type: Timestamp, sqlType: "timestamp"
         version false
     }
