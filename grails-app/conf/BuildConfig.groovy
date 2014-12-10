@@ -24,18 +24,14 @@ grails.project.dependency.resolution = {
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
     legacyResolve false
+
     repositories {
-        inherits true
-        grailsPlugins()
-        grailsHome()
-        grailsCentral()
-        mavenCentral()
-        mavenRepo "http://maven.ala.org.au/repository/"
-        mavenRepo "http://repo1.maven.org/maven2/"
-        mavenRepo "http://oss.sonatype.org/content/repositories/releases/"
-        mavenRepo "https://repository.jboss.org/nexus/content/groups/public/"
-        mavenRepo "http://developer.jasig.org/repo/content/groups/m2-legacy/"
+        mavenLocal()
+        mavenRepo("http://nexus.ala.org.au/content/groups/public/") {
+            updatePolicy 'always'
+        }
     }
+
     dependencies {
         //runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
         runtime 'mysql:mysql-connector-java:5.1.18'
