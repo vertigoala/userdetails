@@ -110,57 +110,39 @@ environments {
     }
 }
 
+// log4j configuration
+def loggingDir = (System.getProperty('catalina.base') ? System.getProperty('catalina.base') + '/logs' : './logs')
+
 log4j = {
     appenders {
         environments {
             production {
-                rollingFile name: "${appName}-prod",
-                    maxFileSize: 104857600,
-                    file: "/var/log/tomcat6/${appName}.log",
-                    threshold: org.apache.log4j.Level.INFO,
-                    layout: pattern(conversionPattern: "%d [%c{1}]  %m%n")
-                rollingFile name: "stacktrace", maxFileSize: 1024, file: "/var/log/tomcat6/${appName}-stacktrace.log"
+                println "Log4j logs will be written to : ${loggingDir}"
+                rollingFile name: "tomcatLog", maxFileSize: '1MB', file: "${loggingDir}/${appName}.log", threshold: Level.ERROR, layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
             }
-            development{
-                console name: "stdout", layout: pattern(conversionPattern: "%d [%c{1}]  %m%n"), threshold: org.apache.log4j.Level.DEBUG
+            development {
+                console name: "stdout", layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n"), threshold: Level.DEBUG
+            }
+            test {
+                println "Log4j logs will be written to : ${loggingDir}"
+                rollingFile name: "tomcatLog", maxFileSize: '1MB', file: "/tmp/${appName}", threshold: Level.DEBUG, layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
             }
         }
     }
-
     root {
-        debug  '${appName}-prod'
+        // change the root logger to my tomcatLog file
+        error 'tomcatLog'
+        warn 'tomcatLog'
+        additivity = true
     }
 
-    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
-            'org.codehaus.groovy.grails.web.pages', //  GSP
-            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-            'org.codehaus.groovy.grails.web.mapping', // URL mapping
-            'org.codehaus.groovy.grails.commons', // core / classloading
-            'org.codehaus.groovy.grails.plugins', // plugins
-            'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-            'org.springframework',
-            'org.hibernate',
-            'net.sf.ehcache.hibernate',
-            'org.codehaus.groovy.grails.plugins.orm.auditable',
-            'org.mortbay.log', 'org.springframework.webflow',
-            'grails.app',
-            'org.apache',
-            'org',
-            'com',
-            'au',
-            'grails.app',
-            'net',
-            'grails.util.GrailsUtil',
-            'grails.app.service.org.grails.plugin.resource',
-            'grails.app.service.org.grails.plugin.resource.ResourceTagLib',
-            'grails.app',
-            'grails.plugin.springcache',
-            'au.org.ala.cas.client',
-            'grails.spring.BeanBuilder',
-            'grails.plugin.webxml',
-            'grails.plugin.cache.web.filter'
-    debug  'ala'
+    debug 'grails.app',
+            'grails.app.domain',
+            'grails.app.controller',
+            'grails.app.service',
+            'grails.app.tagLib',
+            'au.org.ala.userdetails',
+            'grails.app.jobs'
 }
 
 // these placeholder values are overridden at runtime using the external configuration properties file
