@@ -26,68 +26,11 @@ if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 
 /******************************************************************************\
- *  SECURITY
+ *  All configuration properties are stored in the template properties file in
+ *  the ALA-INSTALL source repository:
+ *  https://github.com/AtlasOfLivingAustralia/ala-install/blob/master/ansible/roles/userdetails/templates/userdetails-config.properties
 \******************************************************************************/
-if (!security.cas.uriFilterPattern) {
-    security.cas.uriFilterPattern = "/admin/.*,/registration/editAccount, /my-profile, /my-profile/, /myprofile/, /myprofile, /profile/.*, /admin/, /admin, /registration/update, /registration/update/.*"
-}
-if (!security.cas.loginUrl) {
-    security.cas.loginUrl = "https://auth.ala.org.au/cas/login"
-}
-if (!security.cas.logoutUrl) {
-    security.cas.logoutUrl = "https://auth.ala.org.au/cas/logout"
-}
-if (!security.apikey.serviceUrl) {
-    security.apikey.serviceUrl = "http://auth.ala.org.au/apikey/ws/check?apikey="
-}
-if(!security.cas.appServerName){
-    security.cas.appServerName = "http://devt.ala.org.au:8080"
-}
-if(!security.cas.contextPath ){
-    security.cas.contextPath = "/${appName}"
-}
-if(!security.cas.casServerName){
-    security.cas.casServerName = "https://auth.ala.org.au"
-}
-if(!security.cas.uriExclusionFilterPattern){
-    security.cas.uriExclusionFilterPattern = '/images.*,/css.*,/js.*,/less.*'
-}
-if(!security.cas.authenticateOnlyIfLoggedInPattern){
-    security.cas.authenticateOnlyIfLoggedInPattern = "" // pattern for pages that can optionally display info about the logged-in user
-}
-if(!security.cas.casServerUrlPrefix){
-    security.cas.casServerUrlPrefix = 'https://auth.ala.org.au/cas'
-}
-if(!security.cas.bypass){
-    security.cas.bypass = false
-}
-if(!supportEmail){
-    supportEmail = 'support@ala.org.au'
-}
-if(!homeUrl){
-    homeUrl = 'http://www.ala.org.au'
-}
-if(!mainTitle){
-    mainTitle = 'Atlas of Living Australia'
-}
-if(!emailSenderTitle){
-    emailSenderTitle = 'Atlas of Living Australia'
-}
-if(!emailSender){
-    emailSender = 'support@ala.org.au'
-}
-if(!adminRoles){
-    adminRoles = ['ROLE_ADMIN']
-}
-if(!encoding.algorithm){
-    encoding.algorithm = "xxxxxxxxxxxxxxxxxxxxx"
-}
-if(!encoding.salt){
-    encoding.salt = "xxxxxxxxxxxxxxxxxxxxx"
-}
-if(!redirectAfterFirstLogin){
-    redirectAfterFirstLogin = security.cas.appServerName + security.cas.contextPath + "/myprofile"
-}
+
 
 /******************************************************************************/
 grails.project.groupId = 'au.org.ala' // change this to alter the default package name and Maven publishing destination
@@ -220,6 +163,7 @@ log4j = {
     debug  'ala'
 }
 
+// these placeholder values are overridden at runtime using the external configuration properties file
 oauth {
     providers {
         flickr {
@@ -228,7 +172,7 @@ oauth {
             secret = "xxxxxxxxxxxxxxxxxxxxx"
             successUri = '/profile/flickrSuccess'
             failureUri = '/profile/flickrFail'
-            callback = security.cas.appServerName + security.cas.contextPath + "/profile/flickrCallback"
+            callback = "xxxxxxxxxxxxx/yyyyyyyyyy/profile/flickrCallback"
         }
     }
 //   debug = true
