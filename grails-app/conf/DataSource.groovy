@@ -12,13 +12,17 @@ dataSource {
         testWhileIdle = true // default = false
         validationQuery = "SELECT 1" // default = null
         validationQueryTimeout = 10 //seconds (default = -1 i.e. disabled)
+        validationInterval = 30000 // milliseconds, default is 30000 (30 seconds)
         removeAbandoned = true // // default = false
         removeAbandonedTimeout = 300 // seconds (default = 60)
         logAbandoned = true // adds some overhead to every borrow from the pool, disable if it becomes a performance issue
         logValidationErrors = true // default = false, logs validation errors at SEVERE
 
-        // mysql jdbc connection properties - see http://dev.mysql
-        // .com/doc/connector-j/en/connector-j-reference-configuration-properties.html
+        // NOTE: removeAbandoned = true OR testWhileIdle = true enables the Pool Cleaner. There is a bug with the
+        // pool cleaner which causes deadlocks when using older mysql jdbc drivers. This configuration has been
+        // tested successfully with mysql:mysql-connector-java:5.1.34.
+
+        // mysql jdbc connection properties - see http://dev.mysql.com/doc/connector-j/en/connector-j-reference-configuration-properties.html
         dbProperties {
             autoReconnect = true
             connectTimeout = 0
