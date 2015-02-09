@@ -26,68 +26,11 @@ if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 
 /******************************************************************************\
- *  SECURITY
+ *  All configuration properties are stored in the template properties file in
+ *  the ALA-INSTALL source repository:
+ *  https://github.com/AtlasOfLivingAustralia/ala-install/blob/master/ansible/roles/userdetails/templates/userdetails-config.properties
 \******************************************************************************/
-if (!security.cas.uriFilterPattern) {
-    security.cas.uriFilterPattern = "/admin/.*,/registration/editAccount, /my-profile, /my-profile/, /myprofile/, /myprofile, /profile/.*, /admin/, /admin, /registration/update, /registration/update/.*"
-}
-if (!security.cas.loginUrl) {
-    security.cas.loginUrl = "https://auth.ala.org.au/cas/login"
-}
-if (!security.cas.logoutUrl) {
-    security.cas.logoutUrl = "https://auth.ala.org.au/cas/logout"
-}
-if (!security.apikey.serviceUrl) {
-    security.apikey.serviceUrl = "http://auth.ala.org.au/apikey/ws/check?apikey="
-}
-if(!security.cas.appServerName){
-    security.cas.appServerName = "http://devt.ala.org.au:8080"
-}
-if(!security.cas.contextPath ){
-    security.cas.contextPath = "/${appName}"
-}
-if(!security.cas.casServerName){
-    security.cas.casServerName = "https://auth.ala.org.au"
-}
-if(!security.cas.uriExclusionFilterPattern){
-    security.cas.uriExclusionFilterPattern = '/images.*,/css.*,/js.*,/less.*'
-}
-if(!security.cas.authenticateOnlyIfLoggedInPattern){
-    security.cas.authenticateOnlyIfLoggedInPattern = "" // pattern for pages that can optionally display info about the logged-in user
-}
-if(!security.cas.casServerUrlPrefix){
-    security.cas.casServerUrlPrefix = 'https://auth.ala.org.au/cas'
-}
-if(!security.cas.bypass){
-    security.cas.bypass = false
-}
-if(!supportEmail){
-    supportEmail = 'support@ala.org.au'
-}
-if(!homeUrl){
-    homeUrl = 'http://www.ala.org.au'
-}
-if(!mainTitle){
-    mainTitle = 'Atlas of Living Australia'
-}
-if(!emailSenderTitle){
-    emailSenderTitle = 'Atlas of Living Australia'
-}
-if(!emailSender){
-    emailSender = 'support@ala.org.au'
-}
-if(!adminRoles){
-    adminRoles = ['ROLE_ADMIN']
-}
-if(!encoding.algorithm){
-    encoding.algorithm = "xxxxxxxxxxxxxxxxxxxxx"
-}
-if(!encoding.salt){
-    encoding.salt = "xxxxxxxxxxxxxxxxxxxxx"
-}
-if(!redirectAfterFirstLogin){
-    redirectAfterFirstLogin = security.cas.appServerName + security.cas.contextPath + "/myprofile"
-}
+
 
 /******************************************************************************/
 grails.project.groupId = 'au.org.ala' // change this to alter the default package name and Maven publishing destination
@@ -167,59 +110,42 @@ environments {
     }
 }
 
+// log4j configuration
+def loggingDir = (System.getProperty('catalina.base') ? System.getProperty('catalina.base') + '/logs' : './logs')
+
 log4j = {
     appenders {
         environments {
             production {
-                rollingFile name: "${appName}-prod",
-                    maxFileSize: 104857600,
-                    file: "/var/log/tomcat6/${appName}.log",
-                    threshold: org.apache.log4j.Level.INFO,
-                    layout: pattern(conversionPattern: "%d [%c{1}]  %m%n")
-                rollingFile name: "stacktrace", maxFileSize: 1024, file: "/var/log/tomcat6/${appName}-stacktrace.log"
+                println "Log4j logs will be written to : ${loggingDir}"
+                rollingFile name: "tomcatLog", maxFileSize: '1MB', file: "${loggingDir}/${appName}.log", threshold: Level.ERROR, layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
             }
-            development{
-                console name: "stdout", layout: pattern(conversionPattern: "%d [%c{1}]  %m%n"), threshold: org.apache.log4j.Level.DEBUG
+            development {
+                console name: "stdout", layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n"), threshold: Level.DEBUG
+            }
+            test {
+                println "Log4j logs will be written to : ${loggingDir}"
+                rollingFile name: "tomcatLog", maxFileSize: '1MB', file: "/tmp/${appName}", threshold: Level.DEBUG, layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
             }
         }
     }
-
     root {
-        debug  '${appName}-prod'
+        // change the root logger to my tomcatLog file
+        error 'tomcatLog'
+        warn 'tomcatLog'
+        additivity = true
     }
 
-    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
-            'org.codehaus.groovy.grails.web.pages', //  GSP
-            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
-            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-            'org.codehaus.groovy.grails.web.mapping', // URL mapping
-            'org.codehaus.groovy.grails.commons', // core / classloading
-            'org.codehaus.groovy.grails.plugins', // plugins
-            'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-            'org.springframework',
-            'org.hibernate',
-            'net.sf.ehcache.hibernate',
-            'org.codehaus.groovy.grails.plugins.orm.auditable',
-            'org.mortbay.log', 'org.springframework.webflow',
-            'grails.app',
-            'org.apache',
-            'org',
-            'com',
-            'au',
-            'grails.app',
-            'net',
-            'grails.util.GrailsUtil',
-            'grails.app.service.org.grails.plugin.resource',
-            'grails.app.service.org.grails.plugin.resource.ResourceTagLib',
-            'grails.app',
-            'grails.plugin.springcache',
-            'au.org.ala.cas.client',
-            'grails.spring.BeanBuilder',
-            'grails.plugin.webxml',
-            'grails.plugin.cache.web.filter'
-    debug  'ala'
+    debug 'grails.app',
+            'grails.app.domain',
+            'grails.app.controller',
+            'grails.app.service',
+            'grails.app.tagLib',
+            'au.org.ala.userdetails',
+            'grails.app.jobs'
 }
 
+// these placeholder values are overridden at runtime using the external configuration properties file
 oauth {
     providers {
         flickr {
@@ -228,7 +154,7 @@ oauth {
             secret = "xxxxxxxxxxxxxxxxxxxxx"
             successUri = '/profile/flickrSuccess'
             failureUri = '/profile/flickrFail'
-            callback = security.cas.appServerName + security.cas.contextPath + "/profile/flickrCallback"
+            callback = "xxxxxxxxxxxxx/yyyyyyyyyy/profile/flickrCallback"
         }
     }
 //   debug = true

@@ -27,32 +27,32 @@
                     </g:link>
                 </li>
                 <li>
-                    <a href="http://sightings.ala.org.au/mine">
+                    <a href="${grailsApplication.config.sightings.url}">
                          View your timeline of sightings recorded through the Atlas
                     </a>
                 </li>
                 <li>
-                    <a href="http://spatial.ala.org.au/actions/dashboard">
+                    <a href="${grailsApplication.config.spatial.url}">
                         Tabulate and graph all functions you've used in the Spatial Portal
                     </a>
                 </li>
                 <li>
-                    <a href="http://volunteer.ala.org.au/user/myStats">
+                    <a href="${grailsApplication.config.volunteer.url}">
                         View your tasks on the Biodiversity Volunteer Portal
                     </a>
                 </li>
                 <li>
-                    <a href="http://lists.ala.org.au/speciesList/list">
+                    <a href="${grailsApplication.config.lists.url}">
                         View your uploaded species lists
                     </a>
                 </li>
                 <li>
-                    <a href="http://biocache.ala.org.au/occurrences/search?q=*%3A*&fq=assertion_user_id%3A%22${user.id}%22">
+                    <a href="${grailsApplication.config.biocache.search.url}?q=*%3A*&fq=assertion_user_id%3A%22${user.id}%22">
                         View records you have annotated
                     </a>
                 </li>
                 <li>
-                    <a href="http://alerts.ala.org.au/">
+                    <a href="${grailsApplication.config.alerts.url}">
                         Manage your alerts
                     </a>
                 </li>
