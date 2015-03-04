@@ -33,7 +33,6 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        //runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
         runtime 'mysql:mysql-connector-java:5.1.34'
         build 'org.apache.httpcomponents:httpcore:4.1.2'
         build 'org.apache.httpcomponents:httpclient:4.1.2'
@@ -43,9 +42,11 @@ grails.project.dependency.resolution = {
 
     plugins {
         runtime ":hibernate:3.6.10.16"
-        runtime ":resources:1.2.8"
 
-        runtime ":ala-web-theme:0.8.1"
+        runtime ":ala-bootstrap2:2.1"
+        runtime (":ala-auth:1.2") {
+            exclude "servlet-api"
+        }
         compile ":csv:0.3.1"
         build ":tomcat:7.0.54"
 
