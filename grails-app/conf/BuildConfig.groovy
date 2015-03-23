@@ -50,7 +50,6 @@ grails.project.dependency.resolution = {
         compile ":csv:0.3.1"
         build ":tomcat:7.0.54"
 
-        compile ":grails-melody:1.55.0"
         compile ":lesscss-resources:1.3.3"
         compile ":mail:1.0.4"
         compile ":oauth:2.1.0"
