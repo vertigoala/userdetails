@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    <title>Reset my password</title>
+    <title>Reset my password |  ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 <body>
 <div class="row-fluid">
