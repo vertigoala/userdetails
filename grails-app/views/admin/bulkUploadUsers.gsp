@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
     <head>
-        <meta name="layout" content="main"/>
+        <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
         <meta name="section" content="home"/>
         <g:set var="title">Bulk Load Users</g:set>
-        <title>${title}</title>
+        <title>${title} | ${grailsApplication.config.skin.orgNameLong}</title>
     </head>
     <body>
         <div class="nav" role="navigation">

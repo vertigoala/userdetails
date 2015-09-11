@@ -23,6 +23,10 @@ if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
     println "[${appName}] No external configuration file defined."
 }
 
+skin.layout = "main"
+skin.orgNameLong = "Atlas of Living Australia"
+skin.orgNameShort = "Atlas"
+
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
 
 /******************************************************************************\
