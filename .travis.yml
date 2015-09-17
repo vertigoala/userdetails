@@ -6,11 +6,11 @@ branches:
   only:
   - master
 before_install:
-  - wget -q https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/ala_common.sh
-  - chmod +x ala_common.sh
-  - source ./ala_common.sh
+ - wget -q https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/ala_common.sh
+ - chmod +x ala_common.sh
+ - source ./ala_common.sh
 
-  - travis_grails_setup_env
+ - travis_grails_setup_env
 
 script:
  - travis_grails_build
