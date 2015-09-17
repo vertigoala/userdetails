@@ -13,7 +13,7 @@
             There was problem creating or updating your account.<br>
             Please contact <a href="mailto:${grailsApplication.config.supportEmail}">${grailsApplication.config.supportEmail}</a>
         </p>
-        <g:if test="${msg}"><p><h4>Error:</h4>h4> <pre>${msg}</pre></p></g:if>
+        <g:if test="${msg}"><p><h4>Error:</h4> <pre>${msg}</pre></p></g:if>
    </div>
 </div>
 </body>
