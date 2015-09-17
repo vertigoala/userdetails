@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    <title>User Administration</title>
+    <title>User Administration | ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 <body>
     <div class="nav" role="navigation">

@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    <title>Account created</title>
+    <title>Account created | ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 <body>
 <div class="row-fluid">
@@ -13,7 +13,7 @@
 
     <div class="row-fluid">
         <div class="span12 well well-large">
-            Thank you for registering with the Atlas. To complete your account registration,
+            Thank you for registering with the ${grailsApplication.config.skin.orgNameShort}. To complete your account registration,
             please check your email and <b>click the link provided in the email</b>.
             <br/>
             If you have any problems please email

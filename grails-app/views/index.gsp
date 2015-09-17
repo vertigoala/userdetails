@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    <title>ALA accounts</title>
+    <title>${grailsApplication.config.skin.orgNameShort} accounts</title>
 </head>
 <body>
 <div class="row-fluid">
@@ -18,7 +18,7 @@
             </div>
         </g:if>
 
-        <h1>ALA accounts</h1>
+        <h1>${grailsApplication.config.skin.orgNameShort} accounts</h1>
         <ul>
             <li><g:link controller="registration" action="createAccount">Create a new account</g:link></li>
             <li><g:link controller="registration" action="forgottenPassword">Reset my password</g:link></li>
@@ -27,7 +27,7 @@
 
     </div>
     <div style="color:white;" class="pull-right">
-        <g:link style="color:#DDDDDD; font-weight:bold;" controller="admin">Admin tools (Atlas administrators only)</g:link>
+        <g:link style="color:#DDDDDD; font-weight:bold;" controller="admin">Admin tools (${grailsApplication.config.skin.orgNameShort} administrators only)</g:link>
     </div>
 </div>
 </body>

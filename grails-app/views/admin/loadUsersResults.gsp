@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
     <head>
-        <meta name="layout" content="main"/>
+        <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
         <meta name="section" content="home"/>
-        <g:set var="title">Bulk Load Users Results</g:set>
+        <g:set var="title">Bulk Load Users Results |  ${grailsApplication.config.skin.orgNameLong} </g:set>
         <title>${title}</title>
     </head>
     <body>
