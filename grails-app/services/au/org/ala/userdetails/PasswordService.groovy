@@ -8,6 +8,16 @@ class PasswordService {
 
     def grailsApplication
 
+    /**
+     * Trigger a password reset
+     *
+     * TODO: I suggest this method throws an exception when it fails. Just returning a false
+     *  value is not helpful in identifying the error from the error page the user sees. NdR.
+     *
+     * @param user
+     * @param newPassword
+     * @return
+     */
     Boolean resetPassword(user,newPassword){
        //update the password
        try {
