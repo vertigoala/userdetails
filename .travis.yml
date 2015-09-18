@@ -10,10 +10,10 @@ before_install:
  - chmod +x ala_common.sh
  - source ./ala_common.sh
 
- - travis_grails_setup_env
+ - ala_travis_grails_setup_env
 
 script:
- - travis_grails_build
+ - ala_travis_grails_build
 
 env:
   global:
