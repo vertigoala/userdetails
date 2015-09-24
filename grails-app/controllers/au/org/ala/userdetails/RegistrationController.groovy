@@ -31,7 +31,7 @@ class RegistrationController {
     def passwordReset = {
         User user = User.get(params.userId?.toLong())
         if(!user){
-            render(view:'accountError')
+            render(view:'accountError', model:[msg: "User not found with ID ${params.userId}"])
         } else if(user.tempAuthKey == params.authKey){
             //keys match, so lets reset password
             render(view:'passwordReset', model:[user:user, authKey:params.authKey])
@@ -50,10 +50,11 @@ class RegistrationController {
                if(success){
                    redirect(controller: 'registration', action:'passwordResetSuccess')
                } else {
-                   render(view:'accountError')
+                   render(view:'accountError', model:[msg: "Failed to reset password"])
                }
            } else {
-               render(view:'accountError')
+               log.error "Password was not reset as AUTH_KEY did not match -- ${user.tempAuthKey} vs ${params.authKey}"
+               render(view:'accountError', model:[msg: "Password was not reset as AUTH_KEY did not match"])
            }
            log.info("Password successfully reset for user: " + params.userId)
         } else {
@@ -81,7 +82,7 @@ class RegistrationController {
                 } catch (Exception e){
                     log.error("Problem starting password reset for email address: " + params.email)
                     log.error(e.getMessage(), e)
-                    render(view:'accountError')
+                    render(view:'accountError', model:[msg: e.getMessage()])
                 }
             } else {
                 //send password reset link
@@ -103,10 +104,10 @@ class RegistrationController {
             if (success) {
                 redirect(controller: 'profile')
             } else {
-                render(view: "accountError")
+                render(view: "accountError", model:[msg: "Failed to update user profile - unknown error"])
             }
         } else {
-            render(view: "accountError")
+            render(view: "accountError", model:[msg: "The current user details could not be found"])
         }
     }
 
@@ -128,11 +129,11 @@ class RegistrationController {
                     emailService.sendAccountActivation(user, user.tempAuthKey)
                     redirect(action:'accountCreated', id: user.id)
                 } else {
-                    render(view:"accountError")
+                    render(view:"accountError", model:[msg: "Failed to reset password"])
                 }
             } catch(Exception e) {
                 log.error(e.getMessage(), e)
-                render(view:"accountError")
+                render(view:"accountError", model:[msg: e.getMessage()])
             }
         }
     }

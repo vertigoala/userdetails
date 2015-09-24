@@ -166,7 +166,7 @@ class UserService {
 
     }
 
-    def registerUser(params){
+    def registerUser(params) throws Exception {
 
         //does a user with the supplied email address exist
         def user = new User(params)
@@ -175,12 +175,12 @@ class UserService {
         user.locked = false
         user.created = new Date().toTimestamp()
         user.tempAuthKey = UUID.randomUUID().toString()
-        def createdUser = user.save(flush: true)
+        def createdUser = user.save(flush: true, failOnError: true)
         updateProperties(createdUser, params)
 
         //add a role of user
         def roleUser = Role.findByRole("ROLE_USER")
-        new UserRole(user:user, role:roleUser).save(flush:true)
+        new UserRole(user:user, role:roleUser).save(flush:true, failOnError: true)
 
         log.info("Newly created user: " + createdUser.id)
         createdUser
