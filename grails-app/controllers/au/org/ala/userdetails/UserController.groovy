@@ -1,6 +1,7 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.PreAuthorise
+import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
 
 import java.sql.Timestamp
