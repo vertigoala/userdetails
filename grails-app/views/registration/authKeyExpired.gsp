@@ -19,7 +19,7 @@
             Alternatively you can start the process again <g:link controller="registration" action="forgottenPassword">here</g:link>.
 
             <br/>
-            If problems persist, please contact <a href="mailto:support@ala.org.au">support@ala.org.au</a>
+            If problems persist, please contact <a href="mailto:${grailsApplication.config.supportEmail}">${grailsApplication.config.supportEmail}</a>
         </p>
    </div>
 </div>

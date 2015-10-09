@@ -162,7 +162,7 @@
             </p>
             <p>
                 For the Atlas' policy on the collection and use of personal information see our
-                <a href="http://www.ala.org.au/about/terms-of-use/privacy-policy/">Privacy Policy</a>.
+                <a href="${grailsApplication.config.privacyPolicy}">Privacy Policy</a>.
             </p>
             <p>
                 Your email address will be your ALA account id.  An account activation link will be
