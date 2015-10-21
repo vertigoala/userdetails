@@ -70,7 +70,14 @@ class UserDetailsController {
     }
 
     private static Map makeUserdetailsMap(User user, boolean includeProps = false) {
-        final results = [userId:user.id.toString(), userName: user.userName, firstName: user.firstName, lastName: user.lastName, email: user.email]
+        final results = [
+                            userId:user.id.toString(),
+                            userName: user.userName,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            email: user.email,
+                            role: user.getUserRoles()?.collect{ it.toString(); }
+        ]
         if (includeProps) {
             results['props'] = user.propsAsMap()
         }
