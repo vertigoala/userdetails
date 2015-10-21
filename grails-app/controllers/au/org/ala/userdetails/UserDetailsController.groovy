@@ -76,7 +76,7 @@ class UserDetailsController {
                             firstName: user.firstName,
                             lastName: user.lastName,
                             email: user.email,
-                            role: user.getUserRoles()?.collect{ it.toString(); }
+                            roles: user.getUserRoles()?.collect{ it.toString(); }?:[]
         ]
         if (includeProps) {
             results['props'] = user.propsAsMap()
