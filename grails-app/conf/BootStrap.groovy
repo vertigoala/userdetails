@@ -8,14 +8,11 @@ class BootStrap {
     def grailsApplication
 
     def init = { servletContext ->
-      log.info("Running bootstrap queries")
-
+        log.info("Running bootstrap queries")
         def ctx = servletContext.getAttribute(ApplicationAttributes.APPLICATION_CONTEXT)
         ctx.getBean( "customObjectMarshallers" ).register()
-
-      addRoles()
-      log.info("Done bootstrap queries.")
-
+        addRoles()
+        log.info("Done bootstrap queries.")
     }
 
     def addRoles(){
