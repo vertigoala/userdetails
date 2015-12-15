@@ -1,18 +1,9 @@
 package au.org.ala.userdetails
-
-import au.org.ala.cas.util.AuthenticationCookieUtils
-import au.org.ala.cas.util.AuthenticationUtils
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.FlickrApi
-import org.scribe.model.OAuthRequest
-import org.scribe.model.Response
-import org.scribe.model.Token
-import org.scribe.model.Verb
-import org.scribe.model.Verifier
+import org.scribe.model.*
 import org.scribe.oauth.OAuthService
 import org.springframework.web.context.request.RequestContextHolder
-
-import javax.servlet.http.Cookie
 
 class ProfileController {
 
@@ -28,11 +19,11 @@ class ProfileController {
         if (user) {
             def props = user.propsAsMap()
             def isAdmin = RequestContextHolder.currentRequestAttributes()?.isUserInRole("ROLE_ADMIN")
-            render(view:"myprofile", model:[user:user, props:props, isAdmin:isAdmin])
+            render(view: "myprofile", model: [user: user, props: props, isAdmin: isAdmin])
         } else {
             String baseUrl = grailsApplication.config.security.cas.loginUrl
             def separator = baseUrl.contains("?") ? "&" : "?"
-            def loginUrl = "${baseUrl}${separator}service=" + URLEncoder.encode(emailService.getMyProfileUrl(),"UTF-8")
+            def loginUrl = "${baseUrl}${separator}service=" + URLEncoder.encode(emailService.getMyProfileUrl(), "UTF-8")
             redirect(url: loginUrl)
         }
     }
@@ -41,9 +32,9 @@ class ProfileController {
 
         Token token = session.getAt("flickr:oasRequestToken")
         OAuthService service = new ServiceBuilder().
-                 provider(FlickrApi.class).
-                 apiKey(grailsApplication.config.oauth.providers.flickr.key).
-                 apiSecret(grailsApplication.config.oauth.providers.flickr.secret).build()
+                provider(FlickrApi.class).
+                apiKey(grailsApplication.config.oauth.providers.flickr.key).
+                apiSecret(grailsApplication.config.oauth.providers.flickr.secret).build()
 
         Verifier verifer = new Verifier(params.oauth_verifier)
         def accessToken = service.getAccessToken(token, verifer)
@@ -53,9 +44,9 @@ class ProfileController {
         service.signRequest(accessToken, request);
         Response response = request.send();
         def model = [:]
-        response.getBody().split("&").each{
+        response.getBody().split("&").each {
             def property = it.substring(0, it.indexOf("="))
-            def value = it.substring(it.indexOf("=")+1)
+            def value = it.substring(it.indexOf("=") + 1)
             model.put(property, value)
         }
 
@@ -70,16 +61,16 @@ class ProfileController {
             flash.message = "Failed to retrieve user details!"
         }
 
-        redirect(controller:'profile')
+        redirect(controller: 'profile')
     }
 
-    def flickrSuccess(){
+    def flickrSuccess() {
         //println "Flickr success called"
         String sessionKey = oauthService.findSessionKeyForAccessToken('twitter')
         //println "Session key: " + request.getSession().getAttribute(sessionKey)
     }
 
-    def flickrFail(){}
+    def flickrFail() {}
 
     def removeFlickrLink() {
         User user = userService.currentUser
@@ -89,6 +80,6 @@ class ProfileController {
         } else {
             flash.message = "Failed to retrieve user details!"
         }
-        redirect(controller:'profile')
+        redirect(controller: 'profile')
     }
 }

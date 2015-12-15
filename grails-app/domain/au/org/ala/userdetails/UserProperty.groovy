@@ -23,6 +23,7 @@ class UserProperty implements Serializable {
         id composite: ['user', 'property']
         user column:  'userid'
         version false
+        value sqlType: 'text'
     }
     static constraints = {
     }
