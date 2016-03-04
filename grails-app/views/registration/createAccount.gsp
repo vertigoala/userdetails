@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    <r:require module="jqueryValidationEngine"/>
+    <r:require modules="jqueryValidationEngine, autocomplete"/>
     <g:if test="${!alreadyRegistered && edit}">
         <g:set var="title">Edit your account</g:set>
     </g:if>
@@ -11,36 +11,6 @@
         <g:set var="title">Create your account</g:set>
     </g:else>
     <title>${title}</title>
-    <r:script>
-        $(function(){
-            $('.typeahead').typeahead();
-
-            var options = {
-                scroll: false
-            };
-
-            $('#updateAccountForm').validationEngine('attach', options);
-
-            $("#updateAccountSubmit").click(function(e) {
-
-                $("#updateAccountSubmit").attr('disabled','disabled');
-
-                var pm = $('#password').val() == $('#reenteredPassword').val();
-                if(!pm){
-                  alert("The supplied passwords do not match!");
-                }
-
-                var valid = $('#updateAccountForm').validationEngine('validate');
-
-                if (valid && pm) {
-                    $("form[name='updateAccountForm']").submit();
-                } else {
-                    $('#updateAccountSubmit').removeAttr('disabled');
-                    e.preventDefault();
-                }
-            });
-        });
-    </r:script>
 </head>
 <body>
 
@@ -127,19 +97,14 @@
                     <input id="telephone" name="telephone" type="text" class="input-xlarge" value="${props?.telephone}" />
 
                     <label for="primaryUserType">Primary usage</label>
-                    <input id="primaryUserType" name="primaryUserType" type="text" class="input-xlarge"
-                           value="${props?.primaryUserType}"
-                           data-provide="typeahead"
-                           data-items="20"
-                           data-source='["Amateur naturalist","Amateur photographer","Biodiversity Research","Biogeographer","Biologist","Botanist","Bush Regenerator","BushCare leader","Citizen scientist","Collection manager","Collection technician","Communications","Conservation Planner","Consultant","Data manager","Database Manager","Eco Tourism","Ecologist","Education","Education programs developer","Entomologist","Environmental Officer","Environmental Scientist","Farming","Field Researcher","Forester","Geochemist","GIS visualisation","Identification","IT specialist","Land manager","Land owner","Librarian","Mycologist ","Naturalist","Observer","Park Ranger","Pest control","Pest Identification","PhD Student","Policy developer","Predicting distribution","Researcher","Science communicator","Scientific Illustrator","Scientist","Student","Taxonomist","Teacher","Veterinary Pathologist","Volunteer","Volunteer Digitizer","Writer","Zoologist"]'
+                    <input id="primaryUserType" name="primaryUserType" type="text" value="" class="input-xlarge usageAuto"
+                           value="${props?.primaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
 
                     <label for="secondaryUserType">Secondary usage</label>
-                    <input id="secondaryUserType" name="secondaryUserType" type="text" class="input-xlarge"
-                           value="${props?.secondaryUserType}"
-                           data-provide="typeahead" data-items="20"
-                           data-source='["Amateur naturalist","Amateur photographer","Biodiversity Research","Biogeographer","Biologist","Botanist","Bush Regenerator","BushCare leader","Citizen scientist","Collection manager","Collection technician","Communications","Conservation Planner","Consultant","Data manager","Database Manager","Eco Tourism","Ecologist","Education","Education programs developer","Entomologist","Environmental Officer","Environmental Scientist","Farming","Field Researcher","Forester","Geochemist","GIS visualisation","Identification","IT specialist","Land manager","Land owner","Librarian","Mycologist ","Naturalist","Observer","Park Ranger","Pest control","Pest Identification","PhD Student","Policy developer","Predicting distribution","Researcher","Science communicator","Scientific Illustrator","Scientist","Student","Taxonomist","Teacher","Veterinary Pathologist","Volunteer","Volunteer Digitizer","Writer","Zoologist"]'
+                    <input id="secondaryUserType" name="secondaryUserType" type="text" value="" class="input-xlarge usageAuto"
+                           value="${props?.secondaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
                 <br/>
@@ -172,4 +137,43 @@
    </div>
 </div>
 </body>
+<r:script>
+    $(function(){
+
+        //$('.typeahead').typeahead();
+        var usageOptions = [
+            "Amateur naturalist","Amateur photographer","Biodiversity Research","Biogeographer",
+            "Biologist","Botanist","Bush Regenerator","BushCare leader","Citizen scientist","Collection manager",
+            "Collection technician","Communications","Conservation Planner","Consultant","Data manager",
+            "Database Manager","Eco Tourism","Ecologist","Education","Education programs developer","Entomologist",
+            "Environmental Officer","Environmental Scientist","Farming","Field Researcher","Forester","Geochemist",
+            "GIS visualisation","Identification","IT specialist","Land manager","Land owner","Librarian","Mycologist",
+            "Naturalist","Observer","Park Ranger","Pest control","Pest Identification","PhD Student","Policy developer",
+            "Predicting distribution","Researcher","Science communicator","Scientific Illustrator","Scientist",
+            "Student","Taxonomist","Teacher","Veterinary Pathologist","Volunteer","Volunteer Digitizer","Writer",
+            "Zoologist"
+        ];
+
+        $(".usageAuto").autocomplete(usageOptions, {});
+        $('#updateAccountForm').validationEngine('attach', { scroll: false });
+        $("#updateAccountSubmit").click(function(e) {
+
+            $("#updateAccountSubmit").attr('disabled','disabled');
+
+            var pm = $('#password').val() == $('#reenteredPassword').val();
+            if(!pm){
+                alert("The supplied passwords do not match!");
+            }
+
+            var valid = $('#updateAccountForm').validationEngine('validate');
+
+            if (valid && pm) {
+                $("form[name='updateAccountForm']").submit();
+            } else {
+                $('#updateAccountSubmit').removeAttr('disabled');
+                e.preventDefault();
+            }
+        });
+    });
+</r:script>
 </html>
