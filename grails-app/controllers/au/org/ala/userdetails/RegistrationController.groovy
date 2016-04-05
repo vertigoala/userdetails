@@ -63,6 +63,11 @@ class RegistrationController {
         }
     }
 
+    def accountDisabled()
+    {
+
+    }
+
     def passwordResetSuccess(){
         [serverUrl:grailsApplication.config.security.cas.appServerName + grailsApplication.config.security.cas.contextPath + '/myprofile']
     }
@@ -91,8 +96,28 @@ class RegistrationController {
         }
     }
 
+    def disableAccount = {
+        def user = userService.currentUser
+
+        log.debug("Disabling account for " + user)
+        if (user) {
+            user.setLocked(true)
+            def success = userService.disableUser(user)
+
+            if (success) {
+                redirect(controller: 'logout', action: 'logout', params: [casUrl: grailsApplication.config.security.cas.logoutUrl,
+                                                                          appUrl:grailsApplication.config.grails.serverURL + '/registration/accountDisabled'])
+            } else {
+                render(view: "accountError", model:[msg: "Failed to disable user profile - unknown error"])
+            }
+        } else {
+            render(view: "accountError", model:[msg: "The current user details could not be found"])
+        }
+    }
+
     def update = {
         def user = userService.currentUser
+        log.debug("Updating account for " + user)
 
         if (user) {
             if (params.email != user.email) {
@@ -115,7 +140,8 @@ class RegistrationController {
 
         //create user account...
         if(!params.email || userService.isEmailRegistered(params.email)){
-            render(view:'createAccount', model:[edit:false, user:params, props:params, alreadyRegistered: true])
+            def inactiveUser = !userService.isActive(params.email)
+            render(view:'createAccount', model:[edit:false, user:params, props:params, alreadyRegistered: true, inactiveUser: inactiveUser ])
         } else {
 
             try {

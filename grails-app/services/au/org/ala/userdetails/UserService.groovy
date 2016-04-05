@@ -25,6 +25,22 @@ class UserService {
         }
     }
 
+    def disableUser(user){
+        try {
+            user.activated = false
+            user.save(flush:true)
+            true
+        } catch (Exception e){
+            log.error(e.getMessage(), e)
+            false
+        }
+    }
+
+    def isActive(email) {
+        def user = User.findByEmail(email.toLowerCase())
+        user && user.activated
+    }
+
     def isEmailRegistered(email){
         def user = User.findByEmail(email.toLowerCase())
         if(user){

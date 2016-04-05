@@ -28,15 +28,30 @@
 
 <div class="row-fluid">
     <h1>${title}</h1>
-    <g:if test="${alreadyRegistered}">
-    <div class="row-fluid warning well">
-        <p class="text-error">A user is already registered with the email address <b>${params.email}</b>. </p>
-        <p>
-            To login with this user name, <a href="${grailsApplication.config.security.cas.loginUrl}">click here</a>.<br/>
-            To start the process of resetting your password, <g:link controller="registration" action="forgottenPassword" params="${[email:params.email]}">click here</g:link>.
-        </p>
-    </div>
+    <g:if test="${inactiveUser}">
+        <div class="row-fluid warning well">
+            <p class="text-error">A user is already registered with the email address <b>${params.email}</b> however it is currently disabled.
+            </p>
+
+            <p>
+                If you think this is an error or you disabled your account please contact <a
+                    href="mailto:${grailsApplication.config.supportEmail}">${grailsApplication.config.supportEmail}</a>.
+            </p>
+        </div>
     </g:if>
+    <g:elseif test="${alreadyRegistered}">
+        <div class="row-fluid warning well">
+            <p class="text-error">A user is already registered with the email address <b>${params.email}</b>.</p>
+
+            <p>
+                To login with this user name, <a
+                    href="${grailsApplication.config.security.cas.loginUrl}">click here</a>.<br/>
+                To start the process of resetting your password, <g:link controller="registration"
+                                                                         action="forgottenPassword"
+                                                                         params="${[email: params.email]}">click here</g:link>.
+            </p>
+        </div>
+    </g:elseif>
 
     <div class="row-fluid">
         <div class="span4">
@@ -97,19 +112,20 @@
                     <input id="telephone" name="telephone" type="text" class="input-xlarge" value="${props?.telephone}" />
 
                     <label for="primaryUserType">Primary usage</label>
-                    <input id="primaryUserType" name="primaryUserType" type="text" value="" class="input-xlarge usageAuto"
+                    <input id="primaryUserType" name="primaryUserType" type="text" class="input-xlarge usageAuto"
                            value="${props?.primaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
 
                     <label for="secondaryUserType">Secondary usage</label>
-                    <input id="secondaryUserType" name="secondaryUserType" type="text" value="" class="input-xlarge usageAuto"
+                    <input id="secondaryUserType" name="secondaryUserType" type="text"  class="input-xlarge usageAuto"
                            value="${props?.secondaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
                 <br/>
                 <g:if test="${edit}">
                     <button id="updateAccountSubmit" class="btn btn-ala">Update account</button>
+                    <button id="disableAccountSubmit" class="btn btn-ala delete">Disable account</button>
                 </g:if>
                 <g:else>
                     <button id="updateAccountSubmit" class="btn btn-ala">Create account</button>
@@ -118,9 +134,11 @@
             </div>
         </div>
         <div class="span8 well">
-            <p>
-                To create your new account, fill in the fields opposite and click "Create".
-            </p>
+            <g:if test="${!edit}">
+                <p>
+                    To create your new account, fill in the fields opposite and click "Create".
+                </p>
+            </g:if>
             <p>
                 In the Primary and Secondary Usage fields you can enter your own text to describe your
                 intended usage of the site. Examples include: "Amateur naturalist", "Photographer", "Ecologist".
@@ -174,6 +192,25 @@
                 e.preventDefault();
             }
         });
+
+        $("#disableAccountSubmit").click(function(e) {
+
+            $("#disableAccountSubmit").attr('disabled','disabled');
+
+            var valid = confirm("${message(code: 'default.button.delete.user.confirm.message', default: "Are you sure want to disable your account.  You won't be able to login again. You will have to contact support@ala.org.au in the future if you want to reactivate your account")}");
+
+            if (valid) {
+                $('#updateAccountForm').validationEngine('detach');
+                $("form[name='updateAccountForm']").attr('action','disableAccount');
+                $("form[name='updateAccountForm']").submit();
+            } else {
+                $('#disableAccountSubmit').removeAttr('disabled');
+                e.preventDefault();
+            }
+        });
+
+
+
     });
 </r:script>
 </html>
