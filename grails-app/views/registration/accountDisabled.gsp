@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    <title>Please check your email</title>
+    <title>Account disabled</title>
 </head>
 <body>
 <div class="row-fluid">

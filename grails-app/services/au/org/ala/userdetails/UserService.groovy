@@ -16,7 +16,7 @@ class UserService {
             user.setProperties(params)
             user.activated = true
             user.locked = false
-            user.save(flush:true)
+            user.save(failOnError: true, flush:true)
             updateProperties(user, params)
             true
         } catch (Exception e){
@@ -28,7 +28,7 @@ class UserService {
     def disableUser(user){
         try {
             user.activated = false
-            user.save(flush:true)
+            user.save(failOnError: true, flush:true)
             true
         } catch (Exception e){
             log.error(e.getMessage(), e)
@@ -38,7 +38,7 @@ class UserService {
 
     def isActive(email) {
         def user = User.findByEmail(email.toLowerCase())
-        user && user.activated
+        user?.activated
     }
 
     def isEmailRegistered(email){

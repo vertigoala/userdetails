@@ -64,9 +64,13 @@ class RegistrationController {
         }
     }
 
+    /**
+     * Used only to display the view.
+     * This is required given that the view is not rendered directly by #disableAccount but rather a chain
+     * of redirects:  userdetails logout, cas logout and finally this view
+     */
     def accountDisabled()
     {
-
     }
 
     def passwordResetSuccess(){
@@ -102,7 +106,6 @@ class RegistrationController {
 
         log.debug("Disabling account for " + user)
         if (user) {
-            user.setLocked(true)
             def success = userService.disableUser(user)
 
             if (success) {
