@@ -32,6 +32,15 @@ class AdminController {
     def bulkUploadUsers() {
     }
 
+    def exportUsers() {
+        render (view:'exportUsers', model: [roles: Role.list()])
+    }
+
+    def downloadCsvFile() {
+
+        render ("Coming Soon ${params}")
+    }
+
     def loadUsersCSV() {
         if(request instanceof MultipartHttpServletRequest) {
             MultipartFile f = ((MultipartHttpServletRequest) request).getFile('userList')

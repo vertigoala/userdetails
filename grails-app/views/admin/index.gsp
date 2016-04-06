@@ -21,6 +21,7 @@
                 <li><g:link controller="role">Roles</g:link></li>
                 <li><g:link controller="authorisedSystem">Authorised systems</g:link></li>
                 <li><g:link controller="admin" action="bulkUploadUsers">Bulk create user accounts</g:link></li>
+                <li><g:link controller="admin" action="exportUsers">Export users to CSV file</g:link></li>
             </ul>
 
             <h2>Web services (HTTP POST)</h2>
