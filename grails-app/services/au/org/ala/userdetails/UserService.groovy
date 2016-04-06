@@ -247,6 +247,14 @@ class UserService {
         }
     }
 
+    def clearTempAuthKey(User user) {
+        if (user) {
+            //set the temp auth key
+            user.tempAuthKey = null
+            user.save(flush: true)
+        }
+    }
+
     /**
      * This service method returns the User object for the current user.
      */
@@ -276,4 +284,9 @@ class UserService {
         return user
     }
 
+    String getResetPasswordUrl(User user) {
+        if(user.tempAuthKey){
+            emailService.getServerUrl() + "resetPassword/" +  user.id +  "/"  + user.tempAuthKey
+        }
+    }
 }

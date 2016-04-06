@@ -64,7 +64,9 @@ class UserController {
             return
         }
 
-        [userInstance: userInstance]
+        String resetPasswordUrl = userService.getResetPasswordUrl(userInstance)
+
+        [userInstance: userInstance, resetPasswordUrl: resetPasswordUrl]
     }
 
     def edit(Long id) {

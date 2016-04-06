@@ -72,15 +72,13 @@ class EmailService {
     }
 
     def getMyProfileUrl(){
-            grailsApplication.config.security.cas.appServerName  +
-                    grailsApplication.config.security.cas.contextPath +
+            grailsApplication.config.grails.serverURL  +
                     "/myprofile/"
 
     }
 
     def getServerUrl(){
-            grailsApplication.config.security.cas.appServerName  +
-                    grailsApplication.config.security.cas.contextPath +
+        grailsApplication.config.grails.serverURL +
                     "/registration/"
     }
 }

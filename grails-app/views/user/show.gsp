@@ -76,14 +76,16 @@
         </g:if>
 
         <g:if test="${userInstance?.tempAuthKey}">
+        %{--If tempAuthKey is present then there should be a resetPasswordUrl--}%
             <li class="fieldcontain">
                 <span id="tempAuthKey-label" class="property-label"><g:message code="user.tempAuthKey.label"
-                                                                               default="Temp Auth Key"/></span>
+                                                                                   default="Temp Auth Key"/></span>
 
-                <span class="property-value" aria-labelledby="tempAuthKey-label"><g:fieldValue bean="${userInstance}"
-                                                                                               field="tempAuthKey"/></span>
+            <span class="property-value" aria-labelledby="tempAuthKey-label">
+                <a  href="${resetPasswordUrl}">   <g:fieldValue bean="${userInstance}"
+                                                              field="tempAuthKey"/></span></a>
 
-            </li>
+                </li>
         </g:if>
 
         %{--<g:if test="${userInstance?.userName}">--}%
@@ -140,6 +142,14 @@
         <g:else>
             <p>No roles set for this user.</p>
         </g:else>
+
+        <br/>
+        <g:if test="${userInstance?.tempAuthKey}">
+            <p>
+                Temp Auth Key points to the user reset password url.
+                This is useful in cases when the user didn't recieve the reset password e-mail, usually because spam filters got in the way.
+            </p>
+        </g:if>
 </div>
 </div>
 

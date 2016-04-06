@@ -48,6 +48,7 @@ class RegistrationController {
                //update the password
                def success = passwordService.resetPassword(user, params.password)
                if(success){
+                   userService.clearTempAuthKey(user)
                    redirect(controller: 'registration', action:'passwordResetSuccess')
                } else {
                    render(view:'accountError', model:[msg: "Failed to reset password"])
@@ -69,7 +70,7 @@ class RegistrationController {
     }
 
     def passwordResetSuccess(){
-        [serverUrl:grailsApplication.config.security.cas.appServerName + grailsApplication.config.security.cas.contextPath + '/myprofile']
+        [serverUrl:grailsApplication.config.grails.serverURL + '/myprofile']
     }
 
     def startPasswordReset = {
