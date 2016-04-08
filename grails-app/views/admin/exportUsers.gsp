@@ -70,8 +70,6 @@
                 <label class="control-label" for="primaryUsage">
                     Only users in selected roles (defaults to all if none selected)
                 </label>
-
-                ${roling}
                 <div class="controls">
                     <g:select size="10" name="selectedRoles" from="${roles}"  multiple="true"/>
                 </div>
