@@ -10,6 +10,9 @@ class AdminController {
     def passwordService
     def emailService
     def userService
+    def exportService
+    def profileService
+    def authorisedSystemService
 
     def index() {}
 
@@ -33,12 +36,70 @@ class AdminController {
     }
 
     def exportUsers() {
-        render (view:'exportUsers', model: [roles: Role.list()])
+        def secondaryFields = profileService.allAvailableProperties
+        String extraFields =  secondaryFields.join(",")
+
+        render(view: 'exportUsers',
+                model: [roles        : Role.list(),
+                        primaryFields: grailsApplication.config.admin.export.csv.primary.fields,
+                        extraFields  : extraFields])
     }
 
-    def downloadCsvFile() {
+    def downloadUsersCsvFile() {
+        if (authorisedSystemService.isAuthorisedSystem(request)) {
+            //selectedRoles data type will be different depending on whether one or more option were selected
+            def roleList = {
+                if (!params.selectedRoles) {
+                    return []
+                } else if (params.selectedRoles instanceof String) {
+                    return [params.selectedRoles]
+                } else {
+                    return params.selectedRoles as List
+                }
+            }.call()
 
-        render ("Coming Soon ${params}")
+            //1. Get data based on user inputs
+            def userList = userService.findUsersForExport(roleList, params?.includeInactiveUsers)
+
+            //2. Then prepare the format options
+            String primaryFieldsProperty = grailsApplication.config.admin.export.csv.primary.fields
+            def primaryFields = primaryFieldsProperty ? primaryFieldsProperty.split(',').collect { it as String } : []
+            def fields = primaryFields
+
+            def formatters = [:]
+            if (params.includeExtraFields) {
+                def secondaryFields = profileService.allAvailableProperties
+                fields.addAll(secondaryFields)
+                secondaryFields.each {
+                    formatters[it] = { domain, value ->
+                        String fieldName = it
+                        domain.userProperties.find {
+                            it.property == fieldName
+                        }?.value
+                    }
+                }
+            }
+
+            if (params.includeRoles) {
+                String roleFieldName = 'roles'
+                formatters[roleFieldName] = { User domain, value ->
+                    def result = ""
+                    domain.userRoles.each {
+                        result += it.role.role + " "
+                    }
+                    result
+                }
+                fields.add(roleFieldName)
+            }
+
+            log.debug("Export fields ${fields}")
+
+            String fileName = "users-" + new Date().format("YYYYMMdd-HHmm")
+            //3. And finally generate and send file to browser
+            exportService.export("csv", response, fileName, "csv", userList, fields, [:], formatters, [:])
+        } else {
+            response.sendError(403)
+        }
     }
 
     def loadUsersCSV() {

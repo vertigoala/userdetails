@@ -30,6 +30,9 @@ grails.project.dependency.resolution = {
         mavenRepo("http://nexus.ala.org.au/content/groups/public/") {
             updatePolicy 'always'
         }
+        //The repo below and commons-beanutils dependency are a workaround required to make export plugin work
+        // More details at http://stackoverflow.com/questions/24411420/grails-export-plugin-errors
+        mavenRepo "http://repo.grails.org/grails/core"
     }
 
     dependencies {
@@ -38,6 +41,7 @@ grails.project.dependency.resolution = {
         build 'org.apache.httpcomponents:httpclient:4.1.2'
         build 'org.apache.httpcomponents:httpmime:4.1.2'
         build 'org.apache.commons:commons-lang3:3.1'
+        compile 'commons-beanutils:commons-beanutils:1.8.3'
     }
 
     plugins {
@@ -54,6 +58,7 @@ grails.project.dependency.resolution = {
         compile ":mail:1.0.4"
         compile ":oauth:2.1.0"
         compile ":simple-captcha:0.9.9"
+        compile ":export:1.6"
         build ':release:3.0.1', ':rest-client-builder:1.0.3', {
             export = false
         }

@@ -10,6 +10,7 @@ class UserService {
     def passwordService
     def authService
     def grailsApplication
+    def profileService
 
     def updateUser(user, params){
         try {
@@ -288,5 +289,24 @@ class UserService {
         if(user.tempAuthKey){
             emailService.getServerUrl() + "resetPassword/" +  user.id +  "/"  + user.tempAuthKey
         }
+    }
+
+    def findUsersForExport(List usersInRoles, includeInactive) {
+        def roles = usersInRoles? Role.findAllByRoleInList(usersInRoles) : []
+        def criteria = User.createCriteria()
+        def results
+            results = criteria.listDistinct {
+                and {
+                    if(roles) {
+                        userRoles {
+                            'in'('role', roles)
+                        }
+                    }
+                    if(!includeInactive) {
+                        eq('activated', true)
+                    }
+                }
+            }
+        results
     }
 }

@@ -9,4 +9,13 @@ class ProfileService {
     UserProperty saveUserProperty(User user, String name, String value){
         UserProperty.addOrUpdateProperty(user, name, value);
     }
+
+    List getAllAvailableProperties() {
+        UserProperty.withCriteria {
+            projections {
+                distinct("property")
+            }
+            order("property")
+        }
+    }
 }

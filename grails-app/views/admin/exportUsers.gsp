@@ -28,18 +28,25 @@
                 </p>
                 <p>
                     <code>
-                    primaryfield1,...,primaryfieldn, ...[,extrafield1,..,extrafieldm][,roles]
+                    primaryfield1,...,primaryfieldn[,extrafield1,..,extrafieldm][,roles]
                     </code>
                 </p>
                 <p>
-                Where <code>roles</code> is an optional space separated list of the roles that the user should have.
+                    Where primary fields are <code>${primaryFields}</code>
                 </p>
+                <p>
+                    Extra fields are <code>${extraFields}</code>
+                </p>
+                <p>
+                    And <code>roles</code> is an optional space separated list of the user roles.
+                </p>
+
                 <p>
                     <em>Note:</em> The first row will contain the name of the fields included in the output
                 </p>
             </div>
         </div>
-        <g:form action="downloadCsvFile" method="post"  class="form-horizontal well well-small">
+        <g:form name="exportUsersForm" action="downloadUsersCsvFile" method="post"  class="form-horizontal well well-small">
             <div class="control-group">
             </div>
             <div class="control-group">
@@ -55,13 +62,13 @@
                 </div>
                 <div class="controls">
                     <label class="checkbox">
-                        <g:checkBox name="includeRoles"/> Include roles
+                        <g:checkBox name="includeRoles"/> Include roles field
                     </label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="primaryUsage">
-                    Only in selected roles (defaults to all if none selected)
+                    Only users in selected roles (defaults to all if none selected)
                 </label>
 
                 ${roling}
@@ -69,13 +76,25 @@
                     <g:select size="10" name="selectedRoles" from="${roles}"  multiple="true"/>
                 </div>
             </div>
-
-
             <div class="control-group">
                 <div class="controls">
-                    <button class="btn btn-primary">Download CSV file</button>
+                    <button id="downloadFileButton" class="btn btn-primary">Download CSV file</button>
                 </div>
             </div>
         </g:form>
     </body>
+    <r:script>
+        $(function(){
+            $("#downloadFileButton").click(function(e) {
+                $("#downloadFileButton").attr('disabled','disabled');
+                var valid = confirm("${message(code: 'default.button.admin.export.users.confirm.message', default: "Your download will start shortly after clicking accept/OK. You will need to refresh the page if you want to download a file with different parameters.")}");
+                if (valid) {
+                    $("form[name='exportUsersForm']").submit();
+                } else {
+                    $('#downloadFileButton').removeAttr('disabled');
+                    e.preventDefault();
+                }
+            });
+        });
+    </r:script>
 </html>
