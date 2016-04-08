@@ -147,7 +147,7 @@
         <g:if test="${userInstance?.tempAuthKey}">
             <p>
                 Temp Auth Key points to the user reset password url.
-                This is useful in cases when the user didn't recieve the reset password e-mail, usually because spam filters got in the way.
+                This is useful in cases when the user didn't receive the reset password e-mail, usually because spam filters got in the way.
             </p>
         </g:if>
 </div>
