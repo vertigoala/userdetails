@@ -38,7 +38,7 @@
                 </li>
                 <li>
                     <a href="${grailsApplication.config.volunteer.url}">
-                        View your tasks on the Biodiversity Volunteer Portal
+                        View your tasks on the DigiVol Portal
                     </a>
                 </li>
                 <li>
