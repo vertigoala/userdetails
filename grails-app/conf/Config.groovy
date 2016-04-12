@@ -91,6 +91,7 @@ grails.databinding.convertEmptyStringsToNull = false
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
+        println  'Using development environment'
         grails.serverURL = "http://devt.ala.org.au:8080/userdetails"
         grails.logging.jul.usebridge = true
         grails {
@@ -102,6 +103,7 @@ environments {
         }
     }
     production {
+        println  'Using production environment'
         grails.serverURL = "http://auth.ala.org.au/userdetails"
         security.cas.appServerName = "http://auth.ala.org.au"
         grails.logging.jul.usebridge = false
@@ -124,12 +126,14 @@ log4j = {
     appenders {
         environments {
             production {
-                rollingFile name: "tomcatLog", maxFileSize: '1MB', file: "${loggingDir}/${appName}.log", threshold: org.apache.log4j.Level.ERROR, layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
+                println("Application logging ${loggingDir}/${appName}.log")
+                rollingFile name: "tomcatLog", maxFileSize: '1MB', file: "${loggingDir}/${appName}.log", threshold: org.apache.log4j.Level.WARN, layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
             }
             development {
                 console name: "stdout", layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n"), threshold: org.apache.log4j.Level.DEBUG
             }
             test {
+                println("Application logging /tmp/${appName}")
                 rollingFile name: "tomcatLog", maxFileSize: '1MB', file: "/tmp/${appName}", threshold: org.apache.log4j.Level.DEBUG, layout: pattern(conversionPattern: "%d %-5p [%c{1}] %m%n")
             }
         }
@@ -141,13 +145,15 @@ log4j = {
         additivity = true
     }
 
-    error   'au.org.ala.cas.client',
-            'grails.spring.BeanBuilder',
+
+    error   'grails.spring.BeanBuilder',
             'grails.plugin.webxml',
             'grails.plugin.cache.web.filter',
             'grails.app.services.org.grails.plugin.resource',
             'grails.app.taglib.org.grails.plugin.resource',
             'grails.app.resourceMappers.org.grails.plugin.resource'
+
+    warn   'au.org.ala'
 
     debug   'grails.app','au.org.ala.cas','au.org.ala.userdetails'
 }
