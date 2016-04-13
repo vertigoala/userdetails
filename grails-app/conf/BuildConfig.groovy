@@ -37,9 +37,9 @@ grails.project.dependency.resolution = {
 
     dependencies {
         runtime 'mysql:mysql-connector-java:5.1.34'
-        build 'org.apache.httpcomponents:httpcore:4.1.2'
-        build 'org.apache.httpcomponents:httpclient:4.1.2'
-        build 'org.apache.httpcomponents:httpmime:4.1.2'
+        build 'org.apache.httpcomponents:httpcore:4.3.3'
+        build 'org.apache.httpcomponents:httpclient:4.3.3'
+        build 'org.apache.httpcomponents:httpmime:4.3.3'
         build 'org.apache.commons:commons-lang3:3.1'
         compile 'commons-beanutils:commons-beanutils:1.8.3'
     }
@@ -47,9 +47,12 @@ grails.project.dependency.resolution = {
     plugins {
         runtime ":hibernate:3.6.10.16"
 
-        runtime ":ala-bootstrap2:2.4"
+        runtime (":ala-bootstrap2:2.4") {
+            exclude "commons-httpclient"
+        }
+        runtime ":ala-ws-plugin:0.1-SNAPSHOT"
         runtime (":ala-auth:1.2") {
-            exclude "servlet-api"
+            excludes "servlet-api", "commons-httpclient"
         }
         compile ":csv:0.3.1"
         build ":tomcat:7.0.54"
@@ -59,6 +62,7 @@ grails.project.dependency.resolution = {
         compile ":oauth:2.1.0"
         compile ":simple-captcha:0.9.9"
         compile ":export:1.6"
+
         build ':release:3.0.1', ':rest-client-builder:1.0.3', {
             export = false
         }

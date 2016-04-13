@@ -2,7 +2,9 @@ package au.org.ala.userdetails
 
 import au.org.ala.auth.BulkUserLoadResults
 import au.org.ala.auth.PasswordResetFailedException
+import au.org.ala.ws.service.WebService
 import grails.util.Environment
+import org.apache.http.HttpStatus
 
 class UserService {
 
@@ -10,7 +12,7 @@ class UserService {
     def passwordService
     def authService
     def grailsApplication
-    def profileService
+    WebService webService
 
     def updateUser(user, params){
         try {
@@ -29,7 +31,12 @@ class UserService {
     def disableUser(user){
         try {
             user.activated = false
-            user.save(failOnError: true, flush:true)
+            user.save(failOnError: true, flush: true)
+            Map resp = webService.post("${grailsApplication.config.alerts.url}/api/alerts/user/${user.id}/unsubscribe", [:])
+            if (resp.statusCode != HttpStatus.SC_OK) {
+                log.error("Alerts returned ${resp} when trying to disable the user's alerts. " +
+                        "The user has been disabled, but their alerts are still active.")
+            }
             true
         } catch (Exception e){
             log.error(e.getMessage(), e)
