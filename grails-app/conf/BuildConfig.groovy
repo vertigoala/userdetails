@@ -50,7 +50,7 @@ grails.project.dependency.resolution = {
         runtime (":ala-bootstrap2:2.4") {
             exclude "commons-httpclient"
         }
-        runtime ":ala-ws-plugin:0.1-SNAPSHOT"
+        runtime ":ala-ws-plugin:1.0"
         runtime (":ala-auth:1.2") {
             excludes "servlet-api", "commons-httpclient"
         }
