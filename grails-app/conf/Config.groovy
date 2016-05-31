@@ -96,10 +96,15 @@ environments {
         grails {
           mail {
             host = "localhost"
-            port = 1025
+            port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
             username = postie.emailSender
           }
         }
+        grails.mail.port = com.icegreen.greenmail.util.ServerSetupTest.SMTP.port
+        grails.serverURL = "http://devt.ala.org.au:8080/userdetails"
+    }
+    test{
+        greenmail.disabled=true
     }
     production {
         grails.serverURL = "http://auth.ala.org.au/userdetails"
@@ -112,6 +117,7 @@ environments {
             username = postie.emailSender
           }
         }
+        greenmail.disabled=true
     }
 }
 
@@ -173,7 +179,7 @@ oauth {
 }
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
 
-/* remove this line 
+/* remove this line
 // GSP settings
 grails {
     views {
