@@ -29,6 +29,9 @@ CAS manages the local authentication as well as third party auth provider integr
 * You will need MySQL running in your local environment
 * You will need to run [schema.sql](https://github.com/AtlasOfLivingAustralia/ala-install/blob/master/ansible/roles/userdetails/files/db/schema.sql) in the MySQL to create the database structure
 
+### Mail Server
+* You will get unexpected errors if you are not running a local mail server. The config.groovy is set up to point at a mail server on port 1025. This is a good option https://nilhcem.github.io/FakeSMTP/download.html.
+
 
 * The app is expected to run in the default port 8080 locally.
 

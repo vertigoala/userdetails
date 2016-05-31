@@ -9,9 +9,9 @@ grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.project.dependency.resolver = "maven" // or ivy
 
 grails.project.fork = [
-        test   : false,
-        run    : false,
-        war    : false,
+        test: false,
+        run: false,
+        war: false,
         console: false
 ]
 
@@ -33,7 +33,6 @@ grails.project.dependency.resolution = {
         //The repo below and commons-beanutils dependency are a workaround required to make export plugin work
         // More details at http://stackoverflow.com/questions/24411420/grails-export-plugin-errors
         mavenRepo "http://repo.grails.org/grails/core"
-        mavenRepo "http://download.java.net/maven/2/"
     }
 
     dependencies {
@@ -48,11 +47,11 @@ grails.project.dependency.resolution = {
     plugins {
         runtime ":hibernate:3.6.10.16"
 
-        runtime(":ala-bootstrap2:2.4") {
+        runtime (":ala-bootstrap2:2.4") {
             exclude "commons-httpclient"
         }
         runtime ":ala-ws-plugin:1.0"
-        runtime(":ala-auth:1.2") {
+        runtime (":ala-auth:1.2") {
             excludes "servlet-api", "commons-httpclient"
         }
         compile ":csv:0.3.1"
@@ -63,7 +62,6 @@ grails.project.dependency.resolution = {
         compile ":oauth:2.1.0"
         compile ":simple-captcha:0.9.9"
         compile ":export:1.6"
-        compile "org.grails.plugins:greenmail:1.3.4"
 
         build ':release:3.0.1', ':rest-client-builder:1.0.3', {
             export = false
