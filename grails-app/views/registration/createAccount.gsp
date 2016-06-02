@@ -56,7 +56,7 @@
     <div class="row-fluid">
         <div class="span4">
             <div>
-            <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration"  onsubmit="updateAccountSubmit.disabled = true; return true;">
+            <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" useToken="true" onsubmit="updateAccountSubmit.disabled = true; return true;">
 
                     <label for="firstName">First name</label>
                     <input id="firstName" name="firstName" type="text" class="input-xlarge" value="${user?.firstName}" data-validation-engine="validate[required]"/>
@@ -132,6 +132,9 @@
                 </g:else>
             </g:form>
             </div>
+            <g:if test="${flash.invalidToken}">
+                Please don't click the button twice.
+            </g:if>
         </div>
         <div class="span8 well">
             <g:if test="${!edit}">

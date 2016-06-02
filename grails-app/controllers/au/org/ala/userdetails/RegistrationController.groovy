@@ -18,49 +18,49 @@ class RegistrationController {
     def userService
 
     def index() {
-        redirect(action:'createAccount')
+        redirect(action: 'createAccount')
     }
 
     def createAccount = {}
 
     def editAccount = {
         def user = userService.currentUser
-        render(view:'createAccount', model: [edit:true, user:user, props:user?.propsAsMap()])
+        render(view: 'createAccount', model: [edit: true, user: user, props: user?.propsAsMap()])
     }
 
     def passwordReset = {
         User user = User.get(params.userId?.toLong())
-        if(!user){
-            render(view:'accountError', model:[msg: "User not found with ID ${params.userId}"])
-        } else if(user.tempAuthKey == params.authKey){
+        if (!user) {
+            render(view: 'accountError', model: [msg: "User not found with ID ${params.userId}"])
+        } else if (user.tempAuthKey == params.authKey) {
             //keys match, so lets reset password
-            render(view:'passwordReset', model:[user:user, authKey:params.authKey])
+            render(view: 'passwordReset', model: [user: user, authKey: params.authKey])
         } else {
-            render(view:'authKeyExpired')
+            render(view: 'authKeyExpired')
         }
     }
 
     def updatePassword = {
         User user = User.get(params.userId.toLong())
-        if(params.password == params.reenteredPassword){
-           //check the authKey for the user
-           if(user.tempAuthKey == params.authKey){
-               //update the password
-               def success = passwordService.resetPassword(user, params.password)
-               if(success){
-                   userService.clearTempAuthKey(user)
-                   redirect(controller: 'registration', action:'passwordResetSuccess')
-               } else {
-                   render(view:'accountError', model:[msg: "Failed to reset password"])
-               }
-           } else {
-               log.error "Password was not reset as AUTH_KEY did not match -- ${user.tempAuthKey} vs ${params.authKey}"
-               render(view:'accountError', model:[msg: "Password was not reset as AUTH_KEY did not match"])
-           }
-           log.info("Password successfully reset for user: " + params.userId)
+        if (params.password == params.reenteredPassword) {
+            //check the authKey for the user
+            if (user.tempAuthKey == params.authKey) {
+                //update the password
+                def success = passwordService.resetPassword(user, params.password)
+                if (success) {
+                    userService.clearTempAuthKey(user)
+                    redirect(controller: 'registration', action: 'passwordResetSuccess')
+                } else {
+                    render(view: 'accountError', model: [msg: "Failed to reset password"])
+                }
+            } else {
+                log.error "Password was not reset as AUTH_KEY did not match -- ${user.tempAuthKey} vs ${params.authKey}"
+                render(view: 'accountError', model: [msg: "Password was not reset as AUTH_KEY did not match"])
+            }
+            log.info("Password successfully reset for user: " + params.userId)
         } else {
-           //back to the original form
-           render(view:'passwordReset', model: [user:user, authKey:params.authKey, passwordMatchFail:true])
+            //back to the original form
+            render(view: 'passwordReset', model: [user: user, authKey: params.authKey, passwordMatchFail: true])
         }
     }
 
@@ -69,34 +69,33 @@ class RegistrationController {
      * This is required given that the view is not rendered directly by #disableAccount but rather a chain
      * of redirects:  userdetails logout, cas logout and finally this view
      */
-    def accountDisabled()
-    {
+    def accountDisabled() {
     }
 
-    def passwordResetSuccess(){
-        [serverUrl:grailsApplication.config.grails.serverURL + '/myprofile']
+    def passwordResetSuccess() {
+        [serverUrl: grailsApplication.config.grails.serverURL + '/myprofile']
     }
 
     def startPasswordReset = {
         //check for human
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
-        if(!captchaValid){
+        if (!captchaValid) {
             //send password reset link
-            render(view:'forgottenPassword', model:[email: params.email, captchaInvalid: true])
+            render(view: 'forgottenPassword', model: [email: params.email, captchaInvalid: true])
         } else {
             log.info("Starting password reset for email address: " + params.email)
             def user = User.findByEmail(params.email)
-            if(user){
+            if (user) {
                 try {
                     userService.resetAndSendTemporaryPassword(user, null, null, null)
-                } catch (Exception e){
+                } catch (Exception e) {
                     log.error("Problem starting password reset for email address: " + params.email)
                     log.error(e.getMessage(), e)
-                    render(view:'accountError', model:[msg: e.getMessage()])
+                    render(view: 'accountError', model: [msg: e.getMessage()])
                 }
             } else {
                 //send password reset link
-                render(view:'forgottenPassword', model:[email: params.email, captchaInvalid: false, invalidEmail:true])
+                render(view: 'forgottenPassword', model: [email: params.email, captchaInvalid: false, invalidEmail: true])
             }
         }
     }
@@ -110,12 +109,12 @@ class RegistrationController {
 
             if (success) {
                 redirect(controller: 'logout', action: 'logout', params: [casUrl: grailsApplication.config.security.cas.logoutUrl,
-                                                                          appUrl:grailsApplication.config.grails.serverURL + '/registration/accountDisabled'])
+                                                                          appUrl: grailsApplication.config.grails.serverURL + '/registration/accountDisabled'])
             } else {
-                render(view: "accountError", model:[msg: "Failed to disable user profile - unknown error"])
+                render(view: "accountError", model: [msg: "Failed to disable user profile - unknown error"])
             }
         } else {
-            render(view: "accountError", model:[msg: "The current user details could not be found"])
+            render(view: "accountError", model: [msg: "The current user details could not be found"])
         }
     }
 
@@ -133,44 +132,45 @@ class RegistrationController {
             if (success) {
                 redirect(controller: 'profile')
             } else {
-                render(view: "accountError", model:[msg: "Failed to update user profile - unknown error"])
+                render(view: "accountError", model: [msg: "Failed to update user profile - unknown error"])
             }
         } else {
-            render(view: "accountError", model:[msg: "The current user details could not be found"])
+            render(view: "accountError", model: [msg: "The current user details could not be found"])
         }
     }
 
     def register = {
+        withForm {
+            //create user account...
+            if (!params.email || userService.isEmailRegistered(params.email)) {
+                def inactiveUser = !userService.isActive(params.email)
+                render(view: 'createAccount', model: [edit: false, user: params, props: params, alreadyRegistered: true, inactiveUser: inactiveUser])
+            } else {
 
-        //create user account...
-        if(!params.email || userService.isEmailRegistered(params.email)){
-            def inactiveUser = !userService.isActive(params.email)
-            render(view:'createAccount', model:[edit:false, user:params, props:params, alreadyRegistered: true, inactiveUser: inactiveUser ])
-        } else {
+                try {
+                    //does a user with the supplied email address exist
+                    def user = userService.registerUser(params)
 
-            try {
-                //does a user with the supplied email address exist
-                def user = userService.registerUser(params)
-
-                //store the password
-                def success = passwordService.resetPassword(user, params.password)
-                if(success){
                     //store the password
-                    emailService.sendAccountActivation(user, user.tempAuthKey)
-                    redirect(action:'accountCreated', id: user.id)
-                } else {
-                    render(view:"accountError", model:[msg: "Failed to reset password"])
+                    def success = passwordService.resetPassword(user, params.password)
+                    if (success) {
+                        //store the password
+                        emailService.sendAccountActivation(user, user.tempAuthKey)
+                        redirect(action: 'accountCreated', id: user.id)
+                    } else {
+                        render(view: "accountError", model: [msg: "Failed to reset password"])
+                    }
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e)
+                    render(view: "accountError", model: [msg: e.getMessage()])
                 }
-            } catch(Exception e) {
-                log.error(e.getMessage(), e)
-                render(view:"accountError", model:[msg: e.getMessage()])
             }
         }
     }
 
     def accountCreated = {
         def user = User.get(params.id)
-        render(view:'accountCreated', model:[user:user])
+        render(view: 'accountCreated', model: [user: user])
     }
 
     def forgottenPassword = {}
@@ -178,12 +178,12 @@ class RegistrationController {
     def activateAccount = {
         def user = User.get(params.userId)
         //check the activation key
-        if(user.tempAuthKey == params.authKey){
+        if (user.tempAuthKey == params.authKey) {
             userService.activateAccount(user)
             redirect(url: grailsApplication.config.security.cas.loginUrl + "?email=" + user.email + "&service=" + grailsApplication.config.redirectAfterFirstLogin)
         } else {
             log.error('Auth keys did not match for user : ' + params.userId + ", supplied: " + params.authKey + ", stored: " + user.tempAuthKey)
-            render(view:"accountError")
+            render(view: "accountError")
         }
     }
 }
