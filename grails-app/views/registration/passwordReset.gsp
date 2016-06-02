@@ -35,7 +35,7 @@
 
     <div class="row-fluid">
 
-        <g:form name="resetPasswordForm" controller="registration" action="updatePassword">
+        <g:form name="resetPasswordForm" controller="registration" action="updatePassword" onsubmit="submitResetBtn.disabled = true; return true;">
 
             <label for="password">Your new password</label>
             <input id="password" type="password" name="password" value=""/>
