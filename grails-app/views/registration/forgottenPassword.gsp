@@ -6,6 +6,7 @@
     <title>Reset my password</title>
 </head>
 <body>
+
 <div class="row-fluid">
     <h1>Reset my password</h1>
     <div class="row-fluid">
@@ -22,7 +23,7 @@
             </p>
             </g:if>
 
-            <g:form action="startPasswordReset" method="POST">
+            <g:form action="startPasswordReset" method="POST" onsubmit="submitResetBtn.disabled = true; return true;">
                 <label for="email">Your email address</label>
                 <input id="email" name="email" type="text" class="input-xlarge" value="${params.email ?: email}"/>
                 <br/>
@@ -32,7 +33,7 @@
                 <g:textField name="captcha"/>
 
                 <br/>
-                <g:submitButton class="btn btn-ala" name="submit" value="Send Password Reset Link"/>
+                <g:submitButton id="submitResetBtn" class="btn btn-ala" name="submit" value="Send Password Reset Link"/>
             </g:form>
         </div>
         <div class="span6">
