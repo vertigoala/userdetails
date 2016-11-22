@@ -47,13 +47,14 @@ grails.project.dependency.resolution = {
     plugins {
         runtime ":hibernate:3.6.10.16"
 
-        runtime (":ala-bootstrap2:2.4") {
+        runtime (":ala-bootstrap2:2.4.5") {
             exclude "commons-httpclient"
         }
         runtime ":ala-ws-plugin:1.0"
-        runtime (":ala-auth:1.2") {
+        runtime (":ala-auth:1.3.4") {
             excludes "servlet-api", "commons-httpclient"
         }
+        runtime ":ala-admin-plugin:1.2"
         compile ":csv:0.3.1"
         build ":tomcat:7.0.54"
 
