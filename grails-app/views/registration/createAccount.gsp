@@ -151,8 +151,13 @@
                 <a href="${grailsApplication.config.privacyPolicy}">Privacy Policy</a>.
             </p>
             <p>
-                Your email address will be your ALA account id.  An account activation link will be
-                emailed to the address provided.
+                Your email address will be your ALA account login.
+                <g:if test="${!edit}">
+                    An &quot;account activation&quot; link will be
+                    emailed to the address provided. You need click this link, in order to complete the
+                    registration process. Note, you may need to check you spam/junk mail folder, as activation emails
+                    sometimes get caught by mail filters.
+                </g:if>
             </p>
         </div>
    </div>
