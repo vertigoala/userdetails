@@ -3,7 +3,8 @@ import au.org.ala.userdetails.marshaller.*;
 beans = {
     customObjectMarshallers(CustomObjectMarshallers){
         marshallers =[
-                new UserPropertyMarshaller()
+                new UserPropertyMarshaller(),
+                new UserMarshaller()
         ]
     }
 }
