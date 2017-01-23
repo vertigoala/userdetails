@@ -7,6 +7,7 @@ import org.codehaus.groovy.grails.web.converters.marshaller.json.CollectionMarsh
 import org.codehaus.groovy.grails.web.converters.marshaller.json.MapMarshaller
 import spock.lang.Specification
 
+import javax.servlet.http.HttpServletRequest
 import java.sql.Timestamp
 
 /**
@@ -15,6 +16,21 @@ import java.sql.Timestamp
 
 abstract class UserDetailsSpec extends Specification {
 
+
+    // These classes are a workaround for the difficulty in injecting Spock mocks into the filter class in unit tests.
+    public static class UnAuthorised extends AuthorisedSystemService {
+        @Override
+        def isAuthorisedSystem(HttpServletRequest request) {
+            return false
+        }
+    }
+
+    public static class Authorised extends AuthorisedSystemService {
+        @Override
+        def isAuthorisedSystem(HttpServletRequest request) {
+            return true
+        }
+    }
     void registerMarshallers() {
         // There are issues where tests fail the first time due to the custom marshallers not being registered.
         // This is a workaround to ensure the defaults are set.

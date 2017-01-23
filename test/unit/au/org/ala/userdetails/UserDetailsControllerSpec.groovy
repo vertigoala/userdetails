@@ -5,30 +5,12 @@ import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import org.apache.http.HttpStatus
 
-import javax.servlet.http.HttpServletRequest
-
 /**
  * Tests the UserDetailsController and the filtering behaviour associated with it.
  */
 @TestFor(UserDetailsController)
 @Mock([RoleBasedFilters, AuthorisedSystemService, User, Role, UserRole, UserProperty])
 class UserDetailsControllerSpec extends UserDetailsSpec {
-
-
-    // These classes are a workaround for the difficulty in injecting Spock mocks into the filter class in unit tests.
-    static class UnAuthorised extends AuthorisedSystemService {
-        @Override
-        def isAuthorisedSystem(HttpServletRequest request) {
-            return false
-        }
-    }
-
-    static class Authorised extends  AuthorisedSystemService {
-        @Override
-        def isAuthorisedSystem(HttpServletRequest request) {
-            return true
-        }
-    }
 
 
     private User user

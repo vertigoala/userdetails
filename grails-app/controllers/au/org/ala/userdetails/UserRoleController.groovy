@@ -1,6 +1,7 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.PreAuthorise
+import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
 
 @PreAuthorise
@@ -29,18 +30,27 @@ class UserRoleController {
 
     def list(Integer max) {
 
+        Map model
         if(params.role){
             def role = Role.findByRole(params.role)
             if(role){
                 params.max = Math.min(max ?: 100, 1000)
                 def list = UserRole.findAllByRole(role,params)
-                [userRoleInstanceList: list, userRoleInstanceTotal: UserRole.findAllByRole(role).size()]
+                model = [userRoleInstanceList: list, userRoleInstanceTotal: UserRole.findAllByRole(role).size()]
             } else {
-                [userRoleInstanceList: [], userRoleInstanceTotal: 0]
+                model = [userRoleInstanceList: [], userRoleInstanceTotal: 0]
             }
         } else {
             params.max = Math.min(max ?: 100, 1000)
-            [userRoleInstanceList: UserRole.list(params), userRoleInstanceTotal: UserRole.count()]
+            model = [userRoleInstanceList: UserRole.list(params), userRoleInstanceTotal: UserRole.count()]
+        }
+        withFormat {
+
+            html { model }
+            json {
+                Map toRender = [users:model.userRoleInstanceList.collect{it.user}, count:model.userRoleInstanceTotal]
+                render toRender as JSON
+            }
         }
     }
 
