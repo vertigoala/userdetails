@@ -8,15 +8,23 @@
 <body>
 <r:script>
     $(function(){
+        // Used to prevent double clicks from submitting the form twice.  Doing so will result in a confusing
+        // message sent back to the user.
+        var processingPasswordReset = false;
         $("#submitResetBtn").click(function() {
-            $('#submitResetBtn').attr('disabled','disabled');
-            if($('#reenteredPassword').val() != $('#password').val()){
-                alert("The supplied passwords do not match!")
-                $('#submitResetBtn').removeAttr('disabled');
-                event.preventDefault();
-            } else {
-                //submit the form
-                $("form[name='resetPasswordForm']").submit();
+            // Double clicks result in a confusing error being presented to the user.
+            if (!processingPasswordReset) {
+                processingPasswordReset = true;
+                $('#submitResetBtn').attr('disabled','disabled');
+                if($('#reenteredPassword').val() != $('#password').val()){
+                    processingPasswordReset = false;
+                    alert("The supplied passwords do not match!")
+                    $('#submitResetBtn').removeAttr('disabled');
+                    event.preventDefault();
+                } else {
+                    //submit the form
+                    $("form[name='resetPasswordForm']").submit();
+                }
             }
         });
     });
