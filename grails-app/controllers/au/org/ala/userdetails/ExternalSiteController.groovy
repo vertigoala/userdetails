@@ -2,6 +2,8 @@ package au.org.ala.userdetails
 
 class ExternalSiteController {
 
+    def userService
+
     def index() {}
 
     def flickr(){
@@ -19,5 +21,9 @@ class ExternalSiteController {
              }
           }
         }
+    }
+
+    def getUserStats(){
+        render(contentType: "text/json"){ userService.getUsersCounts(request.locale) }  // getUsersCounts is cached
     }
 }
