@@ -60,6 +60,10 @@
 }</pre>
                 </li>
             </ul>
+            <h2>Web services (HTTP GET)</h2>
+            <ul>
+                <li><a href="${createLink(uri:'/ws/getUserStats')}">${createLink(uri:'/ws/getUserStats')}</a> - a public web service that returns a JSON object containing a 'description' of the service, 'totalUsers' and 'totalUsersOneYearAgo' counts.</li>
+            </ul>
         </div>
     </div>
 </body>
