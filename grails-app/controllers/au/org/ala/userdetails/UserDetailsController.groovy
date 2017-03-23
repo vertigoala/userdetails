@@ -42,27 +42,30 @@ class UserDetailsController {
     }
 
     def getUserList(){
-
-        def users = User.findAll()
+        def users = User.executeQuery('select email, firstName, lastName from User where email is not null')
         def map = [:]
         users.each {
-            if(it.email){
-                map.put(it.email.toLowerCase(), it.firstName + " " + it.lastName)
+            if(it[0]){
+                map.put(it[0].toLowerCase(), it[1]?:"" + " " + it[2]?:"")
             }
         }
         render(contentType: "text/json"){ map }
     }
 
     def getUserListWithIds(){
-
-        def users = User.findAll()
+        def users = User.executeQuery('select id, firstName, lastName from User')
         def map = [:]
-        users.each { map.put(it.id, it.firstName + " "+ it.lastName) }
+        users.each { map.put(it[0], it[1]?:"" + " " + it[2]?:"") }
         render(contentType: "text/json"){ map }
     }
 
     def getUserListFull(){
-        render(contentType: "text/json"){ User.findAll() }
+        render(contentType: "text/json") {
+            //limit fields
+            User.executeQuery('select id, firstName, lastName, userName, email from User').collect {
+                [id: it[0], firstName: it[1]?:"", lastName: it[2]?:"", userName: it[3]?:"", email: it[4]?:""]
+            }
+        }
     }
 
     def getUserDetailsFromIdList() {
