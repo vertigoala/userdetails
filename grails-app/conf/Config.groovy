@@ -25,7 +25,7 @@ if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
 
 skin.layout = "main"
 skin.orgNameLong = "Atlas of Living Australia"
-skin.orgNameShort = "Atlas"
+skin.orgNameShort = "ALA"
 privacyPolicy = "http://www.ala.org.au/about/terms-of-use/privacy-policy/"
 
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
@@ -88,15 +88,17 @@ grails.hibernate.cache.queries = true
 // convert empty strings to NULL in DB
 grails.databinding.convertEmptyStringsToNull = false
 
+postie.emailSender = 'atlas-admin@ala.org.au'
+
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
-        grails.serverURL = "http://devt.ala.org.au:8080/userdetails"
+        grails.serverURL = "http://devt.ala.org.au:8051/userdetails"
         grails.logging.jul.usebridge = true
         grails {
           mail {
-            host = "localhost"
-            port = 1025
+            host =  "smtp-relay.csiro.au"  // "smtp-relay.csiro.au" "localhost"//
+            port =  25 //1025 //
             username = postie.emailSender
           }
         }
