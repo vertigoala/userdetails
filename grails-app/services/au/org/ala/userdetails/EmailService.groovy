@@ -53,6 +53,18 @@ class EmailService {
         }
     }
 
+    def sendAccountActivationSuccess(def user, def activatedAlerts) {
+        sendMail {
+            from grailsApplication.config.emailSenderTitle+"<" + grailsApplication.config.emailSender + ">"
+            subject "Account activated successfully"
+            to user.email
+            body (view: '/email/activateAccountSuccess',
+                    plugin:"email-confirmation",
+                    model:[activatedAlerts: activatedAlerts]
+            )
+        }
+    }
+
     def sendGeneratedPassword(user, generatedPassword){
         sendMail {
           from grailsApplication.config.emailSenderTitle+"<" + grailsApplication.config.emailSender + ">"

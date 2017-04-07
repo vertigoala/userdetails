@@ -180,7 +180,8 @@ class RegistrationController {
         //check the activation key
         if (user.tempAuthKey == params.authKey) {
             userService.activateAccount(user)
-            redirect(url: grailsApplication.config.security.cas.loginUrl + "?email=" + user.email + "&service=" + grailsApplication.config.redirectAfterFirstLogin)
+            render(view: 'accountActivatedSuccessful', model: [user: user])
+            //redirect(url: grailsApplication.config.security.cas.loginUrl + "?email=" + user.email + "&service=" + grailsApplication.config.redirectAfterFirstLogin)
         } else {
             log.error('Auth keys did not match for user : ' + params.userId + ", supplied: " + params.authKey + ", stored: " + user.tempAuthKey)
             render(view: "accountError")

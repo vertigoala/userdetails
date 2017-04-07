@@ -59,7 +59,13 @@ class UserService {
     }
 
     def activateAccount(user){
-        //TODO create alerts using a webservice......
+        Map resp = webService.post("${grailsApplication.config.alerts.url}/api/alerts/user/createAlerts", [:], [userId: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName])
+        if (resp.statusCode == HttpStatus.SC_CREATED) {
+            emailService.sendAccountActivationSuccess(user, resp.resp)
+        } else if (resp.statusCode != HttpStatus.SC_OK) {
+            log.error("Alerts returned ${resp} when trying to create user alerts for " + user.id + " with email: " + user.email)
+        }
+
         user.activated = true
         user.save(flush:true)
     }
