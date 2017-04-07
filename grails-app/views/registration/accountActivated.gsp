@@ -13,7 +13,7 @@
 
     <div class="row-fluid">
         <div class="span12 well well-large">
-            Thank you for registering with the ${grailsApplication.config.skin.orgNameShort}. To complete your account registration,
+            Thank you for registering with the ${grailsApplication.config.skin.orgNameLong}. To complete your account registration,
             please check your email and <b>click the link provided in the email</b>.
             <br/>
             If you have any problems please email
