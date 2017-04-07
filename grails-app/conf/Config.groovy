@@ -171,6 +171,19 @@ oauth {
     }
 //   debug = true
 }
+
+config.grails.cache.config = {
+    defaults {
+        eternal false
+        overflowToDisk false
+        maxElementsInMemory 10000
+        timeToLiveSeconds 3600
+    }
+    cache {
+        name 'dailyCache'
+        timeToLiveSeconds (3600 * 24)
+    }
+}
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
 
 /* remove this line 

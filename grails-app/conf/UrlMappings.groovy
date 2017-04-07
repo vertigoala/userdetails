@@ -19,6 +19,8 @@ class UrlMappings {
     }
 
     "/external/flickr"(controller: 'externalSite', action: 'flickr')
+    "/ws/flickr"(controller: 'externalSite', action: 'flickr')
+    "/ws/getUserStats"(controller:'externalSite', action: 'getUserStats')
 
     "/registration/$action?/$id?" {
        controller = 'registration'

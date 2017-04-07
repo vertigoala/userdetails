@@ -3,8 +3,12 @@ package au.org.ala.userdetails
 import au.org.ala.auth.BulkUserLoadResults
 import au.org.ala.auth.PasswordResetFailedException
 import au.org.ala.ws.service.WebService
+import grails.converters.JSON
+import grails.plugin.cache.Cacheable
 import grails.util.Environment
 import org.apache.http.HttpStatus
+
+import java.sql.Timestamp
 
 class UserService {
 
@@ -12,6 +16,7 @@ class UserService {
     def passwordService
     def authService
     def grailsApplication
+    def messageSource
     WebService webService
 
     def updateUser(user, params){
@@ -321,5 +326,25 @@ class UserService {
                 }
             }
         results
+    }
+
+    /**
+     * Calculate the number of active users (not locked and is activated), as well as the number
+     * of active users 1 year ago (for comparison).
+     *
+     * @return Map jsonMap
+     */
+    @Cacheable('dailyCache')
+    Map getUsersCounts(Locale locale) {
+        Map jsonMap = [description: messageSource.getMessage("getUserCounts.description", null, locale?:Locale.default)]
+        jsonMap.totalUsers = User.countByLockedAndActivated(false, true)
+        // calculate number of users 1 year ago
+        Calendar cal = Calendar.getInstance()
+        cal.add(Calendar.YEAR, -1); // minus 1 year
+        Date oneYearAgoDate = cal.getTime()
+        Timestamp oneYearAgoTimeStamp = new Timestamp(oneYearAgoDate.getTime())
+        jsonMap.totalUsersOneYearAgo = User.countByLockedAndActivatedAndCreatedLessThan(false, true, oneYearAgoTimeStamp)
+        log.debug "jsonMap = ${jsonMap as JSON}"
+        jsonMap
     }
 }

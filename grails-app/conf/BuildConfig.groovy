@@ -63,6 +63,8 @@ grails.project.dependency.resolution = {
         compile ":oauth:2.1.0"
         compile ":simple-captcha:0.9.9"
         compile ":export:1.6"
+        compile ':cache:1.1.8'
+        compile ":cache-ehcache:1.0.0"
 
         build ':release:3.0.1', ':rest-client-builder:1.0.3', {
             export = false
