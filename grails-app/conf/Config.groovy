@@ -25,7 +25,7 @@ if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
 
 skin.layout = "main"
 skin.orgNameLong = "Atlas of Living Australia"
-skin.orgNameShort = "Atlas"
+skin.orgNameShort = "ALA"
 privacyPolicy = "http://www.ala.org.au/about/terms-of-use/privacy-policy/"
 
 println "[${appName}] (*) grails.config.locations = ${grails.config.locations}"
