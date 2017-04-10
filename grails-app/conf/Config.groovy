@@ -88,17 +88,15 @@ grails.hibernate.cache.queries = true
 // convert empty strings to NULL in DB
 grails.databinding.convertEmptyStringsToNull = false
 
-postie.emailSender = 'atlas-admin@ala.org.au'
-
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
-        grails.serverURL = "http://devt.ala.org.au:8051/userdetails"
+        grails.serverURL = "http://devt.ala.org.au:8080/userdetails"
         grails.logging.jul.usebridge = true
         grails {
           mail {
-            host =  "smtp-relay.csiro.au"  // "smtp-relay.csiro.au" "localhost"//
-            port =  25 //1025 //
+            host = "localhost"
+            port = 1025
             username = postie.emailSender
           }
         }
