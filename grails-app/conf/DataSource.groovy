@@ -47,6 +47,14 @@ environments {
             password = "password"
         }
     }
+    test {
+        dataSource {
+            pooled = true
+            driverClassName = "org.h2.Driver"
+            username = "sa"
+            password = ""
+        }
+    }
     production {
         dataSource {
             dbCreate = "none"
