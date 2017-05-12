@@ -4,6 +4,7 @@ jdk:
 sudo: false
 branches:
   only:
+  - dev
   - master
   - hotfix
 before_install:
@@ -14,6 +15,7 @@ before_install:
  - ala_travis_grails_setup_env
 
 script:
+ - ala_travis_grails_test
  - ala_travis_grails_build
 
 env:

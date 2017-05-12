@@ -47,9 +47,9 @@ class UserRoleControllerSpec extends UserDetailsSpec {
 
         setup:
         defineBeans {
-            authorisedSystemService(UnAuthorised)
+            authorisedSystemService(UserDetailsSpec.UnAuthorised)
         }
-        request.format = 'json'
+        response.format = 'json'
 
         when:
         withFilters(action: 'list') {
@@ -64,7 +64,7 @@ class UserRoleControllerSpec extends UserDetailsSpec {
         setup:
         registerMarshallers()
         defineBeans {
-            authorisedSystemService(Authorised)
+            authorisedSystemService(UserDetailsSpec.Authorised)
         }
         request.format = 'json'
         response.format = 'json'
