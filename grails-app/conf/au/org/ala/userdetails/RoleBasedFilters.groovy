@@ -20,7 +20,7 @@ class RoleBasedFilters {
                 def method = controllerClass?.getMethod(actionName ?: "index", [] as Class[])
 
                 if (method && (controllerClass.isAnnotationPresent(PreAuthorise) || method.isAnnotationPresent(PreAuthorise))) {
-                    request.withFormat {
+                    response.withFormat {
                         html {
                             PreAuthorise pa = method.getAnnotation(PreAuthorise) ?: controllerClass.getAnnotation(PreAuthorise)
                             def requiredRole = pa.requiredRole()

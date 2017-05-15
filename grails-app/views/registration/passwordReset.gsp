@@ -11,20 +11,22 @@
         // Used to prevent double clicks from submitting the form twice.  Doing so will result in a confusing
         // message sent back to the user.
         var processingPasswordReset = false;
-        $("#submitResetBtn").click(function() {
+        var $form = $("form[name='resetPasswordForm']");
+        $form.submit(function(event) {
+
             // Double clicks result in a confusing error being presented to the user.
             if (!processingPasswordReset) {
                 processingPasswordReset = true;
                 $('#submitResetBtn').attr('disabled','disabled');
-                if($('#reenteredPassword').val() != $('#password').val()){
+                if($('#reenteredPassword').val() != $('#password').val()) {
+                    event.preventDefault();
                     processingPasswordReset = false;
                     alert("The supplied passwords do not match!")
                     $('#submitResetBtn').removeAttr('disabled');
-                    event.preventDefault();
-                } else {
-                    //submit the form
-                    $("form[name='resetPasswordForm']").submit();
                 }
+            }
+            else {
+                event.preventDefault();
             }
         });
     });
@@ -33,17 +35,17 @@
 <div class="row-fluid">
     <h1>Please supply your new password</h1>
 
-    <g:if test="${passwordMatchFail}">
-        <div class="well">
-            <p class="text-error">
-                The supplied passwords did not match.
-            </p>
-        </div>
-    </g:if>
+    <g:hasErrors>
+    <div class="alert alert-error">
+        <g:eachError var="err">
+            <p><g:message error="${err}"/></p>
+        </g:eachError>
+    </div>
+    </g:hasErrors>
 
     <div class="row-fluid">
 
-        <g:form name="resetPasswordForm" controller="registration" action="updatePassword" onsubmit="submitResetBtn.disabled = true; return true;">
+        <g:form useToken="true" name="resetPasswordForm" controller="registration" action="updatePassword">
 
             <label for="password">Your new password</label>
             <input id="password" type="password" name="password" value=""/>

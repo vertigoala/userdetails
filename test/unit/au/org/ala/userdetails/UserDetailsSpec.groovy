@@ -49,12 +49,12 @@ abstract class UserDetailsSpec extends Specification {
     }
 
 
-    protected User createUser() {
+    protected User createUser(String tempAuthKey = "") {
         Role role = new Role(role: 'ROLE_USER', description:"Everyone has this role")
         role.save(failOnError: true, flush: true)
 
 
-        User user = new User(firstName: 'test first', lastName: 'test last', email: 'test@test.com', userName:'test@test.com', activated: true, locked: false, created: new Timestamp(System.currentTimeMillis()))
+        User user = new User(firstName: 'test first', lastName: 'test last', email: 'test@test.com', userName:'test@test.com', activated: true, locked: false, created: new Timestamp(System.currentTimeMillis()), tempAuthKey: tempAuthKey)
         user.save(failOnError: true, flush: true)
 
         UserRole userRole = new UserRole(user:user, role:role)
