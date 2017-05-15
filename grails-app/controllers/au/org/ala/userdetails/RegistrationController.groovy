@@ -1,5 +1,7 @@
 package au.org.ala.userdetails
 
+import au.org.ala.auth.UpdatePasswordCommand
+
 /**
  * Controller that handles the interactions with general public.
  * Supports:
@@ -40,28 +42,34 @@ class RegistrationController {
         }
     }
 
-    def updatePassword = {
-        User user = User.get(params.userId.toLong())
-        if (params.password == params.reenteredPassword) {
-            //check the authKey for the user
-            if (user.tempAuthKey == params.authKey) {
-                //update the password
-                def success = passwordService.resetPassword(user, params.password)
-                if (success) {
-                    userService.clearTempAuthKey(user)
-                    redirect(controller: 'registration', action: 'passwordResetSuccess')
-                } else {
-                    render(view: 'accountError', model: [msg: "Failed to reset password"])
-                }
-            } else {
-                log.error "Password was not reset as AUTH_KEY did not match -- ${user.tempAuthKey} vs ${params.authKey}"
-                render(view: 'accountError', model: [msg: "Password was not reset as AUTH_KEY did not match"])
-            }
-            log.info("Password successfully reset for user: " + params.userId)
-        } else {
-            //back to the original form
-            render(view: 'passwordReset', model: [user: user, authKey: params.authKey, passwordMatchFail: true])
+    def updatePassword(UpdatePasswordCommand cmd) {
+
+        User user = User.get(cmd.userId)
+        if (cmd.hasErrors()) {
+            render(view: 'passwordReset', model: [user: user, authKey: cmd.authKey, errors:cmd.errors, passwordMatchFail: true])
         }
+        else {
+            withForm {
+                if (user.tempAuthKey == params.authKey) {
+                    //update the password
+                    def success = passwordService.resetPassword(user, cmd.password)
+                    if (success) {
+                        userService.clearTempAuthKey(user)
+                        redirect(controller: 'registration', action: 'passwordResetSuccess')
+                        log.info("Password successfully reset for user: " + cmd.userId)
+                    } else {
+                        render(view: 'accountError', model: [msg: "Failed to reset password"])
+                    }
+                } else {
+                    log.error "Password was not reset as AUTH_KEY did not match -- ${user.tempAuthKey} vs ${cmd.authKey}"
+                    render(view: 'accountError', model: [msg: "Password was not reset as AUTH_KEY did not match"])
+                }
+            }
+            .invalidToken {
+                redirect(action: 'duplicateSubmit', model: [msg: ""])
+            }
+        }
+
     }
 
     /**
@@ -70,6 +78,11 @@ class RegistrationController {
      * of redirects:  userdetails logout, cas logout and finally this view
      */
     def accountDisabled() {
+    }
+
+    /** Displayed as a result of a password update with a duplicate form submission. */
+    def duplicateSubmit() {
+        [serverUrl: grailsApplication.config.grails.serverURL + '/myprofile']
     }
 
     def passwordResetSuccess() {
