@@ -50,7 +50,7 @@ abstract class UserDetailsSpec extends Specification {
 
 
     protected User createUser(String tempAuthKey = "") {
-        Role role = new Role(role: 'ROLE_USER', description:"Everyone has this role")
+        Role role = Role.findOrCreateWhere(role: 'ROLE_USER', description:"Everyone has this role")
         role.save(failOnError: true, flush: true)
 
 

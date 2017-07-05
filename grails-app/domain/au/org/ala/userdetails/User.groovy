@@ -39,9 +39,42 @@ class User implements Serializable {
         tempAuthKey nullable: true
     }
 
-   def beforeInsert() {
+    static List<String[]> findNameAndEmailWhereEmailIsNotNull() {
+        withCriteria {
+            isNotNull('email')
+            projections {
+                property('email')
+                property('firstName')
+                property('lastName')
+            }
+        }
+    }
+
+    static List<String[]> findIdFirstAndLastName() {
+        withCriteria {
+            projections {
+                property('id')
+                property('firstName')
+                property('lastName')
+            }
+        }
+    }
+
+    static List<String[]> findUserDetails() {
+        withCriteria {
+            projections {
+                property('id')
+                property('firstName')
+                property('lastName')
+                property('userName')
+                property('email')
+            }
+        }
+    }
+
+    def beforeInsert() {
         created = new Date().toTimestamp()
-   }
+    }
 
     def propsAsMap(){
         def map = [:]

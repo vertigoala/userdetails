@@ -13,9 +13,8 @@ import org.apache.http.HttpStatus
 class UserDetailsControllerSpec extends UserDetailsSpec {
 
     private User user
+
     void setup() {
-        // This mocking isn't currently working.
-        User.metaClass.static.executeQuery = { query -> []}
         user = createUser()
     }
 
@@ -23,13 +22,12 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
 
         setup:
         defineBeans {
-            User.metaClass.static.executeQuery = { query -> []}
             authorisedSystemService(UserDetailsSpec.UnAuthorised)
         }
 
         when:
         withFilters(action:'getUserDetails') {
-            User.metaClass.static.executeQuery = { query -> []}
+            request.method = 'POST'
             controller.getUserDetails()
         }
         then:
@@ -38,7 +36,7 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
         when:
         response.reset()
         withFilters(action:'getUserList') {
-            User.metaClass.static.executeQuery = { query -> []}
+            request.method = 'POST'
             controller.getUserList()
         }
         then:
@@ -47,7 +45,7 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
         when:
         response.reset()
         withFilters(action:'getUserListWithIds') {
-            User.metaClass.static.executeQuery = { query -> []}
+            request.method = 'POST'
             controller.getUserListWithIds()
         }
         then:
@@ -56,6 +54,7 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
         when:
         response.reset()
         withFilters(action:'getUserListFull') {
+            request.method = 'POST'
             controller.getUserListFull()
         }
         then:
@@ -64,6 +63,7 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
         when:
         response.reset()
         withFilters(action:'getUserDetailsFromIdList') {
+            request.method = 'POST'
             controller.getUserDetailsFromIdList()
         }
         then:
@@ -71,7 +71,6 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
     }
 
     void "Authorised systems should be able to use the UserDetailsController web services"() {
-
         setup:
         registerMarshallers()
         defineBeans {
@@ -80,6 +79,7 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
 
         when:
         withFilters(action:'getUserDetails') {
+            request.method = 'POST'
             params.userName = Long.toString(user.id)
             controller.getUserDetails()
         }
@@ -89,11 +89,8 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
         when:
         response.reset()
         withFilters(action:'getUserList') {
-            try {
-                controller.getUserList()
-            }
-            // User.executeQuery throws an Exception and mocking isn't working
-            catch (UnsupportedOperationException e) {}
+            request.method = 'POST'
+            controller.getUserList()
         }
         then:
         response.status == HttpStatus.SC_OK
@@ -101,11 +98,8 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
         when:
         response.reset()
         withFilters(action:'getUserListWithIds') {
-            try {
-                controller.getUserListWithIds()
-            }
-            // User.executeQuery throws an Exception and mocking isn't working
-            catch (UnsupportedOperationException e) {}
+            request.method = 'POST'
+            controller.getUserListWithIds()
         }
         then:
         response.status == HttpStatus.SC_OK
@@ -113,18 +107,16 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
         when:
         response.reset()
         withFilters(action:'getUserListFull') {
-            try {
-                controller.getUserListFull()
-            }
-            // User.executeQuery throws an Exception and mocking isn't working
-            catch (UnsupportedOperationException e) {}
-            }
+            request.method = 'POST'
+            controller.getUserListFull()
+        }
         then:
         response.status == HttpStatus.SC_OK
 
         when:
         response.reset()
         withFilters(action:'getUserDetailsFromIdList') {
+            request.method = 'POST'
             controller.getUserDetailsFromIdList()
         }
         then:
@@ -133,6 +125,7 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
 
     void "A user can be found by user id"() {
         when:
+        request.method = 'POST'
         params.userName = Long.toString(user.id)
         controller.getUserDetails()
 

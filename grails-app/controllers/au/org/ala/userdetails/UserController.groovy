@@ -16,7 +16,7 @@ class UserController {
         redirect(action: "list", params: params)
     }
 
-    def addRole = {
+    def addRole() {
         def user = User.get(params.userId)
         [user:user, roles:Role.all]
     }
