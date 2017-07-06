@@ -131,6 +131,9 @@ environments {
           }
         }
     }
+    test {
+        security.cas.appServerName = "http://auth.ala.org.au"
+    }
     production {
         grails.serverURL = "http://auth.ala.org.au/userdetails"
         security.cas.appServerName = "http://auth.ala.org.au"

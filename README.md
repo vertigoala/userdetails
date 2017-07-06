@@ -7,7 +7,7 @@ The Atlas user management app (userdetails) manages profile information for user
 
 This application is the central repository for user information for Atlas systems requiring authentication.
 
-Userdetails works hand in hand with [CAS] (https://github.com/AtlasOfLivingAustralia/ala-cas-2.0) and both share the same underlying database.
+Userdetails works hand in hand with [CAS](https://github.com/AtlasOfLivingAustralia/ala-cas-2.0) and both share the same underlying database.
 
 CAS manages the local authentication as well as third party auth provider integrtion.
 
@@ -15,7 +15,7 @@ CAS manages the local authentication as well as third party auth provider integr
 ## General Information
 
 ### Technologies
-  * Grails framework: 2.3.11
+  * Grails framework: 2.5.6
   * JQuery
 
 ### Setup

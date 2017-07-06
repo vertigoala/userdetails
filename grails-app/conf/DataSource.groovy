@@ -49,6 +49,7 @@ environments {
     }
     test {
         dataSource {
+            dbCreate = "create-drop"
             pooled = true
             driverClassName = "org.h2.Driver"
             username = "sa"

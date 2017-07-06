@@ -49,7 +49,7 @@ grails.project.dependency.resolution = {
         runtime ":hibernate4:4.3.10"
 
         runtime ":ala-bootstrap2:2.5.0-SNAPSHOT"
-        runtime ":ala-ws-plugin:1.6.1"
+        runtime ":ala-ws-plugin:1.7"
         runtime ":ala-auth:2.1.3"
         runtime ":ala-admin-plugin:1.2"
         compile ":csv:0.3.1"
