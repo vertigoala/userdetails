@@ -6,10 +6,10 @@
     <title>Reset password form submission</title>
 </head>
 <body>
-<div class="row-fluid">
+<div class="row">
     <h1>Results of resetting your password</h1>
-    <div class="row-fluid">
-        <div class="alert">
+    <div class="row">
+        <div class="alert alert-warning">
             The system has detected more than one password reset attempt.  This can happen if the "Set my password" button is clicked more than once on the page you entered your new password.
         </div>
 

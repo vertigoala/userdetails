@@ -6,9 +6,9 @@
     <title>Reset password link expired</title>
 </head>
 <body>
-<div class="row-fluid">
+<div class="row">
     <h1>Reset password link expired</h1>
-    <div class="row-fluid">
+    <div class="row">
         <p>
             This link to start the process to reset your password has expired.<br/>
             If you have completed the <g:link controller="registration" action="forgottenPassword">Reset your password</g:link>

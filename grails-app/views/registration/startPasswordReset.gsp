@@ -6,10 +6,10 @@
     <title>Please check your email</title>
 </head>
 <body>
-<div class="row-fluid">
+<div class="row">
     <h1>Please check your email</h1>
-    <div class="row-fluid">
-        <div class="span12">
+    <div class="row">
+        <div class="col-md-12">
             <p class="well">
                 We have sent you an email with a link to reset your password.
                 <br/>

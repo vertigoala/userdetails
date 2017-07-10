@@ -6,7 +6,7 @@
     <title>My profile | ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 <body>
-<div class="row-fluid">
+<div class="row">
     <h1>Flickr success</h1>
     <table class="table">
         <tr>

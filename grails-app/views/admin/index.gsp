@@ -12,8 +12,8 @@
         </ul>
     </div>
 
-    <div class="row-fluid">
-        <div class="span12" id="page-body" role="main">
+    <div class="row">
+        <div class="col-md-12" id="page-body" role="main">
             <h1>User Administration</h1>
             <ul>
                 <li><g:link controller="user">Find a user</g:link></li>

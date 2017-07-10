@@ -6,13 +6,13 @@
     <title>Account created</title>
 </head>
 <body>
-<div class="row-fluid">
+<div class="row">
     <h1>
         Please check your email to activate your account and complete the registration process!
     </h1>
 
-    <div class="row-fluid">
-        <div class="span12 well well-large">
+    <div class="row">
+        <div class="col-md-12 well well-large">
             Thank you for registering with the ${grailsApplication.config.skin.orgNameLong}.
             <br/>
             To complete your account registration,

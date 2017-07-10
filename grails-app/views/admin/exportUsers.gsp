@@ -10,7 +10,7 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><a href="${createLink(controller:'admin', action:'index')}"><i class="icon-wrench"></i>&nbsp;Administration</a></li>
+                <li><a href="${createLink(controller:'admin', action:'index')}"><i class="glyphicon glyphicon-wrench"></i>&nbsp;Administration</a></li>
             </ul>
         </div>
 
@@ -20,8 +20,8 @@
             </div>
         </g:if>
 
-        <div class="row-fluid">
-            <div class="span12" id="page-body" role="main">
+        <div class="row">
+            <div class="col-md-12" id="page-body" role="main">
                 <h1>Export Users to CSV</h1>
                 <p>
                 Choose the options for exporting. The output will be in the following format:
@@ -47,35 +47,41 @@
             </div>
         </div>
         <g:form name="exportUsersForm" action="downloadUsersCsvFile" method="post"  class="form-horizontal well well-small">
-            <div class="control-group">
+            <div class="form-group">
             </div>
-            <div class="control-group">
-                <div class="controls">
-                    <label class="checkbox">
-                        <g:checkBox name="includeInactiveUsers"/> Include inactive users
-                    </label>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <g:checkBox name="includeInactiveUsers"/> Include inactive users
+                        </label>
+                    </div>
                 </div>
-                <div class="controls">
-                    <label class="checkbox">
-                        <g:checkBox name="includeExtraFields"/> Include extra data fields (e.g. organisation, primaryUserType, etc)
-                    </label>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <g:checkBox name="includeExtraFields"/> Include extra data fields (e.g. organisation, primaryUserType, etc)
+                        </label>
+                    </div>
                 </div>
-                <div class="controls">
-                    <label class="checkbox">
-                        <g:checkBox name="includeRoles"/> Include roles field
-                    </label>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <g:checkBox name="includeRoles"/> Include roles field
+                        </label>
+                    </div>
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="primaryUsage">
+            <div class="form-group">
+                <label class="col-sm-2" for="selectedRoles">
                     Only users in selected roles (defaults to all if none selected)
                 </label>
-                <div class="controls">
-                    <g:select size="10" name="selectedRoles" from="${roles}"  multiple="true"/>
+                <div class="col-sm-10">
+                    <g:select class="form-control" size="10" name="selectedRoles" from="${roles}"  multiple="true"/>
                 </div>
             </div>
-            <div class="control-group">
-                <div class="controls">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
                     <button id="downloadFileButton" class="btn btn-primary">Download CSV file</button>
                 </div>
             </div>

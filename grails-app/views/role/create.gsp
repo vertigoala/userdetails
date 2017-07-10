@@ -29,7 +29,7 @@
 		<div id="create-role" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
-                <div class="message well warning text-error" role="status">${flash.message}</div>
+                <div class="message well warning text-danger" role="status">${flash.message}</div>
 			</g:if>
 			<g:hasErrors bean="${roleInstance}">
               <div class="well warning">

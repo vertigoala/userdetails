@@ -32,18 +32,18 @@
     });
 </r:script>
 
-<div class="row-fluid">
+<div class="row">
     <h1>Please supply your new password</h1>
 
     <g:hasErrors>
-    <div class="alert alert-error">
+    <div class="alert alert-danger">
         <g:eachError var="err">
             <p><g:message error="${err}"/></p>
         </g:eachError>
     </div>
     </g:hasErrors>
 
-    <div class="row-fluid">
+    <div class="row">
 
         <g:form useToken="true" name="resetPasswordForm" controller="registration" action="updatePassword">
 
@@ -58,7 +58,7 @@
 
             <br/>
             <br/>
-            <button id="submitResetBtn" class="btn btn-ala">Set my password</button>
+            <button id="submitResetBtn" class="btn btn-primary">Set my password</button>
         </g:form>
    </div>
 </div>

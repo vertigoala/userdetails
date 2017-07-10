@@ -7,11 +7,11 @@
         <title>${title}</title>
     </head>
     <body>
-        <div class="inner row-fluid">
-            <div id="breadcrumb" class="span12">
+        <div class="inner row">
+            <div id="breadcrumb" class="col-md-12">
                 <ol class="breadcrumb">
-                    <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class=" icon icon-arrow-right"></span></li>
-                    <li><a href="${createLink(controller:'admin', action:'index')}">User Details Administration</a> <span class=" icon icon-arrow-right"></span></li>
+                    <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
+                    <li><a href="${createLink(controller:'admin', action:'index')}">User Details Administration</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
                     <li class="active">${title}</li>
                 </ol>
             </div>
@@ -23,8 +23,8 @@
             </div>
         </g:if>
 
-        <div class="row-fluid">
-            <div class="span12" id="page-body" role="main">
+        <div class="row">
+            <div class="col-md-12" id="page-body" role="main">
                 <h1>Bulk Load Users Results</h1>
                 <p>
                     <g:if test="${results.success}">
@@ -38,8 +38,8 @@
                     </g:else>
                 </p>
                 <h3>Upload results</h3>
-                <div class="row-fluid">
-                    <div class="span4">
+                <div class="row">
+                    <div class="col-md-4">
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>

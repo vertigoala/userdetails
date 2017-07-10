@@ -7,19 +7,19 @@
 </head>
 <body>
 
-<div class="inner row-fluid">
-    <div id="breadcrumb" class="span12">
+<div class="inner row">
+    <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class=" icon icon-arrow-right"></span></li>
+            <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
             <li class="active">My profile</li>
         </ol>
     </div>
 </div>
 
-<div class="row-fluid">
+<div class="row">
     <h1>Hello ${user.firstName} !</h1>
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="col-md-6">
             <ul>
                 <li>
                     <g:link controller="registration" action="editAccount">
@@ -88,7 +88,7 @@
 
 
 
-                    <g:link controller="profile" class="btn" action="removeFlickrLink" target="_blank">Remove link to flickr account</g:link>
+                    <g:link controller="profile" class="btn btn-default" action="removeFlickrLink" target="_blank">Remove link to flickr account</g:link>
                 </g:if>
                 <g:else>
                     <p>
@@ -96,7 +96,7 @@
                     so they can be attributed to you.
                     </p>
 
-                    <span class="btn">
+                    <span class="btn btn-default">
                         <oauth:connect provider="flickr">Link to my Flickr account</oauth:connect>
                     </span>
                 </g:else>

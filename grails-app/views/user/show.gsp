@@ -27,8 +27,8 @@
     </g:if>
     <ol class="property-list user">
 
-<div class="row-fluid">
-<div class="span8">
+<div class="row">
+<div class="col-md-8">
 
         <g:if test="${userInstance?.firstName}">
             <li class="fieldcontain">
@@ -112,7 +112,7 @@
 
         </g:if>
 </div>
-<div class="span4 well ">
+<div class="col-md-4 well ">
 
             <span id="activated-label" class="property-label"><g:message code="user.activated.label"
                                                                          default="Activated"/>:</span>

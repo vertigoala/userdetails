@@ -14,23 +14,23 @@
 </head>
 <body>
 
-<div class="inner row-fluid">
-    <div id="breadcrumb" class="span12">
+<div class="inner row">
+    <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class=" icon icon-arrow-right"></span></li>
+            <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
             <g:if test="${edit}">
-                <li><g:link controller="profile">My profile</g:link> <span class=" icon icon-arrow-right"></span></li>
+                <li><g:link controller="profile">My profile</g:link> <span class="glyphicon glyphicon-arrow-right"></span></li>
             </g:if>
             <li class="active">${title}</li>
         </ol>
     </div>
 </div>
 
-<div class="row-fluid">
+<div class="row">
     <h1>${title}</h1>
     <g:if test="${inactiveUser}">
-        <div class="row-fluid warning well">
-            <p class="text-error">A user is already registered with the email address <b>${params.email}</b> however it is currently disabled.
+        <div class="row warning well">
+            <p class="text-danger">A user is already registered with the email address <b>${params.email}</b> however it is currently disabled.
             </p>
 
             <p>
@@ -40,8 +40,8 @@
         </div>
     </g:if>
     <g:elseif test="${alreadyRegistered}">
-        <div class="row-fluid warning well">
-            <p class="text-error">A user is already registered with the email address <b>${params.email}</b>.</p>
+        <div class="row warning well">
+            <p class="text-danger">A user is already registered with the email address <b>${params.email}</b>.</p>
 
             <p>
                 To login with this user name, <a
@@ -53,20 +53,20 @@
         </div>
     </g:elseif>
 
-    <div class="row-fluid">
-        <div class="span4">
+    <div class="row">
+        <div class="col-md-4">
             <div>
             <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" useToken="true" onsubmit="updateAccountSubmit.disabled = true; return true;">
 
                     <label for="firstName">First name</label>
-                    <input id="firstName" name="firstName" type="text" class="input-xlarge" value="${user?.firstName}" data-validation-engine="validate[required]"/>
+                    <input id="firstName" name="firstName" type="text" class="form-control" value="${user?.firstName}" data-validation-engine="validate[required]"/>
 
                     <label for="lastName">Last name</label>
-                    <input id="lastName" name="lastName" type="text" class="input-xlarge" value="${user?.lastName}"  data-validation-engine="validate[required]"/>
+                    <input id="lastName" name="lastName" type="text" class="form-control" value="${user?.lastName}"  data-validation-engine="validate[required]"/>
 
 
                     <label for="email">Email address</label>
-                    <input id="email" name="email" type="text" class="input-xlarge" value="${user?.email}"
+                    <input id="email" name="email" type="text" class="form-control" value="${user?.email}"
                            data-validation-engine="validate[required,custom[email]]"
                            data-errormessage-value-missing="Email is required!"
                     />
@@ -75,7 +75,7 @@
                     <label for="password">Password</label>
                     <input id="password"
                            name="password"
-                           class="input-xlarge"
+                           class="form-control"
                            value=""
                            data-validation-engine="validate[required, minSize[8]]"
                            data-errormessage-value-missing="Password is required!"
@@ -85,7 +85,7 @@
                     <label for="reenteredPassword">Reentered password</label>
                     <input id="reenteredPassword"
                            name="reenteredPassword"
-                           class="input-xlarge"
+                           class="form-control"
                            value=""
                            data-validation-engine="validate[required, minSize[8]]"
                            data-errormessage-value-missing="Password is required!"
@@ -94,10 +94,10 @@
                     </g:if>
 
                     <label for="organisation">Organisation</label>
-                    <input id="organisation" name="organisation" type="text" class="input-xlarge" value="${props?.organisation}"/>
+                    <input id="organisation" name="organisation" type="text" class="form-control" value="${props?.organisation}"/>
 
                     <label for="city">City</label>
-                    <input id="city" name="city" type="text" class="input-xlarge" value="${props?.city}" />
+                    <input id="city" name="city" type="text" class="form-control" value="${props?.city}" />
 
                     <label for="state">State/territory</label>
                     <g:select id="state" name="state"
@@ -109,26 +109,26 @@
                     />
 
                     <label for="telephone">Telephone</label>
-                    <input id="telephone" name="telephone" type="text" class="input-xlarge" value="${props?.telephone}" />
+                    <input id="telephone" name="telephone" type="text" class="form-control" value="${props?.telephone}" />
 
                     <label for="primaryUserType">Primary usage</label>
-                    <input id="primaryUserType" name="primaryUserType" type="text" class="input-xlarge usageAuto"
+                    <input id="primaryUserType" name="primaryUserType" type="text" class="form-control usageAuto"
                            value="${props?.primaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
 
                     <label for="secondaryUserType">Secondary usage</label>
-                    <input id="secondaryUserType" name="secondaryUserType" type="text"  class="input-xlarge usageAuto"
+                    <input id="secondaryUserType" name="secondaryUserType" type="text"  class="form-control usageAuto"
                            value="${props?.secondaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
                 <br/>
                 <g:if test="${edit}">
-                    <button id="updateAccountSubmit" class="btn btn-ala">Update account</button>
-                    <button id="disableAccountSubmit" class="btn btn-ala delete">Disable account</button>
+                    <button id="updateAccountSubmit" class="btn btn-primary">Update account</button>
+                    <button id="disableAccountSubmit" class="btn btn-primary delete">Disable account</button>
                 </g:if>
                 <g:else>
-                    <button id="updateAccountSubmit" class="btn btn-ala">Create account</button>
+                    <button id="updateAccountSubmit" class="btn btn-primary">Create account</button>
                 </g:else>
             </g:form>
             </div>
@@ -136,7 +136,7 @@
                 Please don't click the button twice.
             </g:if>
         </div>
-        <div class="span8 well">
+        <div class="col-md-8 well">
             <g:if test="${!edit}">
                 <p>
                     To create your new account, fill in the fields opposite and click "Create".
