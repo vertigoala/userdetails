@@ -17,9 +17,9 @@
 <div class="inner row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
+            <li><a href="${grailsApplication.config.homeUrl}">Home</a></li>
             <g:if test="${edit}">
-                <li><g:link controller="profile">My profile</g:link> <span class="glyphicon glyphicon-arrow-right"></span></li>
+                <li><g:link controller="profile">My profile</g:link></li>
             </g:if>
             <li class="active">${title}</li>
         </ol>
@@ -57,21 +57,24 @@
         <div class="col-md-4">
             <div>
             <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" useToken="true" onsubmit="updateAccountSubmit.disabled = true; return true;">
-
+                <div class="form-group">
                     <label for="firstName">First name</label>
                     <input id="firstName" name="firstName" type="text" class="form-control" value="${user?.firstName}" data-validation-engine="validate[required]"/>
-
+                </div>
+                <div class="form-group">
                     <label for="lastName">Last name</label>
                     <input id="lastName" name="lastName" type="text" class="form-control" value="${user?.lastName}"  data-validation-engine="validate[required]"/>
-
-
+                </div>
+                <div class="form-group">
                     <label for="email">Email address</label>
                     <input id="email" name="email" type="text" class="form-control" value="${user?.email}"
                            data-validation-engine="validate[required,custom[email]]"
                            data-errormessage-value-missing="Email is required!"
                     />
+                </div>
 
-                    <g:if test="${!edit}">
+                <g:if test="${!edit}">
+                    <div class="form-group">
                     <label for="password">Password</label>
                     <input id="password"
                            name="password"
@@ -81,7 +84,8 @@
                            data-errormessage-value-missing="Password is required!"
                            type="password"
                     />
-
+                    </div>
+                    <div class="form-group">
                     <label for="reenteredPassword">Reentered password</label>
                     <input id="reenteredPassword"
                            name="reenteredPassword"
@@ -91,38 +95,45 @@
                            data-errormessage-value-missing="Password is required!"
                            type="password"
                     />
-                    </g:if>
-
+                    </div>
+                </g:if>
+                <div class="form-group">
                     <label for="organisation">Organisation</label>
                     <input id="organisation" name="organisation" type="text" class="form-control" value="${props?.organisation}"/>
-
+                </div>
+                <div class="form-group">
                     <label for="city">City</label>
                     <input id="city" name="city" type="text" class="form-control" value="${props?.city}" />
-
+                </div>
+                <div class="form-group">
                     <label for="state">State/territory</label>
                     <g:select id="state" name="state"
+                              class="form-control"
                               value="${props?.state}"
                               keys="['N/A', 'ACT', 'NSW', 'WA', 'VIC', 'SA', 'TAS', 'NT', 'QLD']"
                               from="['N/A', 'Australian Capital Territory', 'New South Wales',
                                       'Western Australia', 'Victoria', 'South Australia', 'Tasmania',
                                       'Northern Territory', 'Queensland']"
                     />
-
+                </div>
+                <div class="form-group">
                     <label for="telephone">Telephone</label>
                     <input id="telephone" name="telephone" type="text" class="form-control" value="${props?.telephone}" />
-
+                </div>
+                <div class="form-group">
                     <label for="primaryUserType">Primary usage</label>
                     <input id="primaryUserType" name="primaryUserType" type="text" class="form-control usageAuto"
                            value="${props?.primaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
-
+                </div>
+                <div class="form-group">
                     <label for="secondaryUserType">Secondary usage</label>
                     <input id="secondaryUserType" name="secondaryUserType" type="text"  class="form-control usageAuto"
                            value="${props?.secondaryUserType?:''}"
                            data-validation-engine="validate[required]"
                     />
-                <br/>
+                </div>
                 <g:if test="${edit}">
                     <button id="updateAccountSubmit" class="btn btn-primary">Update account</button>
                     <button id="disableAccountSubmit" class="btn btn-primary delete">Disable account</button>

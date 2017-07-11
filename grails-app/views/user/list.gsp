@@ -39,7 +39,7 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <table>
+    <table class="table">
         <thead>
         <tr>
             <g:sortableColumn property="id" title="${message(code: 'user.id.label', default: 'ID')}"/>

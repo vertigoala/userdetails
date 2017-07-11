@@ -18,9 +18,10 @@
     <div class="row">
         <div class="col-md-6">
             <g:form action="sendPasswordResetEmail" method="POST">
-                <label for="email">Email address of user</label>
-                <input id="email" name="email" type="text" class="form-control" value="${params.email ?: email}"/>
-                <br/>
+                <div class="form-group">
+                    <label for="email">Email address of user</label>
+                    <input id="email" name="email" type="text" class="form-control" value="${params.email ?: email}"/>
+                </div>
                 <g:submitButton class="btn btn-primary" name="submit" value="Send user password"/>
             </g:form>
         </div>

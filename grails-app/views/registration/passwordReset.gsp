@@ -46,18 +46,19 @@
     <div class="row">
 
         <g:form useToken="true" name="resetPasswordForm" controller="registration" action="updatePassword">
-
-            <label for="password">Your new password</label>
-            <input id="password" type="password" name="password" value=""/>
-
-            <label for="reenteredPassword">Re-enter Password</label>
-            <input id="reenteredPassword" type="password" name="reenteredPassword" value=""/>
-
             <input id="authKey" type="hidden" name="authKey" value="${authKey}"/>
             <input id="userId" type="hidden" name="userId" value="${user.id}"/>
 
-            <br/>
-            <br/>
+            <div class="form-group">
+                <label for="password">Your new password</label>
+                <input id="password" type="password" class="form-control" name="password" value=""/>
+            </div>
+
+            <div class="form-group">
+                <label for="reenteredPassword">Re-enter Password</label>
+                <input id="reenteredPassword" type="password" class="form-control" name="reenteredPassword" value=""/>
+            </div>
+
             <button id="submitResetBtn" class="btn btn-primary">Set my password</button>
         </g:form>
    </div>

@@ -10,7 +10,7 @@
 <div class="inner row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
+            <li><a href="${grailsApplication.config.homeUrl}">Home</a></li>
             <li class="active">My profile</li>
         </ol>
     </div>

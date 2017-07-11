@@ -24,13 +24,16 @@
             </g:if>
 
             <g:form action="startPasswordReset" method="POST" onsubmit="submitResetBtn.disabled = true; return true;">
-                <label for="email">Your email address</label>
-                <input id="email" name="email" type="text" class="form-control" value="${params.email ?: email}"/>
-                <br/>
+                <div class="form-group">
+                    <label for="email">Your email address</label>
+                    <input id="email" name="email" type="text" class="form-control" value="${params.email ?: email}"/>
+                </div>
 
                 <img src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/>
-                <label for="captcha">Type the letters above in the box below:</label>
-                <g:textField name="captcha"/>
+                <div class="form-group">
+                    <label for="captcha">Type the letters above in the box below:</label>
+                    <g:textField name="captcha" class="form-control"/>
+                </div>
 
                 <br/>
                 <g:submitButton id="submitResetBtn" class="btn btn-primary" name="submit" value="Send Password Reset Link"/>

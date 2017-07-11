@@ -10,8 +10,8 @@
         <div class="inner row">
             <div id="breadcrumb" class="col-md-12">
                 <ol class="breadcrumb">
-                    <li><a href="${grailsApplication.config.homeUrl}">Home</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
-                    <li><a href="${createLink(controller:'admin', action:'index')}">User Details Administration</a> <span class="glyphicon glyphicon-arrow-right"></span></li>
+                    <li><a href="${grailsApplication.config.homeUrl}">Home</a></li>
+                    <li><a href="${createLink(controller:'admin', action:'index')}">User Details Administration</a></li>
                     <li class="active">${title}</li>
                 </ol>
             </div>

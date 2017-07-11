@@ -12,7 +12,7 @@
     </h1>
 
     <div class="row">
-        <div class="col-md-12 well well-large">
+        <div class="col-md-12 well well-lg">
             Thank you for registering with the ${grailsApplication.config.skin.orgNameLong}.
             <br/>
             To complete your account registration,

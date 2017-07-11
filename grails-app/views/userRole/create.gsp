@@ -18,18 +18,18 @@
 			<h1>Add role for ${user}</h1>
 			<g:form action="addRole" >
 				<fieldset class="form">
-                        <label for="role">
+					<input type="hidden" id="userId" name="userId" value="${user.id}"/>
+					<div class="form-group">
+						<label for="role">
                             <g:message code="userRole.role.label" default="Role" />
                         </label>
-
-                        <input type="hidden" id="userId" name="userId" value="${user.id}"/>
-
-                        <g:select id="role" name="role.id" from="${roles}"
-                                  optionKey="role"  value="" class="many-to-one"/>
+						<g:select id="role" name="role.id" from="${roles}"
+                                  optionKey="role"  value="" class="form-control many-to-one"/>
+					</div>
 
 				</fieldset>
 				<fieldset class="buttons">
-					<g:submitButton name="add" class="save" value="${message(code: 'default.button.add.label', default: 'Add role')}" />
+					<g:submitButton name="add" class="btn btn-primary save" value="${message(code: 'default.button.add.label', default: 'Add role')}" />
 				</fieldset>
 			</g:form>
 		</div>
