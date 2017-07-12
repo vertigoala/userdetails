@@ -6,7 +6,7 @@
     <r:require modules="jqueryValidationEngine, autocomplete"/>
     <g:if test="${!alreadyRegistered && edit}">
         <g:set var="title">Edit your account</g:set>
-        %{--<meta name="breadcrumbParent" content="My Profile,${g.createLink(controller: 'profile')}" />--}%
+        <meta name="breadcrumbParent" content="My Profile,${g.createLink(controller: 'profile')}" />
     </g:if>
     <g:else>
         <g:set var="title">Create your account</g:set>
@@ -15,17 +15,17 @@
 </head>
 <body>
 
-<div class="row">
-    <div id="breadcrumb" class="col-md-12">
-        <ol class="breadcrumb">
-            <li><a href="${grailsApplication.config.homeUrl}">Home</a></li>
-            <g:if test="${edit}">
-                <li><g:link controller="profile">My profile</g:link></li>
-            </g:if>
-            <li class="active">${title}</li>
-        </ol>
-    </div>
-</div>
+%{--<div class="row">--}%
+    %{--<div id="breadcrumb" class="col-md-12">--}%
+        %{--<ol class="breadcrumb">--}%
+            %{--<li><a href="${grailsApplication.config.homeUrl}">Home</a></li>--}%
+            %{--<g:if test="${edit}">--}%
+                %{--<li><g:link controller="profile">My profile</g:link></li>--}%
+            %{--</g:if>--}%
+            %{--<li class="active">${title}</li>--}%
+        %{--</ol>--}%
+    %{--</div>--}%
+%{--</div>--}%
 
 <div class="row">
     <h1>${title}</h1>

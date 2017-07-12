@@ -3,20 +3,20 @@
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
         <meta name="section" content="home"/>
-        %{--<meta name="breadcrumbParent" content="User Details Administration,${createLink(controller:'admin', action:'index')}" />--}%
+        <meta name="breadcrumbParent" content="User Details Administration,${createLink(controller:'admin', action:'index')}" />
         <g:set var="title">Bulk Load Users Results |  ${grailsApplication.config.skin.orgNameLong} </g:set>
         <title>${title}</title>
     </head>
     <body>
-        <div class="inner row">
-            <div id="breadcrumb" class="col-md-12">
-                <ol class="breadcrumb">
-                    <li><a href="${grailsApplication.config.homeUrl}">Home</a></li>
-                    <li><a href="${createLink(controller:'admin', action:'index')}">User Details Administration</a></li>
-                    <li class="active">${title}</li>
-                </ol>
-            </div>
-        </div>
+        %{--<div class="inner row">--}%
+            %{--<div id="breadcrumb" class="col-md-12">--}%
+                %{--<ol class="breadcrumb">--}%
+                    %{--<li><a href="${grailsApplication.config.homeUrl}">Home</a></li>--}%
+                    %{--<li><a href="${createLink(controller:'admin', action:'index')}">User Details Administration</a></li>--}%
+                    %{--<li class="active">${title}</li>--}%
+                %{--</ol>--}%
+            %{--</div>--}%
+        %{--</div>--}%
 
         <g:if test="${flash.message}">
             <div class="alert alert-danger">

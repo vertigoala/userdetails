@@ -3,19 +3,19 @@
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    %{--<meta name="breadcrumb" content="My Profile" />--}%
+    <meta name="breadcrumb" content="My Profile" />
     <title>My profile | ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 <body>
 
-<div class="inner row">
-    <div id="breadcrumb" class="col-md-12">
-        <ol class="breadcrumb">
-            <li><a href="${grailsApplication.config.homeUrl}">Home</a></li>
-            <li class="active">My profile</li>
-        </ol>
-    </div>
-</div>
+%{--<div class="inner row">--}%
+    %{--<div id="breadcrumb" class="col-md-12">--}%
+        %{--<ol class="breadcrumb">--}%
+            %{--<li><a href="${grailsApplication.config.homeUrl}">Home</a></li>--}%
+            %{--<li class="active">My profile</li>--}%
+        %{--</ol>--}%
+    %{--</div>--}%
+%{--</div>--}%
 
 <div class="row">
     <h1>Hello ${user.firstName} !</h1>
