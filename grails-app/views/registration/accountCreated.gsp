@@ -17,7 +17,7 @@
                 Thank you for registering with the ${grailsApplication.config.skin.orgNameLong}.
                 <br/>
                 To complete your account registration,
-                please check your email for an &quot;Activate your account&quot; message<b> and click the link provided in the email</b>.
+                please check your email for an &quot;Activate your account&quot; message<strong> and click the link provided in the email</strong>.
                 Note, you will NOT be able to login until you have activated your account via this email.
                 <br/>
                 If you have any problems please email <a href="mailto:${grailsApplication.config.supportEmail}">${grailsApplication.config.supportEmail}</a>

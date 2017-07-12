@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-12">
             <p class="well">
-                The password has been reset for <b>${email}</b> and an email has been sent to the user containing the new password.
+                The password has been reset for <strong>${email}</strong> and an email has been sent to the user containing the new password.
             </p>
         </div>
    </div>

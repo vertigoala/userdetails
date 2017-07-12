@@ -30,27 +30,35 @@
 <div class="row">
     <h1>${title}</h1>
     <g:if test="${inactiveUser}">
-        <div class="row warning well">
-            <p class="text-danger">A user is already registered with the email address <b>${params.email}</b> however it is currently disabled.
-            </p>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="well">
+                    <p class="text-danger">A user is already registered with the email address <strong>${params.email}</strong> however it is currently disabled.
+                    </p>
 
-            <p>
-                If you think this is an error or you disabled your account please contact <a
-                    href="mailto:${grailsApplication.config.supportEmail}">${grailsApplication.config.supportEmail}</a>.
-            </p>
+                    <p>
+                        If you think this is an error or you disabled your account please contact <a
+                            href="mailto:${grailsApplication.config.supportEmail}">${grailsApplication.config.supportEmail}</a>.
+                    </p>
+                </div>
+            </div>
         </div>
     </g:if>
     <g:elseif test="${alreadyRegistered}">
-        <div class="row warning well">
-            <p class="text-danger">A user is already registered with the email address <b>${params.email}</b>.</p>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="well">
+                    <p class="text-danger">A user is already registered with the email address <strong>${params.email}</strong>.</p>
 
-            <p>
-                To login with this user name, <a
-                    href="${grailsApplication.config.security.cas.loginUrl}">click here</a>.<br/>
-                To start the process of resetting your password, <g:link controller="registration"
-                                                                         action="forgottenPassword"
-                                                                         params="${[email: params.email]}">click here</g:link>.
-            </p>
+                    <p>
+                        To login with this user name, <a
+                            href="${grailsApplication.config.security.cas.loginUrl}">click here</a>.<br/>
+                        To start the process of resetting your password, <g:link controller="registration"
+                                                                                 action="forgottenPassword"
+                                                                                 params="${[email: params.email]}">click here</g:link>.
+                    </p>
+                </div>
+            </div>
         </div>
     </g:elseif>
 

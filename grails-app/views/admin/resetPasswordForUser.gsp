@@ -10,8 +10,12 @@
     <h1>Reset password for user</h1>
 
     <g:if test="${emailNotRecognised}">
-    <div class="row warning well">
-        <p class="text-danger">Email address <b>${email}</b> not recognised.</p>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="well">
+                <p class="text-danger">Email address <strong>${email}</strong> not recognised.</p>
+            </div>
+        </div>
     </div>
     </g:if>
 
