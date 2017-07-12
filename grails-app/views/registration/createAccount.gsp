@@ -6,6 +6,7 @@
     <r:require modules="jqueryValidationEngine, autocomplete"/>
     <g:if test="${!alreadyRegistered && edit}">
         <g:set var="title">Edit your account</g:set>
+        %{--<meta name="breadcrumbParent" content="My Profile,${g.createLink(controller: 'profile')}" />--}%
     </g:if>
     <g:else>
         <g:set var="title">Create your account</g:set>
@@ -14,7 +15,7 @@
 </head>
 <body>
 
-<div class="inner row">
+<div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="${grailsApplication.config.homeUrl}">Home</a></li>
@@ -54,7 +55,33 @@
     </g:elseif>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8 col-md-push-4">
+            <div class="well">
+                <g:if test="${!edit}">
+                    <p>
+                        To create your new account, fill in the fields opposite and click "Create".
+                    </p>
+                </g:if>
+                <p>
+                    In the Primary and Secondary Usage fields you can enter your own text to describe your
+                    intended usage of the site. Examples include: "Amateur naturalist", "Photographer", "Ecologist".
+                </p>
+                <p>
+                    For the Atlas' policy on the collection and use of personal information see our
+                    <a href="${grailsApplication.config.privacyPolicy}">Privacy Policy</a>.
+                </p>
+                <p>
+                    Your email address will be your ALA account login.
+                    <g:if test="${!edit}">
+                        An &quot;account activation&quot; link will be
+                        emailed to the address provided. You need click this link, in order to complete the
+                        registration process. Note, you may need to check you spam/junk mail folder, as activation emails
+                        sometimes get caught by mail filters.
+                    </g:if>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 col-md-pull-8">
             <div>
             <g:form name="updateAccountForm" method="POST" action="${edit ? 'update' : 'register'}" controller="registration" useToken="true" onsubmit="updateAccountSubmit.disabled = true; return true;">
                 <div class="form-group">
@@ -146,30 +173,6 @@
             <g:if test="${flash.invalidToken}">
                 Please don't click the button twice.
             </g:if>
-        </div>
-        <div class="col-md-8 well">
-            <g:if test="${!edit}">
-                <p>
-                    To create your new account, fill in the fields opposite and click "Create".
-                </p>
-            </g:if>
-            <p>
-                In the Primary and Secondary Usage fields you can enter your own text to describe your
-                intended usage of the site. Examples include: "Amateur naturalist", "Photographer", "Ecologist".
-            </p>
-            <p>
-                For the Atlas' policy on the collection and use of personal information see our
-                <a href="${grailsApplication.config.privacyPolicy}">Privacy Policy</a>.
-            </p>
-            <p>
-                Your email address will be your ALA account login.
-                <g:if test="${!edit}">
-                    An &quot;account activation&quot; link will be
-                    emailed to the address provided. You need click this link, in order to complete the
-                    registration process. Note, you may need to check you spam/junk mail folder, as activation emails
-                    sometimes get caught by mail filters.
-                </g:if>
-            </p>
         </div>
    </div>
 </div>

@@ -55,9 +55,11 @@
                         <g:paginate total="${authorisedSystemInstanceTotal}" params="${params}" />
                     </div>
                 </div>
-                <div class="col-md-4 well">
-                    This is a list of IP address that can access the web services providing user information.
-                    Requests from IP addresses not listed here will get a HTTP 403 Forbidden response.
+                <div class="col-md-4">
+                    <div class="well">
+                        This is a list of IP address that can access the web services providing user information.
+                        Requests from IP addresses not listed here will get a HTTP 403 Forbidden response.
+                    </div>
                 </div>
             </div>
 		</div>

@@ -48,7 +48,7 @@ grails.project.dependency.resolution = {
     plugins {
         runtime ":hibernate4:4.3.10"
 
-        runtime ":ala-bootstrap3:1.7.0-SNAPSHOT"
+        runtime ":ala-bootstrap3:1.7.0"
         runtime ":resources:1.2.14"
         runtime ":ala-ws-plugin:1.7"
         runtime ":ala-auth:2.1.3"
@@ -64,7 +64,7 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.8'
         compile ":cache-ehcache:1.0.5"
 
-        build ':release:3.1.1', ':rest-client-builder:2.1.1', {
+        build ':release:3.1.2', ':rest-client-builder:2.1.1', {
             export = false
         }
     }

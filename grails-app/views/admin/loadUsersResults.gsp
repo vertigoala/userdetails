@@ -3,6 +3,7 @@
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
         <meta name="section" content="home"/>
+        %{--<meta name="breadcrumbParent" content="User Details Administration,${createLink(controller:'admin', action:'index')}" />--}%
         <g:set var="title">Bulk Load Users Results |  ${grailsApplication.config.skin.orgNameLong} </g:set>
         <title>${title}</title>
     </head>

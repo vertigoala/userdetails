@@ -12,8 +12,10 @@
     </h1>
 
     <div class="row">
-        <div class="col-md-12 well well-lg">
-            Please login in order to access <a href="${grailsApplication.config.security.cas.loginUrl}?email=${user.email}&service=${grailsApplication.config.redirectAfterFirstLogin}">My Profile</a>.
+        <div class="col-md-12">
+            <div class="well well-lg">
+                Please login in order to access <a href="${grailsApplication.config.security.cas.loginUrl}?email=${user.email}&service=${grailsApplication.config.redirectAfterFirstLogin}">My Profile</a>.
+            </div>
         </div>
     </div>
 </div>
