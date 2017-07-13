@@ -5,8 +5,9 @@
 		<meta name="layout" content="${grailsApplication.config.skin.layout}">
 		<g:set var="entityName" value="${message(code: 'role.label', default: 'Role')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
-        <r:require module="jqueryValidationEngine"/>
-        <r:script>
+		<asset:stylesheet src="jqueryValidationEngine.css" />
+		<asset:javascript src="jqueryValidationEngine.js" asset-defer="" />
+        <asset:script type="text/javascript">
             $(function(){
                 $('#validation-container').validationEngine('attach', {scroll: false});
                 $("#saveRoleForm").submit(function() {
@@ -16,7 +17,7 @@
                    }
                 });
             });
-        </r:script>
+        </asset:script>
 	</head>
 	<body>
 		<a href="#create-role" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

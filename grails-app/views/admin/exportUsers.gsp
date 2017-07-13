@@ -87,7 +87,7 @@
             </div>
         </g:form>
     </body>
-    <r:script>
+    <asset:script type="text/javascript">
         $(function(){
             $("#downloadFileButton").click(function(e) {
                 $("#downloadFileButton").attr('disabled','disabled');
@@ -100,5 +100,5 @@
                 }
             });
         });
-    </r:script>
+    </asset:script>
 </html>

@@ -6,7 +6,7 @@
     <title>Please supply your new password</title>
 </head>
 <body>
-<r:script>
+<asset:script type="text/javascript">
     $(function(){
         // Used to prevent double clicks from submitting the form twice.  Doing so will result in a confusing
         // message sent back to the user.
@@ -30,7 +30,7 @@
             }
         });
     });
-</r:script>
+</asset:script>
 
 <div class="row">
     <h1>Please supply your new password</h1>

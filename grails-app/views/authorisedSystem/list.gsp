@@ -64,7 +64,7 @@
             </div>
 		</div>
 	</body>
-    <r:script>
+    <asset:script type="text/javascript">
 
     function doSearch() {
         var query = $("#q").val();
@@ -99,5 +99,5 @@
 
     });
 
-    </r:script>
+    </asset:script>
 </html>

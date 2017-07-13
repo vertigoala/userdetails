@@ -3,7 +3,6 @@
 <head>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
-    <r:require modules="jqueryValidationEngine, autocomplete"/>
     <g:if test="${!alreadyRegistered && edit}">
         <g:set var="title">Edit your account</g:set>
         <meta name="breadcrumbParent" content="My Profile,${g.createLink(controller: 'profile')}" />
@@ -12,6 +11,7 @@
         <g:set var="title">Create your account</g:set>
     </g:else>
     <title>${title}</title>
+    <asset:stylesheet src="createAccount.css" />
 </head>
 <body>
 
@@ -185,7 +185,8 @@
    </div>
 </div>
 </body>
-<r:script>
+<asset:javascript src="createAccount.js" asset-defer="" />
+<asset:script type="text/javascript">
     $(function(){
 
         //$('.typeahead').typeahead();
@@ -242,5 +243,5 @@
 
 
     });
-</r:script>
+</asset:script>
 </html>
