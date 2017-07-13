@@ -15,18 +15,6 @@
 </head>
 <body>
 
-%{--<div class="row">--}%
-    %{--<div id="breadcrumb" class="col-md-12">--}%
-        %{--<ol class="breadcrumb">--}%
-            %{--<li><a href="${grailsApplication.config.homeUrl}">Home</a></li>--}%
-            %{--<g:if test="${edit}">--}%
-                %{--<li><g:link controller="profile">My profile</g:link></li>--}%
-            %{--</g:if>--}%
-            %{--<li class="active">${title}</li>--}%
-        %{--</ol>--}%
-    %{--</div>--}%
-%{--</div>--}%
-
 <div class="row">
     <h1>${title}</h1>
     <g:if test="${inactiveUser}">
