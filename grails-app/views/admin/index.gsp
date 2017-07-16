@@ -6,12 +6,6 @@
     <title>User Administration | ${grailsApplication.config.skin.orgNameLong}</title>
 </head>
 <body>
-    <div class="nav" role="navigation">
-        <ul>
-            <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        </ul>
-    </div>
-
     <div class="row">
         <div class="col-md-12" id="page-body" role="main">
             <h1>User Administration</h1>
