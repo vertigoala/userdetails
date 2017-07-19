@@ -5,20 +5,12 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}">
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
+    <meta name="breadcrumbParent" content="${g.createLink(action:"list")},${g.message(code:"default.list.label", args:"[entityName]")}" />
 </head>
 
 <body>
 <a href="#show-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                            default="Skip to content&hellip;"/></a>
-
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]"/></g:link></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label"
-                                                              args="[entityName]"/></g:link></li>
-    </ul>
-</div>
 
 <div id="show-user" class="content scaffold-show" role="main">
     <h1><g:message code="default.show.label" args="[entityName]"/></h1>
@@ -88,17 +80,6 @@
                 </li>
         </g:if>
 
-        %{--<g:if test="${userInstance?.userName}">--}%
-            %{--<li class="fieldcontain">--}%
-                %{--<span id="userName-label" class="property-label"><g:message code="user.userName.label"--}%
-                                                                            %{--default="User Name"/></span>--}%
-
-                %{--<span class="property-value" aria-labelledby="userName-label"><g:fieldValue bean="${userInstance}"--}%
-                                                                                            %{--field="userName"/></span>--}%
-
-            %{--</li>--}%
-        %{--</g:if>--}%
-
         <g:if test="${userInstance?.userProperties}">
 
                 <g:each in="${userInstance.userProperties}" var="u">
@@ -112,7 +93,8 @@
 
         </g:if>
 </div>
-<div class="col-md-4 well ">
+<div class="col-md-4">
+    <div class="well">
 
             <span id="activated-label" class="property-label"><g:message code="user.activated.label"
                                                                          default="Activated"/>:</span>
@@ -150,6 +132,7 @@
                 This is useful in cases when the user didn't receive the reset password e-mail, usually because spam filters got in the way.
             </p>
         </g:if>
+    </div>
 </div>
 </div>
 

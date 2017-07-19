@@ -7,13 +7,6 @@
         <title>${title} | ${grailsApplication.config.skin.orgNameLong}</title>
     </head>
     <body>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><a href="${createLink(controller:'admin', action:'index')}"><i class="glyphicon glyphicon-wrench"></i>&nbsp;Administration</a></li>
-            </ul>
-        </div>
-
         <g:if test="${flash.message}">
             <div class="alert alert-danger">
                 ${flash.message}

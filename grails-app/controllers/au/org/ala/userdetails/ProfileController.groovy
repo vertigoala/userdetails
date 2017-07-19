@@ -1,8 +1,8 @@
 package au.org.ala.userdetails
-import org.scribe.builder.ServiceBuilder
-import org.scribe.builder.api.FlickrApi
-import org.scribe.model.*
-import org.scribe.oauth.OAuthService
+import com.github.scribejava.core.builder.ServiceBuilder
+import com.github.scribejava.apis.FlickrApi
+import com.github.scribejava.core.model.*
+import com.github.scribejava.core.oauth.OAuthService
 import org.springframework.web.context.request.RequestContextHolder
 
 class ProfileController {
@@ -30,19 +30,17 @@ class ProfileController {
 
     def flickrCallback() {
 
-        Token token = session.getAt("flickr:oasRequestToken")
+        OAuth1RequestToken token = session.getAt("flickr:oasRequestToken")
         OAuthService service = new ServiceBuilder().
-                provider(FlickrApi.class).
                 apiKey(grailsApplication.config.oauth.providers.flickr.key).
-                apiSecret(grailsApplication.config.oauth.providers.flickr.secret).build()
+                apiSecret(grailsApplication.config.oauth.providers.flickr.secret).build(FlickrApi.instance())
 
-        Verifier verifer = new Verifier(params.oauth_verifier)
-        def accessToken = service.getAccessToken(token, verifer)
+        def accessToken = service.getAccessToken(token, params.oauth_verifier)
 
         // Now let's go and ask for a protected resource!
-        OAuthRequest request = new OAuthRequest(Verb.GET, "http://www.flickr.com/services/oauth/access_token");
-        service.signRequest(accessToken, request);
-        Response response = request.send();
+        OAuthRequest request = new OAuthRequest(Verb.GET, "http://www.flickr.com/services/oauth/access_token")
+        service.signRequest(accessToken, request)
+        Response response = service.execute(request)
         def model = [:]
         response.getBody().split("&").each {
             def property = it.substring(0, it.indexOf("="))

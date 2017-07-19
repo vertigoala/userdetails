@@ -5,7 +5,7 @@
     <meta name="section" content="home"/>
     <g:if test="${!alreadyRegistered && edit}">
         <g:set var="title">Edit your account</g:set>
-        <meta name="breadcrumbParent" content="My Profile,${g.createLink(controller: 'profile')}" />
+        <meta name="breadcrumbParent" content="${g.createLink(controller: 'profile')},My Profile" />
     </g:if>
     <g:else>
         <g:set var="title">Create your account</g:set>

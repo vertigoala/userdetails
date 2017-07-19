@@ -15,7 +15,7 @@ CAS manages the local authentication as well as third party auth provider integr
 ## General Information
 
 ### Technologies
-  * Grails framework: 2.5.6
+  * Grails framework: 3.2.11
   * JQuery
 
 ### Setup
