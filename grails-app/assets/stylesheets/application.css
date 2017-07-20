@@ -1,0 +1,9 @@
+/*
+ *= require_self
+ */
+.userdetails-menu {
+    list-style: circle;
+}
+.userdetails-menu li {
+    line-height: 1.6em;
+}

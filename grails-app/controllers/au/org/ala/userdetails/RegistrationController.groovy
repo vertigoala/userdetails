@@ -101,6 +101,7 @@ class RegistrationController {
             if (user) {
                 try {
                     userService.resetAndSendTemporaryPassword(user, null, null, null)
+                    [:]
                 } catch (Exception e) {
                     log.error("Problem starting password reset for email address: " + params.email)
                     log.error(e.getMessage(), e)

@@ -48,12 +48,12 @@ root(WARN, ['STDOUT'])
         'au.org.ala.cas.client'
     ],
     (INFO): [
+        'grails.plugin.externalconfig.ExternalConfig'
     ],
     (DEBUG): [
         'grails.app',
         'au.org.ala.cas',
-        'au.org.ala.userdetails',
-        'grails.plugin.externalconfig.ExternalConfig'
+        'au.org.ala.userdetails'
     ],
     (TRACE): [
     ]

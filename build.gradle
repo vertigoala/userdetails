@@ -32,6 +32,10 @@ repositories {
     maven { url "https://repo.grails.org/grails/core" }
 }
 
+bootRepackage {
+    enabled = false
+}
+
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
@@ -56,7 +60,7 @@ dependencies {
     // Grails plugin dependencies
 
     runtime "org.grails.plugins:ala-bootstrap3:3.0.0-SNAPSHOT"
-    compile 'org.grails.plugins:http-builder-helper:1.0.2.ALA-SNAPSHOT'
+    compile 'org.grails.plugins:http-builder-helper:1.0.2.ALA'
     compile "org.grails.plugins:ala-ws-plugin:2.0-SNAPSHOT"
     compile "org.grails.plugins:ala-auth:3.0.0"
     compile "org.grails.plugins:ala-admin-plugin:2.0-SNAPSHOT"

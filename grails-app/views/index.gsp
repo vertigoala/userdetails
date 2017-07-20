@@ -4,6 +4,7 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
     <title>${grailsApplication.config.skin.orgNameShort} accounts</title>
+    <asset:stylesheet src="application.css" />
 </head>
 <body>
 <div class="row">
@@ -19,7 +20,7 @@
         </g:if>
 
         <h1>${grailsApplication.config.skin.orgNameShort} accounts</h1>
-        <ul>
+        <ul class="userdetails-menu">
             <li><g:link controller="registration" action="createAccount">Create a new account</g:link></li>
             <li><g:link controller="registration" action="forgottenPassword">Reset my password</g:link></li>
             <li><g:link controller="profile">My profile</g:link></li>
