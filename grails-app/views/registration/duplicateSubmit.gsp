@@ -14,7 +14,7 @@
         </div>
 
         <strong>Next steps:</strong>
-        <ul>
+        <ul class="userdetails-menu">
             <li>
                 It is likely that your password has been reset successfully, please try and login <a href="${grailsApplication.config.security.cas.loginUrl}?service=${java.net.URLEncoder.encode(serverUrl, 'UTF-8')}">here</a> using your new password.
             </li>
