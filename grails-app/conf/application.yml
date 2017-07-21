@@ -19,6 +19,9 @@ grails:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
             events: false
+    plugins:
+        twitterbootstrap:
+            fixtaglib: true
 info:
     app:
         name: '@info.app.name@'
@@ -102,7 +105,8 @@ privacyPolicy: "http://www.ala.org.au/about/terms-of-use/privacy-policy/"
 
 security:
     cas:
-        uriFilterPattern: '/admin/.*,/registration/editAccount,/my-profile,/my-profile/,/myprofile/,/myprofile,/profile/.*,/admin/,/admin,/registration/disableAccount/.*,/registration/disableAccount,/registration/update,/registration/update/.*,/monitoring,/monitoring/*,/alaAdmin.*'
+        uriFilterPattern: '/admin/.*,/registration/editAccount,/my-profile,/my-profile/,/myprofile/,/myprofile,/profile/.*,/admin/,/admin,/registration/update,/registration/update/.*,/monitoring,/monitoring/*,/registration/disableAccount/.*,/registration/disableAccount,/admin/admin/downloadUsersCsvFile,/alaAdmin.*'
+#        uriFilterPattern: '/admin/.*,/registration/editAccount,/my-profile,/my-profile/,/myprofile/,/myprofile,/profile/.*,/admin/,/admin,/registration/disableAccount/.*,/registration/disableAccount,/registration/update,/registration/update/.*,/monitoring,/monitoring/*,/alaAdmin.*'
 
 environments:
     development:

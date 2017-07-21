@@ -27,18 +27,19 @@ class RoleBasedInterceptor {
                 html {
                     PreAuthorise pa = method.getAnnotation(PreAuthorise) ?: controllerClass.getAnnotation(PreAuthorise)
                     def requiredRole = pa.requiredRole()
-                    def inRole = RequestContextHolder.currentRequestAttributes()?.isUserInRole(requiredRole)
+                    def inRole = request?.isUserInRole(requiredRole)
 
                     if (!inRole) {
+                        log.warn("Denying access to $controllerName, $actionName to ${request?.userPrincipal?.name}")
                         flash.message = "Access denied: User does not have required permission."
-                        redirect(url: grailsApplication.config.security.cas.appServerName +
-                                grailsApplication.config.security.cas.contextPath)
+                        redirect(uri: '/')
                         result = false
                     }
                 }
 
                 json {
                     if (!authorisedSystemService.isAuthorisedSystem(request)) {
+                        log.warn("Denying access to $actionName from remote addr: ${request.remoteAddr}, remote host: ${request.remoteHost}")
                         response.sendError(HttpStatus.SC_UNAUTHORIZED)
 
                         result = false

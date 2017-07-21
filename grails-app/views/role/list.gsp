@@ -9,39 +9,42 @@
 		<meta name="breadcrumbParent" content="${createLink(controller:'admin', action:'index')},Administration" />
 	</head>
 	<body>
-		<a href="#list-role" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="list-role" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table>
-				<thead>
-					<tr>
-					
-						<g:sortableColumn property="role" title="${message(code: 'role.role.label', default: 'Role')}" />
-					
-						<g:sortableColumn property="description" title="${message(code: 'role.description.label', default: 'Description')}" />
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="list-role" class="content scaffold-list" role="main">
+					<h1><g:message code="default.list.label" args="[entityName]" /></h1>
+					<g:if test="${flash.message}">
+						<div class="message" role="status">${flash.message}</div>
+					</g:if>
+					<table class="table table-bordered table-striped table-condensed">
+						<thead>
+						<tr>
 
-                        <th>Actions</th>
-					
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${roleInstanceList}" status="i" var="roleInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td>${fieldValue(bean: roleInstance, field: "role")}</td>
-					
-						<td>${fieldValue(bean: roleInstance, field: "description")}</td>
+							<g:sortableColumn property="role" title="${message(code: 'role.role.label', default: 'Role')}" />
 
-                        <td><a href="${createLink(controller: 'userRole', action:'list', params:[role:roleInstance.role])}">View users</a></td>
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${roleInstanceTotal}" />
+							<g:sortableColumn property="description" title="${message(code: 'role.description.label', default: 'Description')}" />
+
+							<th>Actions</th>
+
+						</tr>
+						</thead>
+						<tbody>
+						<g:each in="${roleInstanceList}" status="i" var="roleInstance">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+								<td>${fieldValue(bean: roleInstance, field: "role")}</td>
+
+								<td>${fieldValue(bean: roleInstance, field: "description")}</td>
+
+								<td><a href="${createLink(controller: 'userRole', action:'list', params:[role:roleInstance.role])}">View users</a></td>
+							</tr>
+						</g:each>
+						</tbody>
+					</table>
+					<div class="text-center">
+						<hf:paginate total="${roleInstanceTotal}" params="${params}" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

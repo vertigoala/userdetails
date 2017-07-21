@@ -9,8 +9,6 @@
 </head>
 
 <body>
-<a href="#list-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
-                                                           default="Skip to content&hellip;"/></a>
 
 <div id="list-user" class="content scaffold-list" role="main">
 
@@ -32,7 +30,7 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <table class="table">
+    <table class="table-bordered table-striped table-condensed">
         <thead>
         <tr>
             <g:sortableColumn property="id" title="${message(code: 'user.id.label', default: 'ID')}"/>
@@ -80,9 +78,9 @@
     </table>
 
     <g:if test="${!q}">
-    <div class="pagination">
-        <g:paginate total="${userInstanceTotal}" params="[q:q]"/>
-    </div>
+        <div class="text-center">
+            <hf:paginate total="${userInstanceTotal}" params="[q:q]"/>
+        </div>
     </g:if>
 </div>
 </body>
