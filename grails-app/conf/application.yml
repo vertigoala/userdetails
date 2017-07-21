@@ -33,12 +33,6 @@ spring:
     groovy:
         template:
             check-template-location: false
-#server:
-#    contextPath: /userdetails
-#    tomcat:
-#        port-header: 'X-Forwarded-Port'
-#        protocol-header: 'X-Forwarded-Proto'
-#        remote-ip-header: 'X-Forwarded-For'
 # Spring Actuator Endpoints are Disabled by Default
 endpoints:
     enabled: false
