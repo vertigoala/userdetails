@@ -6,6 +6,7 @@
 		<g:set var="entityName" value="${message(code: 'role.label', default: 'Role')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 		<asset:stylesheet src="jqueryValidationEngine.css" />
+		<asset:stylesheet src="application.css" />
 		<asset:javascript src="jqueryValidationEngine.js" asset-defer="" />
         <asset:script type="text/javascript">
             $(function(){
@@ -43,7 +44,7 @@
 							<g:render template="form"/>
 						</fieldset>
 						<fieldset class="buttons">
-							<g:submitButton name="create" class="btn btn-primary save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+							<g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 						</fieldset>
 					</g:form>
 				</div>

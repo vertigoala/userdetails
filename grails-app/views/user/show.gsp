@@ -6,6 +6,7 @@
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
     <meta name="breadcrumbParent" content="${g.createLink(action:"list")},${g.message(code:"default.list.label", args:[entityName])}" />
+    <asset:stylesheet src="application.css" />
 </head>
 
 <body>

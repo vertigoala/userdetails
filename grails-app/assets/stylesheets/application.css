@@ -7,3 +7,29 @@
 .userdetails-menu li {
     line-height: 1.6em;
 }
+
+.property-list {
+    margin: .6em 1.25em 0 1.25em;
+    padding: .3em 1.8em 1.25em;
+    position: relative;
+    zoom: 1;
+    border: none;
+}
+
+.property-list .fieldcontain {
+    list-style: none;
+    overflow: hidden;
+    zoom: 1;
+    margin-top: 1em;
+}
+
+.property-list .fieldcontain .property-label {
+    float: left;
+    text-align: right;
+    width: 25%;
+}
+
+.property-list .fieldcontain .property-value {
+    display: block;
+    margin-left: 27%;
+}

@@ -17,6 +17,7 @@
                 <div class="col-md-8">
                     <div class="pull-right">
                         <div class="form-inline" style="margin-bottom: 10px">
+                            <g:link class="btn btn-primary" action="create"><i class="fa fa-pencil"></i> <g:message code="default.new.label" args="[entityName]" /></g:link>
                             <div class="form-group">
                                 <label class="sr-only" for="q">Query</label>
                                 <g:textField name="q" class="form-control" value="${params.q}" />

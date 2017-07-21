@@ -5,6 +5,7 @@
 		<meta name="layout" content="${grailsApplication.config.skin.layout}">
 		<g:set var="entityName" value="${message(code: 'userRole.label', default: 'UserRole')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
+		<asset:stylesheet src="application.css" />
 	</head>
 	<body>
 	<div class="row">
@@ -24,7 +25,7 @@
 
 					</fieldset>
 					<fieldset class="buttons">
-						<g:submitButton name="add" class="btn btn-primary save" value="${message(code: 'default.button.add.label', default: 'Add role')}" />
+						<g:submitButton name="add" class="btn btn-primary" value="${message(code: 'default.button.add.label', default: 'Add role')}" />
 					</fieldset>
 				</g:form>
 			</div>

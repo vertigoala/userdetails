@@ -4,6 +4,7 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
     <title>Account created | ${grailsApplication.config.skin.orgNameLong}</title>
+    <asset:stylesheet src="application.css" />
 </head>
 <body>
 <div class="row">

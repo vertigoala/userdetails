@@ -15,7 +15,8 @@
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-					<table class="table-bordered table-striped table-condensed">
+					<g:link class="btn btn-primary" action="create"><i class="fa fa-pencil"></i> <g:message code="default.new.label" args="[entityName]" /></g:link>
+					<table class="table table-bordered table-striped table-condensed">
 						<thead>
 						<tr>
 							<th><g:message code="userRole.user.label" default="ID" /></th>

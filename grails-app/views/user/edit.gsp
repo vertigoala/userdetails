@@ -6,6 +6,7 @@
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.edit.label" args="[entityName]"/></title>
     <meta name="breadcrumbParent" content="${g.createLink(action:"list")},${g.message(code:"default.list.label", args:[entityName])}" />
+    <asset:stylesheet src="application.css" />
 </head>
 
 <body>
@@ -34,7 +35,7 @@
                 <fieldset class="buttons">
                     <g:actionSubmit class="btn btn-primary" action="update"
                                     value="${message(code: 'default.button.update.label', default: 'Update')}"/>
-                    <g:actionSubmit class="btn btn-danger delete" action="delete"
+                    <g:actionSubmit class="btn btn-danger" action="delete"
                                     value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate=""
                                     onclick="return confirm('${message(code: 'default.button.delete.user.confirm.message', default: 'Are you sure want to delete this user? This may have serious implications if the user has used systems. Their information may need to be purged from other systems.')}');"/>
                 </fieldset>

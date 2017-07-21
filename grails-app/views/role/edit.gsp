@@ -6,6 +6,7 @@
 		<g:set var="entityName" value="${message(code: 'role.label', default: 'Role')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 		<meta name="breadcrumbParent" content="${g.createLink(action:"list")},${g.message(code:"default.list.label", args:[entityName])}" />
+		<asset:stylesheet src="application.css" />
 	</head>
 	<body>
 		<div class="row">
@@ -29,8 +30,8 @@
 							<g:render template="form"/>
 						</fieldset>
 						<fieldset class="buttons">
-							<g:actionSubmit class="btn btn-primary save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-							<g:actionSubmit class="btn btn-danger delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+							<g:actionSubmit class="btn btn-primary" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+							<g:actionSubmit class="btn btn-danger" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 						</fieldset>
 					</g:form>
 				</div>

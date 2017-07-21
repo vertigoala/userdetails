@@ -5,6 +5,7 @@
         <meta name="section" content="home"/>
         <g:set var="title">Export Users to CSV</g:set>
         <title>${title} | ${grailsApplication.config.skin.orgNameLong}</title>
+        <asset:stylesheet src="application.css" />
     </head>
     <body>
         <g:if test="${flash.message}">
@@ -39,7 +40,8 @@
                 </p>
             </div>
         </div>
-        <g:form name="exportUsersForm" action="downloadUsersCsvFile" method="post"  class="form-horizontal well well-small">
+    <div class="well well-small">
+        <g:form name="exportUsersForm" action="downloadUsersCsvFile" method="post"  class="form-horizontal">
             <div class="form-group">
             </div>
             <div class="form-group">
@@ -79,6 +81,7 @@
                 </div>
             </div>
         </g:form>
+    </div>
     </body>
     <asset:script type="text/javascript">
         $(function(){

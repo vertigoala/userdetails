@@ -7,6 +7,7 @@
 		<g:set var="entityName" value="${message(code: 'authorisedSystem.label', default: 'AuthorisedSystem')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 		<meta name="breadcrumbParent" content="${g.createLink(action:"list")},${g.message(code:"default.list.label", args:[entityName])}" />
+		<asset:stylesheet src="application.css" />
 	</head>
 	<body>
 		<div class="row">
@@ -34,8 +35,8 @@
 					<g:form>
 						<fieldset class="buttons">
 							<g:hiddenField name="id" value="${authorisedSystemInstance?.id}" />
-							<g:link class="edit" action="edit" id="${authorisedSystemInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-							<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+							<g:link class="btn btn-primary" action="edit" id="${authorisedSystemInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+							<g:actionSubmit class="btn btn-danger" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 						</fieldset>
 					</g:form>
 				</div>
