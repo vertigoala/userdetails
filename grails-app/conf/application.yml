@@ -90,6 +90,11 @@ grails:
 endpoints:
     jmx:
         unique-names: true
+password:
+    encoder: bcrypt # or legacy
+bcrypt:
+    strength: 10
+
 ---
 skin:
     layout: "main"

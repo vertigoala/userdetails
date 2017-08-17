@@ -4,24 +4,19 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MyPasswordEncoder{
+public class LegacyPasswordEncoder implements PasswordEncoder {
 
-    private String salt;
-    private String algorithm;
-    private boolean base64Encoding;
+    private final String salt;
+    private final String algorithm;
+    private final boolean base64Encoding;
 
-    public void setSalt(String salt) {
+    public LegacyPasswordEncoder(String salt, String algorithm, boolean base64Encoding) {
         this.salt = salt;
-    }
-
-    public void setAlgorithm(String algorithm) {
         this.algorithm = algorithm;
-    }
-
-    public void setBase64Encoding(boolean base64Encoding) {
         this.base64Encoding = base64Encoding;
     }
 
+    @Override
     public String encode(final String password) {
         String salted = password + "{" + this.salt + "}";
 

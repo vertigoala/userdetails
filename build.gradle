@@ -85,6 +85,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.3.3'
     compile 'org.apache.commons:commons-lang3:3.1'
     compile 'commons-beanutils:commons-beanutils:1.8.3'
+    compile 'org.mindrot:jbcrypt:0.4'
 }
 
 bootRun {

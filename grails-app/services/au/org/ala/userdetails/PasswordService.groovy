@@ -1,12 +1,23 @@
 package au.org.ala.userdetails
 
-import au.org.ala.cas.encoding.MyPasswordEncoder
+import au.org.ala.cas.encoding.BcryptPasswordEncoder
+import au.org.ala.cas.encoding.LegacyPasswordEncoder
+import org.apache.commons.lang3.RandomStringUtils
+import org.springframework.beans.factory.annotation.Value
 
 class PasswordService {
 
-    def serviceMethod() {}
+    static final String BCRYPT_ENCODER_TYPE = 'bcrypt'
+    static final String LEGACY_ENCODER_TYPE = 'legacy'
 
-    def grailsApplication
+    @Value('${password.encoder}')
+    String passwordEncoderType = 'bcrypt'
+    @Value('${bcrypt.strength}')
+    Integer bcryptStrength = 10
+    @Value('${encoding.algorithm}')
+    String legacyAlgorithm
+    @Value('${encoding.salt}')
+    String legacySalt
 
     /**
      * Trigger a password reset
@@ -25,17 +36,16 @@ class PasswordService {
                it.delete(flush:true)
            }
 
-           def encoder = new MyPasswordEncoder()
-           encoder.setAlgorithm(grailsApplication.config.encoding.algorithm)
-           encoder.setSalt(grailsApplication.config.encoding.salt)
-           encoder.setBase64Encoding(true)
+           boolean isBcrypt = passwordEncoderType.equalsIgnoreCase(BCRYPT_ENCODER_TYPE)
 
+           def encoder = isBcrypt ? new BcryptPasswordEncoder(bcryptStrength) : new LegacyPasswordEncoder(legacyAlgorithm, legacySalt, true)
            def encodedPassword = encoder.encode(newPassword)
 
            //reuse object if old password
            def password = new Password()
            password.user = user
            password.password = encodedPassword
+           password.type = isBcrypt ? BCRYPT_ENCODER_TYPE : LEGACY_ENCODER_TYPE
            password.created = new Date().toTimestamp()
            password.status = "CURRENT"
            password.save(flush:true)
@@ -48,17 +58,8 @@ class PasswordService {
 
     String generatePassword(user){
        //generate a new password
-       def start = UUID.randomUUID().toString()
-       def encoder = new MyPasswordEncoder()
-       encoder.setAlgorithm(grailsApplication.config.encoding.algorithm)
-       encoder.setSalt(grailsApplication.config.encoding.salt)
-       encoder.setBase64Encoding(true)
-       def newPassword = encoder.encode(start).toLowerCase().replaceAll(/[^A-Za-z0-9]/, "");
+       def newPassword = RandomStringUtils.random(10)
 
-       //make it 10 characters
-       newPassword = newPassword.substring(0,10)
-
-       //remove non-alpha numerics
        resetPassword(user, newPassword)
        newPassword
     }
