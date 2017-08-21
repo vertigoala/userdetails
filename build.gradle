@@ -1,3 +1,5 @@
+import static org.springframework.boot.gradle.SpringBootPluginExtension.LayoutType.*
+
 buildscript {
     repositories {
         mavenLocal()
@@ -30,12 +32,6 @@ repositories {
     mavenLocal()
     maven { url "https://nexus.ala.org.au/content/groups/public/" }
     maven { url "https://repo.grails.org/grails/core" }
-}
-
-bootRepackage {
-    enabled = true
-    executable = true
-    classifier = 'exec'
 }
 
 dependencies {
@@ -90,9 +86,19 @@ dependencies {
     compile 'org.mindrot:jbcrypt:0.4'
 }
 
+springBoot {
+    layout = WAR
+}
+
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
     addResources = true
+}
+
+bootRepackage {
+    enabled = true
+    executable = true
+    classifier = 'exec'
 }
 
 assets {
