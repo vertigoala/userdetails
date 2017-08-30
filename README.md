@@ -4,7 +4,7 @@ userdetails
 
 ## Note
 
-v1.0 of userdetails requires [ALA CAS 5](https://github.com/AtlasOfLivingAustralia/ala-cas-5)
+v2.0 of userdetails requires [ALA CAS 5](https://github.com/AtlasOfLivingAustralia/ala-cas-5)
 
 ## About
 The Atlas user management app (userdetails) manages profile information for users.
