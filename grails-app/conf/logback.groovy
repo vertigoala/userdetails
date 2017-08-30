@@ -62,6 +62,8 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
+jmxConfigurator()
+
 root(WARN, [TOMCAT_LOG])
 [
     (OFF): [],
