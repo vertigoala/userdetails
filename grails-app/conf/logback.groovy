@@ -84,7 +84,8 @@ root(WARN, [TOMCAT_LOG])
     ],
     (DEBUG): [
         'au.org.ala.cas',
-        'au.org.ala.userdetails'
+        'au.org.ala.userdetails',
+        'grails.plugin.cache'
     ],
     (TRACE): [
     ]
