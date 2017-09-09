@@ -17,6 +17,7 @@ class UserMarshaller {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                locked: user.locked,
                 roles: user.getUserRoles()?.collect{ it.toString(); }?:[]
         ]
     }
