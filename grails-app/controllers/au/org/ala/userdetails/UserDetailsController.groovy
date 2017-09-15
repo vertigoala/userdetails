@@ -43,12 +43,7 @@ class UserDetailsController {
 
     def getUserList() {
         def users = User.findNameAndEmailWhereEmailIsNotNull()
-        def map = [:]
-        users.each {
-            if(it[0]){
-                map.put(it[0].toLowerCase(), it[1]?:"" + " " + it[2]?:"")
-            }
-        }
+        def map = users.collectEntries { [(it[0].toLowerCase()): "${it[1]?:""} ${it[2]?:""}"]}
         render(map as JSON, contentType: "text/json")
     }
 
@@ -101,10 +96,10 @@ class UserDetailsController {
                     JSON.use(null) // Reset to default
                 }
             } catch (Exception ex) {
-                render(contentType: "text/json") { [success: false, message: "Exception: ${ex.toString()}"] }
+                render([success: false, message: "Exception: ${ex.toString()}"] as JSON, contentType: "text/json")
             }
         } else {
-            render(contentType: "text/json") { [success: false, message: "Body must contain JSON map payload with 'userIds' key that contains a list of user ids"] }
+            render([success: false, message: "Body must contain JSON map payload with 'userIds' key that contains a list of user ids"] as JSON, contentType: "text/json")
         }
 
     }

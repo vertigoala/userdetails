@@ -1,29 +1,28 @@
 package au.org.ala.userdetails
 
+import grails.converters.JSON
+
 class ExternalSiteController {
 
     def userService
 
     def index() {}
 
-    def flickr(){
+    def flickr() {
 
         def flickrIds = UserProperty.findAllByProperty("flickrId")
         render(contentType: "text/json") {
-          array {
-                flickrIds.each { flickrId ->
-                  user (
-                      id: flickrId.user.id.toString(),
-                      externalId: flickrId.value,
-                      externalUsername: flickrId.user.propsAsMap().flickrUsername,
-                      externalUrl: 'http://www.flickr.com/photos/' + flickrId.value
-                  )
-             }
-          }
+            flickrUsers(flickrIds) { UserProperty flickrId ->
+                id flickrId.user.id.toString()
+                externalId flickrId.value
+                externalUsername flickrId.user.propsAsMap().flickrUsername
+                externalUrl 'http://www.flickr.com/photos/' + flickrId.value
+            }
         }
     }
 
-    def getUserStats(){
-        render(contentType: "text/json"){ userService.getUsersCounts(request.locale) }  // getUsersCounts is cached
+    def getUserStats() {
+        def stats = userService.getUsersCounts(request.locale)
+        render(stats as JSON, contentType: "text/json")  // getUsersCounts is cached
     }
 }
