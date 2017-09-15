@@ -40,7 +40,7 @@ class User implements Serializable {
     }
 
     static List<String[]> findNameAndEmailWhereEmailIsNotNull() {
-        withCriteria {
+        return User.withCriteria {
             isNotNull('email')
             projections {
                 property('email')
@@ -51,7 +51,7 @@ class User implements Serializable {
     }
 
     static List<String[]> findIdFirstAndLastName() {
-        withCriteria {
+        return User.withCriteria {
             projections {
                 property('id')
                 property('firstName')
@@ -61,7 +61,7 @@ class User implements Serializable {
     }
 
     static List<String[]> findUserDetails() {
-        withCriteria {
+        return User.withCriteria {
             projections {
                 property('id')
                 property('firstName')
