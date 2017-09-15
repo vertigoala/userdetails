@@ -2,7 +2,7 @@ package au.org.ala.userdetails
 
 import au.org.ala.auth.BulkUserLoadResults
 import au.org.ala.auth.PasswordResetFailedException
-import au.org.ala.ws.service.WebService
+//import au.org.ala.ws.service.WebService
 import grails.converters.JSON
 import grails.plugin.cache.Cacheable
 import grails.util.Environment
@@ -17,7 +17,7 @@ class UserService {
     def authService
     def grailsApplication
     def messageSource
-    WebService webService
+    def webService
 
     def updateUser(user, params){
         try {

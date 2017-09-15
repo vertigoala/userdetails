@@ -48,7 +48,7 @@ class EmailService {
           to user.email
           body (view: '/email/activateAccount',
                 plugin:"email-confirmation",
-                model:[link:getServerUrl() + "activateAccount/" + user.id + "/"  + authKey ]
+                model:[link:getServerUrl() + "activateAccount/" + user.id + "/"  + authKey, orgNameLong: grailsApplication.config.skin.orgNameLong ]
           )
         }
     }
@@ -60,7 +60,7 @@ class EmailService {
             to user.email
             body (view: '/email/activateAccountSuccess',
                     plugin:"email-confirmation",
-                    model:[activatedAlerts: activatedAlerts]
+                    model:[activatedAlerts: activatedAlerts, alertsUrl: grailsApplication.config.alerts.url]
             )
         }
     }

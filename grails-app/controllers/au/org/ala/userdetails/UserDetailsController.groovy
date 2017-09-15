@@ -41,31 +41,28 @@ class UserDetailsController {
 
     }
 
-    def getUserList(){
-        def users = User.executeQuery('select email, firstName, lastName from User where email is not null')
+    def getUserList() {
+        def users = User.findNameAndEmailWhereEmailIsNotNull()
         def map = [:]
         users.each {
             if(it[0]){
                 map.put(it[0].toLowerCase(), it[1]?:"" + " " + it[2]?:"")
             }
         }
-        render(contentType: "text/json"){ map }
+        render(map as JSON, contentType: "text/json")
     }
 
-    def getUserListWithIds(){
-        def users = User.executeQuery('select id, firstName, lastName from User')
-        def map = [:]
-        users.each { map.put(it[0], it[1]?:"" + " " + it[2]?:"") }
-        render(contentType: "text/json"){ map }
+    def getUserListWithIds() {
+        def users = User.findIdFirstAndLastName()
+        def map = users.collectEntries { [(it[0]), "${it[1]?:""} ${it[2]?:""}"] }
+        render(map as JSON, contentType: "text/json")
     }
 
-    def getUserListFull(){
-        render(contentType: "text/json") {
-            //limit fields
-            User.executeQuery('select id, firstName, lastName, userName, email from User').collect {
-                [id: it[0], firstName: it[1]?:"", lastName: it[2]?:"", userName: it[3]?:"", email: it[4]?:""]
-            }
+    def getUserListFull() {
+        def details = User.findUserDetails().collect {
+            [id: it[0], firstName: it[1]?:"", lastName: it[2]?:"", userName: it[3]?:"", email: it[4]?:""]
         }
+        render(details as JSON, contentType: "text/json")
     }
 
     def getUserDetailsFromIdList() {

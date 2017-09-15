@@ -23,14 +23,14 @@ class RegistrationController {
         redirect(action: 'createAccount')
     }
 
-    def createAccount = {}
+    def createAccount() {}
 
-    def editAccount = {
+    def editAccount() {
         def user = userService.currentUser
         render(view: 'createAccount', model: [edit: true, user: user, props: user?.propsAsMap()])
     }
 
-    def passwordReset = {
+    def passwordReset() {
         User user = User.get(params.userId?.toLong())
         if (!user) {
             render(view: 'accountError', model: [msg: "User not found with ID ${params.userId}"])
@@ -89,7 +89,7 @@ class RegistrationController {
         [serverUrl: grailsApplication.config.grails.serverURL + '/myprofile']
     }
 
-    def startPasswordReset = {
+    def startPasswordReset() {
         //check for human
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
         if (!captchaValid) {
@@ -101,6 +101,7 @@ class RegistrationController {
             if (user) {
                 try {
                     userService.resetAndSendTemporaryPassword(user, null, null, null)
+                    [:]
                 } catch (Exception e) {
                     log.error("Problem starting password reset for email address: " + params.email)
                     log.error(e.getMessage(), e)
@@ -113,7 +114,7 @@ class RegistrationController {
         }
     }
 
-    def disableAccount = {
+    def disableAccount() {
         def user = userService.currentUser
 
         log.debug("Disabling account for " + user)
@@ -131,7 +132,7 @@ class RegistrationController {
         }
     }
 
-    def update = {
+    def update() {
         def user = userService.currentUser
         log.debug("Updating account for " + user)
 
@@ -152,7 +153,7 @@ class RegistrationController {
         }
     }
 
-    def register = {
+    def register() {
         withForm {
             //create user account...
             if (!params.email || userService.isEmailRegistered(params.email)) {
@@ -181,14 +182,14 @@ class RegistrationController {
         }
     }
 
-    def accountCreated = {
+    def accountCreated() {
         def user = User.get(params.id)
         render(view: 'accountCreated', model: [user: user])
     }
 
-    def forgottenPassword = {}
+    def forgottenPassword() {}
 
-    def activateAccount = {
+    def activateAccount() {
         def user = User.get(params.userId)
         //check the activation key
         if (user.tempAuthKey == params.authKey) {

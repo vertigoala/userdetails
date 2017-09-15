@@ -2,12 +2,16 @@
 userdetails
 ===========
 
+## Note
+
+v2.0 of userdetails requires [ALA CAS 5](https://github.com/AtlasOfLivingAustralia/ala-cas-5)
+
 ## About
 The Atlas user management app (userdetails) manages profile information for users.
 
 This application is the central repository for user information for Atlas systems requiring authentication.
 
-Userdetails works hand in hand with [CAS] (https://github.com/AtlasOfLivingAustralia/ala-cas-2.0) and both share the same underlying database.
+Userdetails works hand in hand with [ALA CAS 5](https://github.com/AtlasOfLivingAustralia/ala-cas-5) and both share the same underlying database.
 
 CAS manages the local authentication as well as third party auth provider integrtion.
 
@@ -15,7 +19,7 @@ CAS manages the local authentication as well as third party auth provider integr
 ## General Information
 
 ### Technologies
-  * Grails framework: 2.3.11
+  * Grails framework: 3.2.11
   * JQuery
 
 ### Setup
@@ -27,7 +31,7 @@ CAS manages the local authentication as well as third party auth provider integr
 ```
 * Add the external config files for userdetails.
 * You will need MySQL running in your local environment
-* You will need to run [schema.sql](https://github.com/AtlasOfLivingAustralia/ala-install/blob/master/ansible/roles/userdetails/files/db/schema.sql) in the MySQL to create the database structure
+* You will need to run the flyway migrations from [ALA CAS 5](https://github.com/AtlasOfLivingAustralia/ala-cas-5) to setup the initial database.
 
 ### Mail Server
 * You will get unexpected errors if you are not running a local mail server. The config.groovy is set up to point at a mail server on port 1025. This is a good option https://nilhcem.github.io/FakeSMTP/download.html.

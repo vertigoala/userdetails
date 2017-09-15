@@ -4,9 +4,10 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
     <title>My profile | ${grailsApplication.config.skin.orgNameLong}</title>
+    <asset:stylesheet src="application.css" />
 </head>
 <body>
-<div class="row-fluid">
+<div class="row">
     <h1>Flickr success</h1>
     <table class="table">
         <tr>

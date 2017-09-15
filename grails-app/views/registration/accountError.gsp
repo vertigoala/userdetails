@@ -4,11 +4,12 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
     <title>ALA Account Error</title>
+    <asset:stylesheet src="application.css" />
 </head>
 <body>
-<div class="row-fluid">
+<div class="row">
     <h1>Account Error</h1>
-    <div class="row-fluid">
+    <div class="row">
         <p>
             There was problem creating or updating your account.<br>
             Please contact <a href="mailto:${grailsApplication.config.supportEmail}">${grailsApplication.config.supportEmail}</a>

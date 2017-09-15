@@ -5,41 +5,36 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}">
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
+    <meta name="breadcrumbParent" content="${createLink(controller:'admin', action:'index')},Administration" />
 </head>
 
 <body>
-<a href="#list-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
-                                                           default="Skip to content&hellip;"/></a>
-
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><a href="${createLink(controller:'admin', action:'index')}"><i class="icon-wrench"></i>&nbsp;Administration</a></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]"/></g:link></li>
-    </ul>
-</div>
 
 <div id="list-user" class="content scaffold-list" role="main">
 
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="col-md-4">
             <h1><g:message code="default.list.label" args="[entityName]"/></h1>
         </div>
-        <div class="span6">
-            <g:form action="list" controller="user" method="get">
-                <div class="input-append pull-right">
-                    <input type="text" class="input-xlarge" name="q" value="${q?:''}" placeholder="Search for user"/>
-                    <input type="submit" class="btn"/>
-                </div>
-            </g:form>
+        <div class="col-md-8">
+            <div class="pull-right">
+                <g:form class="form-inline" action="list" controller="user" method="get">
+                    <g:link class="btn btn-primary" action="create"><i class="fa fa-pencil"></i> <g:message code="default.new.label" args="[entityName]" /></g:link>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" value="${q?:''}" placeholder="Search for user"/>
+                        <span class="input-group-btn">
+                            <input type="submit" class="btn btn-default"/>
+                        </span>
+                    </div>
+                </g:form>
+            </div>
         </div>
-    </div>
-
+        <div class="col-md-12">
 
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <table>
+    <table class="table table-bordered table-striped table-condensed">
         <thead>
         <tr>
             <g:sortableColumn property="id" title="${message(code: 'user.id.label', default: 'ID')}"/>
@@ -87,10 +82,12 @@
     </table>
 
     <g:if test="${!q}">
-    <div class="pagination">
-        <g:paginate total="${userInstanceTotal}" params="[q:q]"/>
-    </div>
+        <div class="text-center">
+            <hf:paginate total="${userInstanceTotal}" params="[q:q]"/>
+        </div>
     </g:if>
+        </div>
+    </div>
 </div>
 </body>
 </html>

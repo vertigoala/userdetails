@@ -9,7 +9,7 @@
     ${activatedAlerts}
 </p>
 <p>
-    Please visit <a href="${grailsApplication.config.alerts.url}/notification/myAlerts">My Alerts</a> to modify your alert configurations.
+    Please visit <a href="${alertsUrl}/notification/myAlerts">My Alerts</a> to modify your alert configurations.
 </p>
 </body>
 </html>

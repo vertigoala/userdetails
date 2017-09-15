@@ -4,14 +4,15 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <meta name="section" content="home"/>
     <title>${grailsApplication.config.skin.orgNameShort} accounts</title>
+    <asset:stylesheet src="application.css" />
 </head>
 <body>
-<div class="row-fluid">
-    <div class="span12" id="page-body" role="main">
+<div class="row">
+    <div class="col-md-12" id="page-body" role="main">
 
         <g:if test="${flash.errorMessage || flash.message}">
-            <div class="span12">
-                <div class="alert alert-error">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
                     <button class="close" onclick="$('.alert').fadeOut();" href="#">×</button>
                     ${flash.errorMessage?:flash.message}
                 </div>
@@ -19,7 +20,7 @@
         </g:if>
 
         <h1>${grailsApplication.config.skin.orgNameShort} accounts</h1>
-        <ul>
+        <ul class="userdetails-menu">
             <li><g:link controller="registration" action="createAccount">Create a new account</g:link></li>
             <li><g:link controller="registration" action="forgottenPassword">Reset my password</g:link></li>
             <li><g:link controller="profile">My profile</g:link></li>

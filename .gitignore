@@ -33,7 +33,6 @@
 # "temporary" build files
 /target
 
-
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
@@ -128,3 +127,11 @@ local.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+# Allow Grails Wrapper
+!/wrapper/*.jar
+# Allow Gradle Wrapper
+!/gradle/wrapper/gradle-wrapper.jar
+
+# Gradle
+.gradle/
+build/

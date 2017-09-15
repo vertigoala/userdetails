@@ -15,7 +15,7 @@ class MobileKeyController {
      * Create a key fo
      * this user.
      */
-    def generateKey = {
+    def generateKey() {
         log.info("Authenticate request received for....." +params.userName)
         try {
             HttpClient http = new DefaultHttpClient()
@@ -53,7 +53,7 @@ class MobileKeyController {
     /**
      * Check this key combination.
      */
-    def checkKey = {
+    def checkKey() {
         //check the user, check the auth key
         log.info("Check key request received for....." +params.userName + ", key: " + params.authKey)
         //println("Check record for...." + params.userName + " with key " + params.authKey)
