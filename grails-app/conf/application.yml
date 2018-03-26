@@ -143,6 +143,8 @@ security:
 
 environments:
     development:
+        server:
+            contextPath: '/userdetails'
         grails:
             serverURL: "http://devt.ala.org.au:8080/userdetails"
             mail:
@@ -209,17 +211,17 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: "none"
+            dbCreate: "create"
             url: "jdbc:mysql://localhost/emmet"
             username: "root"
             password: "password"
     test:
         dataSource:
-            dbCreate: "create-drop"
+            dbCreate: "create"
             pooled: true
             driverClassName: "org.h2.Driver"
             username: "sa"
             password: ""
     production:
         dataSource:
-            dbCreate: "none"
+            dbCreate: "update"

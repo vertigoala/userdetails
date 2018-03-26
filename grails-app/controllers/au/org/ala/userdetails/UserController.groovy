@@ -36,7 +36,6 @@ class UserController {
         [userInstance: new User(params)]
     }
 
-
     def save() {
         def userInstance = new User(params)
         userInstance.created = new Timestamp(System.currentTimeMillis())

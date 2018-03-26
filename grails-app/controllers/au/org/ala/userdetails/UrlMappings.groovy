@@ -22,6 +22,7 @@ class UrlMappings {
 
         "/registration/forgottenPassword"(controller:'registration', action: 'forgottenPassword')
 
+        "/userDetails/findUser"(controller:'userDetails', action: 'findUser')
         "/userDetails/getUserDetails"(controller:'userDetails', action: 'getUserDetails')
         "/userDetails/getUserList"(controller:'userDetails', action: 'getUserList')
         "/userDetails/getUserListFull"(controller:'userDetails', action: 'getUserListFull')
@@ -37,6 +38,7 @@ class UrlMappings {
 
         "/admin"(controller:'admin', action: 'index')
         "/admin/"(controller:'admin', action: 'index')
+        "/admin/webservices"(controller:'admin', action: 'webservices')
 
 //        "/admin/$controller"()
 //        "/admin/$controller/$action?"()

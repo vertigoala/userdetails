@@ -16,8 +16,9 @@ class AdminController {
 
     def index() {}
 
-    def resetPasswordForUser(){
-    }
+    def webservices() {}
+
+    def resetPasswordForUser(){}
 
     def sendPasswordResetEmail(){
 
@@ -32,8 +33,7 @@ class AdminController {
        }
     }
 
-    def bulkUploadUsers() {
-    }
+    def bulkUploadUsers() {}
 
     def exportUsers() {
         def secondaryFields = profileService.allAvailableProperties
@@ -128,5 +128,4 @@ class AdminController {
         }
         redirect(action:"bulkUploadUsers")
     }
-
 }
