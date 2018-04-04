@@ -36,6 +36,21 @@ CAS manages the local authentication as well as third party auth provider integr
 ### Mail Server
 * You will get unexpected errors if you are not running a local mail server. The config.groovy is set up to point at a mail server on port 1025. This is a good option https://nilhcem.github.io/FakeSMTP/download.html.
 
-
 * The app is expected to run in the default port 8080 locally.
+
+### High Availability
+
+The `userdetails` app includes Spring Session support for storing session state in a Redis cluster.  To enable, set the
+following config properties:
+
+```yaml
+spring:
+  session:
+    store-type: redis
+  redis:
+    host: cluster-host-name
+    password: cluster-password
+    port: 6379
+
+```
 

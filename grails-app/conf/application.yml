@@ -33,6 +33,8 @@ spring:
     groovy:
         template:
             check-template-location: false
+    session:
+        store-type: none # Spring Session support disabled by default.
 # Spring Actuator Endpoints are Disabled by Default
 endpoints:
     enabled: false
@@ -133,6 +135,7 @@ bcrypt:
 ---
 skin:
     layout: "main"
+    fluidLayout: false
     orgNameLong: "Atlas of Living Australia"
     orgNameShort: "ALA"
 privacyPolicy: "http://www.ala.org.au/about/terms-of-use/privacy-policy/"
