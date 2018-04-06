@@ -89,6 +89,13 @@ grails:
                 scriptlets: html
                 taglib: none
                 staticparts: none
+    cache:
+        enabled: true
+        ehcache:
+            cacheManagerName: 'userdetails-cache-manager'
+            ehcacheXmlLocation: 'classpath:userdetails-ehcache.xml'
+            reloadable: false
+
 security:
     filterOrder: 0
     basic:
@@ -134,7 +141,7 @@ bcrypt:
 
 ---
 skin:
-    layout: "main"
+    layout: "ala-main"
     fluidLayout: false
     orgNameLong: "Atlas of Living Australia"
     orgNameShort: "ALA"
