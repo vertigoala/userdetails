@@ -35,6 +35,7 @@ spring:
             check-template-location: false
     session:
         store-type: none # Spring Session support disabled by default.
+        disable-redis-config-action: false
 # Spring Actuator Endpoints are Disabled by Default
 endpoints:
     enabled: false
