@@ -95,6 +95,9 @@ dependencies {
     compile 'org.grails.plugins:spring-session-helper:1.0'
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
     compile 'org.springframework.session:spring-session-data-redis'
+
+    // Spring Security to secure actuator endpoints
+    compile 'org.springframework.security:spring-security-web'
 }
 
 springBoot {
