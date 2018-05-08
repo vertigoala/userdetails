@@ -5,6 +5,7 @@
         <meta name="section" content="home"/>
         <g:set var="title">Export Users to CSV</g:set>
         <title>${title} | ${grailsApplication.config.skin.orgNameLong}</title>
+        <asset:stylesheet src="application.css" />
     </head>
     <body>
         <div class="nav" role="navigation">
@@ -46,46 +47,48 @@
                 </p>
             </div>
         </div>
-        <g:form name="exportUsersForm" action="downloadUsersCsvFile" method="post"  class="form-horizontal well well-small">
-            <div class="form-group">
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <g:checkBox name="includeInactiveUsers"/> Include inactive users
-                        </label>
+        <div class="well well-small">
+            <g:form name="exportUsersForm" action="downloadUsersCsvFile" method="post"  class="form-horizontal">
+                <div class="form-group">
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <g:checkBox name="includeInactiveUsers"/> Include inactive users
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <g:checkBox name="includeExtraFields"/> Include extra data fields (e.g. organisation, primaryUserType, etc)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <g:checkBox name="includeRoles"/> Include roles field
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <g:checkBox name="includeExtraFields"/> Include extra data fields (e.g. organisation, primaryUserType, etc)
-                        </label>
+                <div class="form-group">
+                    <label class="col-sm-2" for="selectedRoles">
+                        Only users in selected roles (defaults to all if none selected)
+                    </label>
+                    <div class="col-sm-10">
+                        <g:select class="form-control" size="10" name="selectedRoles" from="${roles}"  multiple="true"/>
                     </div>
                 </div>
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <g:checkBox name="includeRoles"/> Include roles field
-                        </label>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button id="downloadFileButton" class="btn btn-primary">Download CSV file</button>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2" for="selectedRoles">
-                    Only users in selected roles (defaults to all if none selected)
-                </label>
-                <div class="col-sm-10">
-                    <g:select class="form-control" size="10" name="selectedRoles" from="${roles}"  multiple="true"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button id="downloadFileButton" class="btn btn-primary">Download CSV file</button>
-                </div>
-            </div>
-        </g:form>
+            </g:form>
+        </div>
     </body>
     <asset:script type="text/javascript">
         $(function(){

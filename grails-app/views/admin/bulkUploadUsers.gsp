@@ -5,6 +5,7 @@
         <meta name="section" content="home"/>
         <g:set var="title">Bulk Load Users</g:set>
         <title>${title} | ${grailsApplication.config.skin.orgNameLong}</title>
+        <asset:stylesheet src="application.css" />
     </head>
     <body>
         <div class="nav" role="navigation">

@@ -5,6 +5,7 @@
     <meta name="section" content="home"/>
     <meta name="breadcrumb" content="My Profile" />
     <title>My profile | ${grailsApplication.config.skin.orgNameLong}</title>
+    <asset:stylesheet src="application.css" />
 </head>
 <body>
 

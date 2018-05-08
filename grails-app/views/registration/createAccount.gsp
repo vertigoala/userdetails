@@ -11,6 +11,7 @@
         <g:set var="title">Create your account</g:set>
     </g:else>
     <title>${title}</title>
+    <asset:stylesheet src="application.css" />
     <asset:stylesheet src="createAccount.css" />
 </head>
 <body>
@@ -159,7 +160,7 @@
                 </div>
                 <g:if test="${edit}">
                     <button id="updateAccountSubmit" class="btn btn-primary">Update account</button>
-                    <button id="disableAccountSubmit" class="btn btn-primary delete">Disable account</button>
+                    <button id="disableAccountSubmit" class="btn btn-danger">Disable account</button>
                 </g:if>
                 <g:else>
                     <button id="updateAccountSubmit" class="btn btn-primary">Create account</button>

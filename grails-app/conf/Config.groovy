@@ -111,9 +111,12 @@ grails.hibernate.cache.queries = true
 // convert empty strings to NULL in DB
 grails.databinding.convertEmptyStringsToNull = false
 
+grails.plugins.twitterbootstrap.fixtaglib = true
+
 security {
     cas {
         uriFilterPattern = '/admin/.*,/registration/editAccount,/my-profile,/my-profile/,/myprofile/,/myprofile,/profile/.*,/admin/,/admin,/registration/disableAccount/.*,/registration/disableAccount,/registration/update,/registration/update/.*,/monitoring,/monitoring/*,/alaAdmin.*'
+        uriFilterPattern = '/admin/.*,/registration/editAccount,/my-profile,/my-profile/,/myprofile/,/myprofile,/profile/.*,/admin/,/admin,/registration/update,/registration/update/.*,/monitoring,/monitoring/*,/registration/disableAccount/.*,/registration/disableAccount,/admin/admin/downloadUsersCsvFile,/alaAdmin.*'
     }
 }
 
