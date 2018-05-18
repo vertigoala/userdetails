@@ -12,8 +12,8 @@ class User implements Serializable {
     String userName
     String email
 
-    Timestamp dateCreated
-    Timestamp lastUpdated
+    Date dateCreated
+    Date lastUpdated
 
     Timestamp lastLogin
 
@@ -30,8 +30,6 @@ class User implements Serializable {
         lastName column:  'lastname'
         activated sqlType: 'char'
         locked sqlType: 'char'
-        dateCreated type: Timestamp, sqlType: "timestamp"
-        lastUpdated type: Timestamp, sqlType: "timestamp"
         lastLogin type: Timestamp, sqlType: "timestamp"
         version false
     }
@@ -42,8 +40,6 @@ class User implements Serializable {
         lastName  nullable: true
         activated nullable: false
         locked nullable: false
-        dateCreated nullable: false
-        lastUpdated nullable: false
         lastLogin nullable: true
         tempAuthKey nullable: true
     }
