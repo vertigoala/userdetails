@@ -118,7 +118,6 @@ class UserService {
                     userInstance = new User(email: emailAddress, userName: emailAddress, firstName: tokens[1], lastName: tokens[2])
                     userInstance.activated = true
                     userInstance.locked = false
-                    userInstance.created = new Date().toTimestamp()
                 }
 
                 // Now add roles
@@ -208,7 +207,6 @@ class UserService {
         user.userName = params.email
         user.activated = false
         user.locked = false
-        user.created = new Date().toTimestamp()
         user.tempAuthKey = UUID.randomUUID().toString()
         def createdUser = user.save(flush: true, failOnError: true)
         updateProperties(createdUser, params)
@@ -217,7 +215,7 @@ class UserService {
         def roleUser = Role.findByRole("ROLE_USER")
         new UserRole(user:user, role:roleUser).save(flush:true, failOnError: true)
 
-        log.info("Newly created user: " + createdUser.id)
+        log.info("Newly dateCreated user: " + createdUser.id)
         createdUser
     }
 
@@ -343,7 +341,7 @@ class UserService {
         cal.add(Calendar.YEAR, -1); // minus 1 year
         Date oneYearAgoDate = cal.getTime()
         Timestamp oneYearAgoTimeStamp = new Timestamp(oneYearAgoDate.getTime())
-        jsonMap.totalUsersOneYearAgo = User.countByLockedAndActivatedAndCreatedLessThan(false, true, oneYearAgoTimeStamp)
+        jsonMap.totalUsersOneYearAgo = User.countByLockedAndActivatedAndDateCreatedLessThan(false, true, oneYearAgoTimeStamp)
         log.debug "jsonMap = ${jsonMap as JSON}"
         jsonMap
     }

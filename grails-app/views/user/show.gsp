@@ -55,16 +55,38 @@
         </g:if>
 
 
-        <g:if test="${userInstance?.created}">
+        <g:if test="${userInstance?.dateCreated}">
             <li class="fieldcontain">
-                <span id="created-label" class="property-label"><g:message code="user.created.label"
+                <span id="dateCreated-label" class="property-label"><g:message code="user.dateCreated.label"
                                                                            default="Created"/></span>
 
-                <span class="property-value" aria-labelledby="created-label"><g:fieldValue bean="${userInstance}"
-                                                                                           field="created"/></span>
+                <span class="property-value" aria-labelledby="dateCreated-label"><g:fieldValue bean="${userInstance}"
+                                                                                           field="dateCreated"/></span>
 
             </li>
         </g:if>
+
+    <g:if test="${userInstance?.lastUpdated}">
+        <li class="fieldcontain">
+            <span id="lastUpdated-label" class="property-label"><g:message code="user.lastUpdated.label"
+                                                                       default="Last updated"/></span>
+
+            <span class="property-value" aria-labelledby="lastUpdated-label"><g:fieldValue bean="${userInstance}"
+                                                                                       field="lastUpdated"/></span>
+
+        </li>
+    </g:if>
+
+    <g:if test="${userInstance?.lastLogin}">
+        <li class="fieldcontain">
+            <span id="lastLogin-label" class="property-label"><g:message code="user.lastLogin.label"
+                                                                       default="Last login"/></span>
+
+            <span class="property-value" aria-labelledby="lastLogin-label"><g:fieldValue bean="${userInstance}"
+                                                                                       field="lastLogin"/></span>
+
+        </li>
+    </g:if>
 
         <g:if test="${userInstance?.tempAuthKey}">
         %{--If tempAuthKey is present then there should be a resetPasswordUrl--}%

@@ -220,7 +220,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: "none"
+            dbCreate: "validate"
             url: "jdbc:mysql://localhost/emmet"
             username: "root"
             password: "password"
@@ -233,4 +233,4 @@ environments:
             password: ""
     production:
         dataSource:
-            dbCreate: "none"
+            dbCreate: "validate"

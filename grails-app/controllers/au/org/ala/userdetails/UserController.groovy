@@ -1,7 +1,6 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.PreAuthorise
-import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
 
 import java.sql.Timestamp
@@ -39,7 +38,6 @@ class UserController {
 
     def save() {
         def userInstance = new User(params)
-        userInstance.created = new Timestamp(System.currentTimeMillis())
         if (params.locked == null) userInstance.locked = false
         if (params.activated == null) userInstance.activated = false
         // Keep the username and email address in sync

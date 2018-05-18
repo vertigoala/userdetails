@@ -52,7 +52,7 @@
 
             <g:sortableColumn property="locked" title="${message(code: 'user.locked.label', default: 'Locked')}"/>
 
-            <g:sortableColumn property="created" title="${message(code: 'user.created.label', default: 'Created')}"/>
+            <g:sortableColumn property="created" title="${message(code: 'user.dateCreated.label', default: 'Created')}"/>
 
         </tr>
         </thead>
@@ -74,7 +74,7 @@
 
                 <td><g:formatBoolean boolean="${userInstance.locked}"/></td>
 
-                <td>${fieldValue(bean: userInstance, field: "created")}</td>
+                <td>${fieldValue(bean: userInstance, field: "dateCreated")}</td>
 
             </tr>
         </g:each>
