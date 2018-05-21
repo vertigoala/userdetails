@@ -21,12 +21,12 @@ class AdminController {
 
     def sendPasswordResetEmail(){
 
-       def user = User.findByEmail(params.email)
-       if(user){
-           def password = passwordService.generatePassword(user)
-           //email to user
-           emailService.sendGeneratedPassword(user, password)
-           render(view:'userPasswordResetSuccess', model:[email:params.email])
+        def user = User.findByEmail(params.email)
+        if (user) {
+            def password = passwordService.generatePassword(user)
+            //email to user
+            emailService.sendGeneratedPassword(user, password)
+            render(view:'userPasswordResetSuccess', model:[email:params.email])
        } else {
            render(view:'resetPasswordForUser', model:[email:params.email, emailNotRecognised:true])
        }

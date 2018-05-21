@@ -52,12 +52,13 @@ class RegistrationController {
             withForm {
                 if (user.tempAuthKey == params.authKey) {
                     //update the password
-                    def success = passwordService.resetPassword(user, cmd.password)
-                    if (success) {
+                    try {
+                        passwordService.resetPassword(user, cmd.password)
                         userService.clearTempAuthKey(user)
                         redirect(controller: 'registration', action: 'passwordResetSuccess')
                         log.info("Password successfully reset for user: " + cmd.userId)
-                    } else {
+                    } catch (e) {
+                        log.error("Couldn't reset password", e)
                         render(view: 'accountError', model: [msg: "Failed to reset password"])
                     }
                 } else {
@@ -166,12 +167,13 @@ class RegistrationController {
                     def user = userService.registerUser(params)
 
                     //store the password
-                    def success = passwordService.resetPassword(user, params.password)
-                    if (success) {
+                    try {
+                        passwordService.resetPassword(user, params.password)
                         //store the password
                         emailService.sendAccountActivation(user, user.tempAuthKey)
                         redirect(action: 'accountCreated', id: user.id)
-                    } else {
+                    } catch (e) {
+                        log.error("Couldn't reset password", e)
                         render(view: "accountError", model: [msg: "Failed to reset password"])
                     }
                 } catch (Exception e) {

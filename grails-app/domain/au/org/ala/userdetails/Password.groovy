@@ -6,11 +6,11 @@ import java.sql.Timestamp
 +----------+--------------+------+-----+---------------------+-----------------------------+
 | Field    | Type         | Null | Key | Default             | Extra                       |
 +----------+--------------+------+-----+---------------------+-----------------------------+
-| userid   | int(11)      | NO   | PRI | NULL                |                             |
+| userid   | bigint(20)   | NO   | PRI | NULL                |                             |
 | password | varchar(255) | NO   | PRI | NULL                |                             |
 | type     | varchar(255) | NO   |     | NULL                |                             |
-| created  | timestamp    | NO   |     | CURRENT_TIMESTAMP   | on update CURRENT_TIMESTAMP |
-| expiry   | timestamp    | NO   |     | 2038-01-01 00:00:00 |                             |
+| created  | timestamp    | NO   |     | CURRENT_TIMESTAMP   |                             |
+| expiry   | timestamp    | YES  |     | NULL                |                             |
 | status   | varchar(10)  | NO   |     | NULL                |                             |
 +----------+--------------+------+-----+---------------------+-----------------------------+
  */
@@ -32,5 +32,6 @@ class Password implements Serializable {
     }
     static constraints = {
         status nullable: false
+        expiry nullable: true
     }
 }

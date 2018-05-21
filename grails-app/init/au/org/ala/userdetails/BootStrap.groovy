@@ -14,7 +14,7 @@ class BootStrap {
         log.info("Done bootstrap queries.")
     }
 
-    def addRoles(){
+    def addRoles() {
         if(Role.findAll().size()==0){
             (new Role([role:'ROLE_ABRS_ADMIN', description:''])).save()
             (new Role([role:'ROLE_ADMIN', description:''])).save()
