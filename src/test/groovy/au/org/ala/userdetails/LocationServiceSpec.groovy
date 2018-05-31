@@ -9,14 +9,11 @@ import spock.lang.Specification
 @TestFor(LocationService)
 class LocationServiceSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "test resource loads"() {
+        when:
+            def result = service.getStatesAndCountries()
+        then:
+            result['countries']*.isoCode.contains('AU')
+            result['states']['AU']*.isoCode.contains('ACT')
     }
 }
