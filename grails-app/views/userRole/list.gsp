@@ -29,7 +29,7 @@
 							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
 								<td>
-									<g:link controller="user" action="show" id="${fieldValue(bean: userRoleInstance, field: "user.id")}">
+									<g:link controller="user" action="show" id="${userRoleInstance.user.id}">
 										${fieldValue(bean: userRoleInstance, field: "user.id")}
 									</g:link>
 								</td>
