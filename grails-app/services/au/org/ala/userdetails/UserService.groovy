@@ -2,7 +2,6 @@ package au.org.ala.userdetails
 
 import au.org.ala.auth.BulkUserLoadResults
 import au.org.ala.auth.PasswordResetFailedException
-//import au.org.ala.ws.service.WebService
 import grails.converters.JSON
 import grails.plugin.cache.Cacheable
 import grails.transaction.NotTransactional
@@ -10,8 +9,6 @@ import grails.transaction.Transactional
 import grails.util.Environment
 import grails.web.servlet.mvc.GrailsParameterMap
 import org.apache.http.HttpStatus
-
-import java.sql.Timestamp
 
 @Transactional
 class UserService {
@@ -344,9 +341,8 @@ class UserService {
         jsonMap.totalUsers = User.countByLockedAndActivated(false, true)
         // calculate number of users 1 year ago
         Calendar cal = Calendar.getInstance()
-        cal.add(Calendar.YEAR, -1); // minus 1 year
+        cal.add(Calendar.YEAR, -1) // minus 1 year
         Date oneYearAgoDate = cal.getTime()
-//        Timestamp oneYearAgoTimeStamp = new Timestamp(oneYearAgoDate.getTime())
         jsonMap.totalUsersOneYearAgo = User.countByLockedAndActivatedAndDateCreatedLessThan(false, true, oneYearAgoDate)
         log.debug "jsonMap = ${jsonMap as JSON}"
         jsonMap

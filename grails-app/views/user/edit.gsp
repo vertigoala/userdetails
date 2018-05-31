@@ -7,6 +7,7 @@
     <title><g:message code="default.edit.label" args="[entityName]"/></title>
     <meta name="breadcrumbParent" content="${g.createLink(action:"list")},${g.message(code:"default.list.label", args:[entityName])}" />
     <asset:stylesheet src="application.css" />
+    <asset:stylesheet src="createAccount.css" />
 </head>
 
 <body>
@@ -43,5 +44,11 @@
         </div>
     </div>
 </div>
+<asset:javascript src="createAccount.js"/>
+<asset:script type="text/javascript">
+    $(function() {
+        userdetails.initCountrySelect('.chosen-select', '#country', '#state', "${g.createLink(uri: '/ws/registration/states')}");
+    });
+</asset:script>
 </body>
 </html>

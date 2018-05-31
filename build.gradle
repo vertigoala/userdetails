@@ -98,6 +98,12 @@ dependencies {
 
     // Spring Security to secure actuator endpoints
     compile 'org.springframework.security:spring-security-web'
+
+    compile('org.webjars.bower:chosen:1.8.3')
+    compile('org.webjars.bower:chosen-bootstrap:1.1.0') {
+        exclude module: 'jquery' // dependency from skin
+        exclude module: 'bootstrap' // dependency from skin
+    }
 }
 
 springBoot {

@@ -1,6 +1,7 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.UpdatePasswordCommand
+import grails.converters.JSON
 
 /**
  * Controller that handles the interactions with general public.
@@ -18,6 +19,7 @@ class RegistrationController {
     def authService
     def passwordService
     def userService
+    def locationService
 
     def index() {
         redirect(action: 'createAccount')
@@ -201,5 +203,18 @@ class RegistrationController {
             log.error('Auth keys did not match for user : ' + params.userId + ", supplied: " + params.authKey + ", stored: " + user.tempAuthKey)
             render(view: "accountError")
         }
+    }
+
+    def countries() {
+        Map locations = locationService.getStatesAndCountries()
+        respond locations.countries
+    }
+
+    def states(String country) {
+        Map locations = locationService.getStatesAndCountries()
+        if (country)
+            respond locations.states[country] ?: []
+        else
+            respond locations.states
     }
 }

@@ -45,10 +45,13 @@ endpoints:
 ---
 grails:
     mime:
+        use:
+            accept:
+                header: true
         disable:
             accept:
                 header:
-                    userAgents:
+                    userAgents: []
         types:
             all: '*/*'
             atom: application/atom+xml
@@ -139,6 +142,10 @@ password:
     encoder: bcrypt # or legacy
 bcrypt:
     strength: 10
+
+attributes:
+    states:
+        path: classpath:states.json
 
 ---
 skin:

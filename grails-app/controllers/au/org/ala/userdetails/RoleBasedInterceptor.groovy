@@ -1,6 +1,7 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.PreAuthorise
+import grails.converters.JSON
 import org.apache.http.HttpStatus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.context.request.RequestContextHolder
@@ -10,7 +11,7 @@ class RoleBasedInterceptor {
     def authorisedSystemService
 
     RoleBasedInterceptor() {
-        matchAll()
+        matchAll().except(uri:'/error')
     }
 
     boolean before() {
@@ -40,7 +41,8 @@ class RoleBasedInterceptor {
                 json {
                     if (!authorisedSystemService.isAuthorisedSystem(request)) {
                         log.warn("Denying access to $actionName from remote addr: ${request.remoteAddr}, remote host: ${request.remoteHost}")
-                        response.sendError(HttpStatus.SC_UNAUTHORIZED)
+                        response.status = HttpStatus.SC_UNAUTHORIZED
+                        render(['error': "Unauthorized"] as JSON)
 
                         result = false
                     }
