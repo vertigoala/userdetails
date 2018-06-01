@@ -11,7 +11,7 @@ class ExternalSiteController {
     def flickr() {
 
         def flickrIds = UserProperty.findAllByProperty("flickrId")
-        render(contentType: "text/json") {
+        render(contentType: "application/json") {
             flickrUsers(flickrIds) { UserProperty flickrId ->
                 id flickrId.user.id.toString()
                 externalId flickrId.value
@@ -23,6 +23,6 @@ class ExternalSiteController {
 
     def getUserStats() {
         def stats = userService.getUsersCounts(request.locale)
-        render(stats as JSON, contentType: "text/json")  // getUsersCounts is cached
+        render(stats as JSON, contentType: "application/json")  // getUsersCounts is cached
     }
 }
