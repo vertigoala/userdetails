@@ -62,7 +62,7 @@ abstract class UserDetailsSpec extends Specification {
 
 
         [prop1:'prop1', prop2:'prop2'].each { k,v ->
-            UserProperty prop = new UserProperty(user:user, property:k, value:v)
+            UserProperty prop = new UserProperty(user:user, name:k, value:v)
             prop.save(failOnError: true, flush: true)
         }
 

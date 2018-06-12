@@ -55,7 +55,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <div class="checkbox">
                         <label>
-                            <g:checkBox name="includeExtraFields"/> Include extra data fields (e.g. organisation, primaryUserType, etc)
+                            <g:checkBox name="includeExtraFields"/> Include extra data fields (e.g. organisation, city, state, country, etc)
                         </label>
                     </div>
                 </div>

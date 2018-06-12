@@ -106,7 +106,7 @@
                 <g:each in="${userInstance.userProperties}" var="u">
                                 <li class="fieldcontain">
 
-                    <span id="userProperties-label" class="property-label">${u.property}</span>
+                    <span id="userProperties-label" class="property-label">${u.name}</span>
 
                     <span class="property-value" aria-labelledby="userProperties-label">${u.value}</span>
             </li>

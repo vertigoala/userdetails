@@ -80,7 +80,7 @@ class User implements Serializable {
     def propsAsMap(){
         def map = [:]
         this.getUserProperties().each {
-            map.put(it.property, it.value)
+            map.put(it.name, it.value)
         }
         map
     }

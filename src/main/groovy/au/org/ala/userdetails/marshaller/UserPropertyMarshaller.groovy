@@ -11,7 +11,7 @@ class UserPropertyMarshaller {
 
         JSON.registerObjectMarshaller(UserProperty){ UserProperty prop ->
             return [
-                    property: prop.property,
+                    property: prop.name,
                     value: prop.value
             ]
         }

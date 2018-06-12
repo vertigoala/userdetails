@@ -192,12 +192,12 @@ class UserService {
     }
 
     private setUserProperty(User user, String propName, String propValue) {
-        def existingProperty = UserProperty.findByUserAndProperty(user, propName)
+        def existingProperty = UserProperty.findByUserAndName(user, propName)
         if (existingProperty) {
             existingProperty.value = propValue
             existingProperty.save()
         } else {
-            def newProperty = new UserProperty(user: user, property: propName, value: propValue)
+            def newProperty = new UserProperty(user: user, name: propName, value: propValue)
             newProperty.save(failOnError: true)
         }
     }
@@ -222,7 +222,7 @@ class UserService {
     }
 
     def updateProperties(User user, GrailsParameterMap params) {
-        ['city', 'organisation', 'telephone', 'state', 'primaryUserType', 'secondaryUserType'].each { propName ->
+        ['city', 'organisation', 'state', 'country'].each { propName ->
             setUserProperty(user, propName, params.get(propName, ''))
         }
     }
