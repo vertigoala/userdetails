@@ -102,6 +102,8 @@ grails:
                 scriptlets: html
                 taglib: none
                 staticparts: none
+    databinding:
+        convertEmptyStringsToNull: false
     cache:
         enabled: true
         ehcache:
