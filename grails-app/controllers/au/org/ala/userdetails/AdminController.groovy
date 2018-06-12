@@ -74,7 +74,7 @@ class AdminController {
                     formatters[it] = { domain, value ->
                         String fieldName = it
                         domain.userProperties.find {
-                            it.property == fieldName
+                            it.name == fieldName
                         }?.value
                     }
                 }

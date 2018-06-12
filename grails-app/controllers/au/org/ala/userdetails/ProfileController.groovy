@@ -73,8 +73,8 @@ class ProfileController {
     def removeFlickrLink() {
         User user = userService.currentUser
         if (user) {
-            UserProperty.findByUserAndProperty(user, 'flickrUsername').delete(flush: true)
-            UserProperty.findByUserAndProperty(user, 'flickrId').delete(flush: true)
+            UserProperty.findByUserAndName(user, 'flickrUsername').delete(flush: true)
+            UserProperty.findByUserAndName(user, 'flickrId').delete(flush: true)
         } else {
             flash.message = "Failed to retrieve user details!"
         }

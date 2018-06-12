@@ -3,14 +3,14 @@ package au.org.ala.userdetails
 class UserProperty implements Serializable {
 
     User user
-    String property
+    String name
     String value
 
     static def addOrUpdateProperty(user, name, value){
 
-        def up = UserProperty.findByUserAndProperty(user, name)
+        def up = UserProperty.findByUserAndName(user, name)
         if(!up){
-           up = new UserProperty(user:user, property:name, value:value)
+           up = new UserProperty(user:user, name:name, value:value)
         } else {
            up.value = value
         }
@@ -20,17 +20,18 @@ class UserProperty implements Serializable {
 
     static mapping = {
         table 'profiles'
-        id composite: ['user', 'property']
+        id composite: ['user', 'name']
         user column:  'userid'
+        name column: 'property'
         version false
         value sqlType: 'text'
     }
     static constraints = {
         value nullable: false, blank: true
-        property nullable: false, blank: false
+        name nullable: false, blank: false
     }
 
     String toString(){
-        property + " : " + value
+        name + " : " + value
     }
 }

@@ -3,7 +3,7 @@ package au.org.ala.userdetails
 class ProfileService {
 
     List getUserProperty(User user, String name) {
-        UserProperty.findAllByUserAndProperty(user, name)?:[];
+        UserProperty.findAllByUserAndName(user, name)?:[];
     }
 
     UserProperty saveUserProperty(User user, String name, String value){
@@ -13,9 +13,9 @@ class ProfileService {
     List getAllAvailableProperties() {
         UserProperty.withCriteria {
             projections {
-                distinct("property")
+                distinct("name")
             }
-            order("property")
+            order("name")
         }
     }
 }

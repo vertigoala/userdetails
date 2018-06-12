@@ -41,12 +41,11 @@
       "lastName":"User Surname",
       "email":"user@email.address",
       "props":{
-        "secondaryUserType":"Citizen scientist",
         "organisation":"User Organisation",
         "telephone":"555-123456",
         "city":"User City",
         "state":"User State",
-        "primaryUserType":"IT specialist"
+        "country": "AU"
       }
     }
   },
