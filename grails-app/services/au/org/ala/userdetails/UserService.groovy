@@ -2,14 +2,15 @@ package au.org.ala.userdetails
 
 import au.org.ala.auth.BulkUserLoadResults
 import au.org.ala.auth.PasswordResetFailedException
-//import au.org.ala.ws.service.WebService
 import grails.converters.JSON
 import grails.plugin.cache.Cacheable
+import grails.transaction.NotTransactional
+import grails.transaction.Transactional
 import grails.util.Environment
+import grails.web.servlet.mvc.GrailsParameterMap
 import org.apache.http.HttpStatus
 
-import java.sql.Timestamp
-
+@Transactional
 class UserService {
 
     def emailService
@@ -19,7 +20,7 @@ class UserService {
     def messageSource
     def webService
 
-    def updateUser(user, params){
+    def updateUser(User user, GrailsParameterMap params) {
         try {
             user.setProperties(params)
             user.activated = true
@@ -33,7 +34,7 @@ class UserService {
         }
     }
 
-    def disableUser(user){
+    def disableUser(User user) {
         try {
             user.activated = false
             user.save(failOnError: true, flush: true)
@@ -49,21 +50,18 @@ class UserService {
         }
     }
 
-    def isActive(email) {
-        def user = User.findByEmail(email.toLowerCase())
-        user?.activated
+    @Transactional(readOnly = true)
+    boolean isActive(String email) {
+        def user = User.findByEmail(email?.toLowerCase())
+        return user?.activated ?: false
     }
 
-    def isEmailRegistered(email){
-        def user = User.findByEmail(email.toLowerCase())
-        if(user){
-            true
-        } else {
-            false
-        }
+    @Transactional(readOnly = true)
+    boolean isEmailRegistered(String email) {
+        return User.findByEmail(email?.toLowerCase()) != null
     }
 
-    def activateAccount(user){
+    def activateAccount(User user) {
         Map resp = webService.post("${grailsApplication.config.alerts.url}/api/alerts/user/createAlerts", [:], [userId: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName])
         if (resp.statusCode == HttpStatus.SC_CREATED) {
             emailService.sendAccountActivationSuccess(user, resp.resp)
@@ -75,7 +73,7 @@ class UserService {
         user.save(flush:true)
     }
 
-    public BulkUserLoadResults bulkRegisterUsersFromFile(InputStream stream, Boolean firstRowContainsFieldNames, String primaryUsage, String emailSubject, String emailTitle, String emailBody) {
+    BulkUserLoadResults bulkRegisterUsersFromFile(InputStream stream, Boolean firstRowContainsFieldNames, String primaryUsage, String emailSubject, String emailTitle, String emailBody) {
 
         def results = new BulkUserLoadResults()
 
@@ -118,7 +116,6 @@ class UserService {
                     userInstance = new User(email: emailAddress, userName: emailAddress, firstName: tokens[1], lastName: tokens[2])
                     userInstance.activated = true
                     userInstance.locked = false
-                    userInstance.created = new Date().toTimestamp()
                 }
 
                 // Now add roles
@@ -189,26 +186,29 @@ class UserService {
 
         properties.keySet().each { String propName ->
             def propValue = properties[propName] ?: ''
-            def existingProperty = UserProperty.findByUserAndProperty(user, propName)
-            if (existingProperty) {
-                existingProperty.value = propValue
-                existingProperty.save()
-            } else {
-                def newProperty = new UserProperty(user: user, property: propName, value: propValue)
-                newProperty.save(failOnError: true)
-            }
+            setUserProperty(user, propName, propValue)
         }
 
     }
 
-    def registerUser(params) throws Exception {
+    private setUserProperty(User user, String propName, String propValue) {
+        def existingProperty = UserProperty.findByUserAndProperty(user, propName)
+        if (existingProperty) {
+            existingProperty.value = propValue
+            existingProperty.save()
+        } else {
+            def newProperty = new UserProperty(user: user, property: propName, value: propValue)
+            newProperty.save(failOnError: true)
+        }
+    }
+
+    User registerUser(GrailsParameterMap params) throws Exception {
 
         //does a user with the supplied email address exist
         def user = new User(params)
         user.userName = params.email
         user.activated = false
         user.locked = false
-        user.created = new Date().toTimestamp()
         user.tempAuthKey = UUID.randomUUID().toString()
         def createdUser = user.save(flush: true, failOnError: true)
         updateProperties(createdUser, params)
@@ -217,17 +217,14 @@ class UserService {
         def roleUser = Role.findByRole("ROLE_USER")
         new UserRole(user:user, role:roleUser).save(flush:true, failOnError: true)
 
-        log.info("Newly created user: " + createdUser.id)
+        log.info("Newly dateCreated user: " + createdUser.id)
         createdUser
     }
 
-    def updateProperties(user, params) {
-        (new UserProperty(user: user, property: 'city', value: params.city ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'organisation', value: params.organisation ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'telephone', value: params.telephone ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'state', value: params.state ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'primaryUserType', value: params.primaryUserType ?: '')).save(flush: true)
-        (new UserProperty(user: user, property: 'secondaryUserType', value: params.secondaryUserType ?: '')).save(flush: true)
+    def updateProperties(User user, GrailsParameterMap params) {
+        ['city', 'organisation', 'telephone', 'state', 'primaryUserType', 'secondaryUserType'].each { propName ->
+            setUserProperty(user, propName, params.get(propName, ''))
+        }
     }
 
     def deleteUser(User user) {
@@ -277,7 +274,8 @@ class UserService {
     /**
      * This service method returns the User object for the current user.
      */
-    public User getCurrentUser() {
+    @Transactional(readOnly = true)
+    User getCurrentUser() {
 
         def userId = authService.getUserId()
         if (userId == null) {
@@ -303,12 +301,14 @@ class UserService {
         return user
     }
 
+    @NotTransactional
     String getResetPasswordUrl(User user) {
         if(user.tempAuthKey){
             emailService.getServerUrl() + "resetPassword/" +  user.id +  "/"  + user.tempAuthKey
         }
     }
 
+    @Transactional(readOnly = true)
     def findUsersForExport(List usersInRoles, includeInactive) {
         def roles = usersInRoles? Role.findAllByRoleInList(usersInRoles) : []
         def criteria = User.createCriteria()
@@ -335,15 +335,15 @@ class UserService {
      * @return Map jsonMap
      */
     @Cacheable('dailyCache')
+    @Transactional(readOnly = true)
     Map getUsersCounts(Locale locale) {
         Map jsonMap = [description: messageSource.getMessage("getUserCounts.description", null, locale?:Locale.default)]
         jsonMap.totalUsers = User.countByLockedAndActivated(false, true)
         // calculate number of users 1 year ago
         Calendar cal = Calendar.getInstance()
-        cal.add(Calendar.YEAR, -1); // minus 1 year
+        cal.add(Calendar.YEAR, -1) // minus 1 year
         Date oneYearAgoDate = cal.getTime()
-        Timestamp oneYearAgoTimeStamp = new Timestamp(oneYearAgoDate.getTime())
-        jsonMap.totalUsersOneYearAgo = User.countByLockedAndActivatedAndCreatedLessThan(false, true, oneYearAgoTimeStamp)
+        jsonMap.totalUsersOneYearAgo = User.countByLockedAndActivatedAndDateCreatedLessThan(false, true, oneYearAgoDate)
         log.debug "jsonMap = ${jsonMap as JSON}"
         jsonMap
     }

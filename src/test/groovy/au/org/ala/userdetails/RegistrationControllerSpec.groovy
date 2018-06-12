@@ -105,7 +105,7 @@ class RegistrationControllerSpec extends UserDetailsSpec {
         controller.updatePassword()
 
         then:
-        1 * passwordService.resetPassword(user, password) >> true
+        1 * passwordService.resetPassword(user, password)
         1 * userService.clearTempAuthKey(user)
         response.redirectedUrl == '/registration/passwordResetSuccess'
     }

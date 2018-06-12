@@ -126,37 +126,30 @@
                     <input id="organisation" name="organisation" type="text" class="form-control" value="${props?.organisation}"/>
                 </div>
                 <div class="form-group">
+                    <label for="country">Country</label>
+                    <g:select id="country" name="country"
+                              class="form-control chosen-select"
+                              value="${props?.country ?: 'AU'}"
+                              keys="${l.countries()*.isoCode}"
+                              from="${l.countries()*.name}"
+                              noSelection="['':'-Choose your country-']"
+                              valueMessagePrefix="ala.country."
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="state">State / province</label>
+                    <g:select id="state" name="state"
+                              class="form-control chosen-select"
+                              value="${props?.state}"
+                              keys="${l.states(country: props?.country ?: 'AU')*.isoCode}"
+                              from="${l.states(country: props?.country ?: 'AU')*.name}"
+                              noSelection="['':'-Choose your state-']"
+                              valueMessagePrefix="ala.state."
+                    />
+                </div>
+                <div class="form-group">
                     <label for="city">City</label>
                     <input id="city" name="city" type="text" class="form-control" value="${props?.city}" />
-                </div>
-                <div class="form-group">
-                    <label for="state">State/territory</label>
-                    <g:select id="state" name="state"
-                              class="form-control"
-                              value="${props?.state}"
-                              keys="['N/A', 'ACT', 'NSW', 'WA', 'VIC', 'SA', 'TAS', 'NT', 'QLD']"
-                              from="['N/A', 'Australian Capital Territory', 'New South Wales',
-                                      'Western Australia', 'Victoria', 'South Australia', 'Tasmania',
-                                      'Northern Territory', 'Queensland']"
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="telephone">Telephone</label>
-                    <input id="telephone" name="telephone" type="text" class="form-control" value="${props?.telephone}" />
-                </div>
-                <div class="form-group">
-                    <label for="primaryUserType">Primary usage</label>
-                    <input id="primaryUserType" name="primaryUserType" type="text" class="form-control usageAuto"
-                           value="${props?.primaryUserType?:''}"
-                           data-validation-engine="validate[required]"
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="secondaryUserType">Secondary usage</label>
-                    <input id="secondaryUserType" name="secondaryUserType" type="text"  class="form-control usageAuto"
-                           value="${props?.secondaryUserType?:''}"
-                           data-validation-engine="validate[required]"
-                    />
                 </div>
                 <g:if test="${edit}">
                     <button id="updateAccountSubmit" class="btn btn-primary">Update account</button>
@@ -176,23 +169,9 @@
 </body>
 <asset:javascript src="createAccount.js" asset-defer="" />
 <asset:script type="text/javascript">
-    $(function(){
+    $(function() {
+        userdetails.initCountrySelect('.chosen-select', '#country', '#state', "${g.createLink(uri: '/ws/registration/states')}");
 
-        //$('.typeahead').typeahead();
-        var usageOptions = [
-            "Amateur naturalist","Amateur photographer","Biodiversity Research","Biogeographer",
-            "Biologist","Botanist","Bush Regenerator","BushCare leader","Citizen scientist","Collection manager",
-            "Collection technician","Communications","Conservation Planner","Consultant","Data manager",
-            "Database Manager","Eco Tourism","Ecologist","Education","Education programs developer","Entomologist",
-            "Environmental Officer","Environmental Scientist","Farming","Field Researcher","Forester","Geochemist",
-            "GIS visualisation","Identification","IT specialist","Land manager","Land owner","Librarian","Mycologist",
-            "Naturalist","Observer","Park Ranger","Pest control","Pest Identification","PhD Student","Policy developer",
-            "Predicting distribution","Researcher","Science communicator","Scientific Illustrator","Scientist",
-            "Student","Taxonomist","Teacher","Veterinary Pathologist","Volunteer","Volunteer Digitizer","Writer",
-            "Zoologist"
-        ];
-
-        $(".usageAuto").autocomplete(usageOptions, {});
         $('#updateAccountForm').validationEngine('attach', { scroll: false });
         $("#updateAccountSubmit").click(function(e) {
 

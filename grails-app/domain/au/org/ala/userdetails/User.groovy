@@ -12,7 +12,10 @@ class User implements Serializable {
     String userName
     String email
 
-    Timestamp created
+    Date dateCreated
+    Date lastUpdated
+
+    Timestamp lastLogin
 
     Boolean activated
     Boolean locked
@@ -25,7 +28,9 @@ class User implements Serializable {
         userName column:  'username'
         firstName column:  'firstname'
         lastName column:  'lastname'
-        created type: Timestamp, sqlType: "timestamp"
+        activated sqlType: 'char'
+        locked sqlType: 'char'
+        lastLogin type: Timestamp, sqlType: "timestamp"
         version false
     }
 
@@ -35,7 +40,7 @@ class User implements Serializable {
         lastName  nullable: true
         activated nullable: false
         locked nullable: false
-        created nullable: false
+        lastLogin nullable: true
         tempAuthKey nullable: true
     }
 
@@ -70,10 +75,6 @@ class User implements Serializable {
                 property('email')
             }
         }
-    }
-
-    def beforeInsert() {
-        created = new Date().toTimestamp()
     }
 
     def propsAsMap(){

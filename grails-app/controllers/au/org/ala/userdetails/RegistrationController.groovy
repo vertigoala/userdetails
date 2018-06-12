@@ -1,6 +1,7 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.UpdatePasswordCommand
+import grails.converters.JSON
 
 /**
  * Controller that handles the interactions with general public.
@@ -18,6 +19,7 @@ class RegistrationController {
     def authService
     def passwordService
     def userService
+    def locationService
 
     def index() {
         redirect(action: 'createAccount')
@@ -52,12 +54,13 @@ class RegistrationController {
             withForm {
                 if (user.tempAuthKey == params.authKey) {
                     //update the password
-                    def success = passwordService.resetPassword(user, cmd.password)
-                    if (success) {
+                    try {
+                        passwordService.resetPassword(user, cmd.password)
                         userService.clearTempAuthKey(user)
                         redirect(controller: 'registration', action: 'passwordResetSuccess')
                         log.info("Password successfully reset for user: " + cmd.userId)
-                    } else {
+                    } catch (e) {
+                        log.error("Couldn't reset password", e)
                         render(view: 'accountError', model: [msg: "Failed to reset password"])
                     }
                 } else {
@@ -166,12 +169,13 @@ class RegistrationController {
                     def user = userService.registerUser(params)
 
                     //store the password
-                    def success = passwordService.resetPassword(user, params.password)
-                    if (success) {
+                    try {
+                        passwordService.resetPassword(user, params.password)
                         //store the password
                         emailService.sendAccountActivation(user, user.tempAuthKey)
                         redirect(action: 'accountCreated', id: user.id)
-                    } else {
+                    } catch (e) {
+                        log.error("Couldn't reset password", e)
                         render(view: "accountError", model: [msg: "Failed to reset password"])
                     }
                 } catch (Exception e) {
@@ -199,5 +203,18 @@ class RegistrationController {
             log.error('Auth keys did not match for user : ' + params.userId + ", supplied: " + params.authKey + ", stored: " + user.tempAuthKey)
             render(view: "accountError")
         }
+    }
+
+    def countries() {
+        Map locations = locationService.getStatesAndCountries()
+        respond locations.countries
+    }
+
+    def states(String country) {
+        Map locations = locationService.getStatesAndCountries()
+        if (country)
+            respond locations.states[country] ?: []
+        else
+            respond locations.states
     }
 }

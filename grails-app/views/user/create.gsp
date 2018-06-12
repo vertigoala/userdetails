@@ -6,6 +6,7 @@
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.create.label" args="[entityName]"/></title>
     <asset:stylesheet src="application.css" />
+    <asset:stylesheet src="createAccount.css" />
 </head>
 
 <body>
@@ -36,5 +37,11 @@
         </div>
     </div>
 </div>
+<asset:javascript src="createAccount.js"/>
+<asset:script type="text/javascript">
+    $(function() {
+        userdetails.initCountrySelect('.chosen-select', '#country', '#state', "${g.createLink(uri: '/ws/registration/states')}");
+    });
+</asset:script>
 </body>
 </html>

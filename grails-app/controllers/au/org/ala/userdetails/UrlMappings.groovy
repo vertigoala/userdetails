@@ -13,7 +13,10 @@ class UrlMappings {
         "/external/flickr"(controller: 'externalSite', action: 'flickr')
         "/ws/flickr"(controller: 'externalSite', action: 'flickr')
         "/ws/getUserStats"(controller:'externalSite', action: 'getUserStats')
+        "/admin/userRole/list"(controller:'userRole', action:'list', format:'html') // prevent link generator using the /ws endpoint by default
         "/ws/admin/userRole/list"(controller:'userRole', action:'list', format:'json')
+        "/ws/registration/states(.$format)?"(controller: 'registration', action: 'states', format: 'json')
+        "/ws/registration/countries(.$format)?"(controller: 'registration', action: 'countries', format: 'json')
 
         "/registration/$action?/$id?"(controller: 'registration')
 

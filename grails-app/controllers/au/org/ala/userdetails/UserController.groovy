@@ -1,10 +1,7 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.PreAuthorise
-import grails.converters.JSON
 import org.springframework.dao.DataIntegrityViolationException
-
-import java.sql.Timestamp
 
 @PreAuthorise
 class UserController {
@@ -16,13 +13,8 @@ class UserController {
         redirect(action: "list", params: params)
     }
 
-    def addRole() {
-        def user = User.get(params.userId)
-        [user:user, roles:Role.all]
-    }
-
     def list(Integer max) {
-        if(params.q){
+        if (params.q) {
             def q = "%"+ params.q + "%"
             def userList = User.findAllByEmailLikeOrLastNameLikeOrFirstNameLike(q,q,q)
             [userInstanceList: userList, userInstanceTotal: userList.size(), q:params.q]
@@ -39,7 +31,6 @@ class UserController {
 
     def save() {
         def userInstance = new User(params)
-        userInstance.created = new Timestamp(System.currentTimeMillis())
         if (params.locked == null) userInstance.locked = false
         if (params.activated == null) userInstance.activated = false
         // Keep the username and email address in sync

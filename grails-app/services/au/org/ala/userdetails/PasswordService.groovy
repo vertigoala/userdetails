@@ -2,9 +2,11 @@ package au.org.ala.userdetails
 
 import au.org.ala.cas.encoding.BcryptPasswordEncoder
 import au.org.ala.cas.encoding.LegacyPasswordEncoder
+import grails.transaction.Transactional
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.beans.factory.annotation.Value
 
+@Transactional
 class PasswordService {
 
     static final String BCRYPT_ENCODER_TYPE = 'bcrypt'
@@ -22,45 +24,37 @@ class PasswordService {
     /**
      * Trigger a password reset
      *
-     * TODO: I suggest this method throws an exception when it fails. Just returning a false
-     *  value is not helpful in identifying the error from the error page the user sees. NdR.
-     *
      * @param user
      * @param newPassword
      * @return
      */
-    Boolean resetPassword(user,newPassword){
+    void resetPassword(User user, String newPassword) {
        //update the password
-       try {
-           Password.findAllByUser(user).each {
-               it.delete(flush:true)
-           }
-
-           boolean isBcrypt = passwordEncoderType.equalsIgnoreCase(BCRYPT_ENCODER_TYPE)
-
-           def encoder = isBcrypt ? new BcryptPasswordEncoder(bcryptStrength) : new LegacyPasswordEncoder(legacyAlgorithm, legacySalt, true)
-           def encodedPassword = encoder.encode(newPassword)
-
-           //reuse object if old password
-           def password = new Password()
-           password.user = user
-           password.password = encodedPassword
-           password.type = isBcrypt ? BCRYPT_ENCODER_TYPE : LEGACY_ENCODER_TYPE
-           password.created = new Date().toTimestamp()
-           password.status = "CURRENT"
-           password.save(flush:true)
-           true
-       } catch(Exception e){
-           log.error(e.getMessage(),e)
-           false
+       Password.findAllByUser(user).each {
+           it.delete()
        }
+
+       boolean isBcrypt = passwordEncoderType.equalsIgnoreCase(BCRYPT_ENCODER_TYPE)
+
+       def encoder = isBcrypt ? new BcryptPasswordEncoder(bcryptStrength) : new LegacyPasswordEncoder(legacyAlgorithm, legacySalt, true)
+       def encodedPassword = encoder.encode(newPassword)
+
+       //reuse object if old password
+       def password = new Password()
+       password.user = user
+       password.password = encodedPassword
+       password.type = isBcrypt ? BCRYPT_ENCODER_TYPE : LEGACY_ENCODER_TYPE
+       password.created = new Date().toTimestamp()
+       password.expiry = null
+       password.status = "CURRENT"
+       password.save(failOnError: true)
     }
 
-    String generatePassword(user){
+    String generatePassword(User user) {
        //generate a new password
        def newPassword = RandomStringUtils.random(10)
 
        resetPassword(user, newPassword)
-       newPassword
+       return newPassword
     }
 }

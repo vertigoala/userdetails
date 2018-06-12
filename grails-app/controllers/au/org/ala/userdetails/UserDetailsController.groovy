@@ -44,20 +44,20 @@ class UserDetailsController {
     def getUserList() {
         def users = User.findNameAndEmailWhereEmailIsNotNull()
         def map = users.collectEntries { [(it[0].toLowerCase()): "${it[1]?:""} ${it[2]?:""}"]}
-        render(map as JSON, contentType: "text/json")
+        render(map as JSON, contentType: "application/json")
     }
 
     def getUserListWithIds() {
         def users = User.findIdFirstAndLastName()
         def map = users.collectEntries { [(it[0]), "${it[1]?:""} ${it[2]?:""}"] }
-        render(map as JSON, contentType: "text/json")
+        render(map as JSON, contentType: "application/json")
     }
 
     def getUserListFull() {
         def details = User.findUserDetails().collect {
             [id: it[0], firstName: it[1]?:"", lastName: it[2]?:"", userName: it[3]?:"", email: it[4]?:""]
         }
-        render(details as JSON, contentType: "text/json")
+        render(details as JSON, contentType: "application/json")
     }
 
     def getUserDetailsFromIdList() {
@@ -96,10 +96,10 @@ class UserDetailsController {
                     JSON.use(null) // Reset to default
                 }
             } catch (Exception ex) {
-                render([success: false, message: "Exception: ${ex.toString()}"] as JSON, contentType: "text/json")
+                render([success: false, message: "Exception: ${ex.toString()}"] as JSON, contentType: "application/json")
             }
         } else {
-            render([success: false, message: "Body must contain JSON map payload with 'userIds' key that contains a list of user ids"] as JSON, contentType: "text/json")
+            render([success: false, message: "Body must contain JSON map payload with 'userIds' key that contains a list of user ids"] as JSON, contentType: "application/json")
         }
 
     }

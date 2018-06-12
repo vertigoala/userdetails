@@ -17,7 +17,7 @@ plugins {
     id "com.gorylenko.gradle-git-properties" version "1.4.17"
 }
 
-version "2.0.0"
+version "2.1.0"
 group "au.org.ala"
 
 apply plugin:"eclipse"
@@ -61,10 +61,10 @@ dependencies {
 
     // Grails plugin dependencies
 
-    runtime "org.grails.plugins:ala-bootstrap3:3.0.0"
-    compile "org.grails.plugins:ala-ws-plugin:2.0-SNAPSHOT"
-    compile "org.grails.plugins:ala-auth:3.0.2"
-    compile "org.grails.plugins:ala-admin-plugin:2.0"
+    runtime "org.grails.plugins:ala-bootstrap3:3.0.4"
+    compile "org.grails.plugins:ala-ws-plugin:2.0"
+    compile "org.grails.plugins:ala-auth:3.0.3"
+    compile "org.grails.plugins:ala-admin-plugin:2.1"
 
     compile 'org.grails.plugins:external-config:1.1.1'
     compile 'org.grails.plugins:http-builder-helper:1.0.2.ALA'
@@ -74,6 +74,7 @@ dependencies {
     compile "domurtag.plugins:grails-simple-captcha:1.0.0-grails3"
     compile "org.grails.plugins:export:2.0.0"
 
+    compile 'org.grails.plugins:cache-ehcache:2.0.0.ALA'
 //    compile 'org.grails.plugins:cache:4.0.0.RC1'
 //    compile 'org.grails.plugins:cache-ehcache:3.0.0.M1'
 
@@ -90,6 +91,19 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.1'
     compile 'commons-beanutils:commons-beanutils:1.8.3'
     compile 'org.mindrot:jbcrypt:0.4'
+
+    compile 'org.grails.plugins:spring-session-helper:1.0'
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
+    compile 'org.springframework.session:spring-session-data-redis'
+
+    // Spring Security to secure actuator endpoints
+    compile 'org.springframework.security:spring-security-web'
+
+    compile('org.webjars.bower:chosen:1.8.3')
+    compile('org.webjars.bower:chosen-bootstrap:1.1.0') {
+        exclude module: 'jquery' // dependency from skin
+        exclude module: 'bootstrap' // dependency from skin
+    }
 }
 
 springBoot {
