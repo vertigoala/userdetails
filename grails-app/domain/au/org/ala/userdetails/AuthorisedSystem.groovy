@@ -6,6 +6,7 @@ class AuthorisedSystem {
     String description
 
     static constraints = {
+        host nullable: false, blank: false
         description nullable: true
     }
 }

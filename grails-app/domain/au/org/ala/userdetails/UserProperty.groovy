@@ -26,6 +26,8 @@ class UserProperty implements Serializable {
         value sqlType: 'text'
     }
     static constraints = {
+        value nullable: false, blank: true
+        property nullable: false, blank: false
     }
 
     String toString(){
