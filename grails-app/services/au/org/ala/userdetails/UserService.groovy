@@ -52,13 +52,13 @@ class UserService {
 
     @Transactional(readOnly = true)
     boolean isActive(String email) {
-        def user = User.findByEmail(email?.toLowerCase())
+        def user = User.findByEmailOrUserName(email?.toLowerCase(), email?.toLowerCase())
         return user?.activated ?: false
     }
 
     @Transactional(readOnly = true)
     boolean isEmailRegistered(String email) {
-        return User.findByEmail(email?.toLowerCase()) != null
+        return User.findByEmailOrUserName(email?.toLowerCase(), email?.toLowerCase()) != null
     }
 
     def activateAccount(User user) {
@@ -217,7 +217,7 @@ class UserService {
         def roleUser = Role.findByRole("ROLE_USER")
         new UserRole(user:user, role:roleUser).save(flush:true, failOnError: true)
 
-        log.info("Newly dateCreated user: " + createdUser.id)
+        log.info("Newly created user: " + createdUser.id)
         createdUser
     }
 
