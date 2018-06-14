@@ -116,6 +116,7 @@ class UserController {
         }
 
         try {
+            log.info("${request.userPrincipal?.name} is attempting to delete user ${userInstance.userName}")
             userService.deleteUser(userInstance)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), id])
             redirect(action: "list")

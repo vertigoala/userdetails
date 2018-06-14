@@ -36,6 +36,9 @@ spring:
     session:
         store-type: none # Spring Session support disabled by default.
         disable-redis-config-action: false
+        grails:
+            mutableAttributes:
+              - SYNCHRONIZER_TOKENS_HOLDER
 server:
   use-forward-headers: true
   tomcat:
