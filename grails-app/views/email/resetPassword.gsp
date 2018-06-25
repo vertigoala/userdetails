@@ -4,7 +4,7 @@
   <body>
     <h1>${emailTitle}</h1>
     <p>
-        ${emailBody}
+        ${raw(emailBody)}
     </p>
     <g:if test="${password}">
         Your generated password is <strong>${password}</strong>. If you would like to change it, click the link below.
