@@ -52,7 +52,7 @@ class PasswordService {
 
     String generatePassword(User user) {
        //generate a new password
-       def newPassword = RandomStringUtils.random(10)
+       def newPassword = RandomStringUtils.randomAlphanumeric(10)
 
        resetPassword(user, newPassword)
        return newPassword
