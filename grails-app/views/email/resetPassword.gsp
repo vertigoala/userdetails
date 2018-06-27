@@ -4,7 +4,7 @@
   <body>
     <h3>${emailTitle}</h3>
     <p>
-        ${raw(emailBody)}
+        <markdown:renderHtml text="${emailBody}"/>
     </p>
     <g:if test="${password}">
         Your generated password is <strong>${password}</strong>.  To reset your password click the link below:
