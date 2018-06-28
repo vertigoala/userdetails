@@ -18,13 +18,7 @@ class EmailService {
         }
 
         if (!emailBody) {
-            emailBody =
-"""
-        Please click the link below to reset your ALA password.
-        This will take you to a form where you can provide a new
-        password for your account.
-
-"""
+            emailBody = "Please click the link below to reset your ALA password.  This will take you to a form where you can provide a new password for your account."
         }
         try {
             sendMail {
