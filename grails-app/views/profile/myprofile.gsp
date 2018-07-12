@@ -39,8 +39,13 @@
                 </a>
             </li>
             <li>
-                <a href="${grailsApplication.config.biocache.search.url}?q=*%3A*&fq=assertion_user_id%3A%22${user.id}%22">
+                <a href="${grailsApplication.config.biocache.search.url}?%22${user.id}%22">
                     View records you have annotated
+                </a>
+            </li>
+            <li>
+                <a href="${grailsApplication.config.biocache.myDownloads.url}">
+                    View your downloaded records
                 </a>
             </li>
             <li>
