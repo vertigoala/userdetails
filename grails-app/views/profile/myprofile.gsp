@@ -39,7 +39,7 @@
                 </a>
             </li>
             <li>
-                <a href="${grailsApplication.config.biocache.search.url}?%22${user.id}%22">
+                <a href="${grailsApplication.config.biocache.search.url}%22${user.id}%22">
                     View records you have annotated
                 </a>
             </li>
