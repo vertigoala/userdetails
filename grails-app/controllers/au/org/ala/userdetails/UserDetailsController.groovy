@@ -1,13 +1,104 @@
 package au.org.ala.userdetails
 
+import au.org.ala.cas.encoding.CloseShieldWriter
 import au.org.ala.userdetails.marshaller.UserMarshaller
 import grails.converters.JSON
+import org.hibernate.ScrollableResults
 
 class UserDetailsController {
 
     static allowedMethods = [getUserDetails: "POST", getUserList: "POST", getUserListWithIds: "POST", getUserListFull: "POST", getUserDetailsFromIdList: "POST"]
 
     def index() {}
+
+    def search() {
+        def q = params['q']
+        def max = params.int('max', 10)
+        User.withStatelessSession { session ->
+            def c = User.createCriteria()
+            ScrollableResults results = c.scroll {
+                or {
+                    ilike('userName', "%$q%")
+                    ilike('email', "%$q%")
+                    ilike('displayName', "%$q%")
+                }
+                maxResults(10)
+            }
+            streamResults(session, results, UserMarshaller.WITH_PROPERTIES_CONFIG)
+        }
+    }
+
+    def byRole() {
+        def ids = params.list('id')
+        def roleName = params.get('role', 'ROLE_USER')
+        def includeProps = params.boolean('includeProps', false)
+
+        def things = ids.groupBy { it.isLong() }
+        def userIds = things[false]
+        def numberIds = things[true]
+
+        // stream the results just in case someone requests ROLE_USER or something
+        User.withStatelessSession { session ->
+            Role role = Role.findByRole(roleName)
+            if (!role) {
+                response.sendError(404, "Role not found")
+                return
+            }
+
+            def c = User.createCriteria()
+            ScrollableResults results = c.scroll {
+                or {
+                    if (numberIds) {
+                        inList('id', numberIds*.toLong())
+                    }
+                    if (userIds) {
+                        inList('userName', userIds)
+                        inList('email', userIds)
+                    }
+                }
+                userRoles {
+                    eq("role", role)
+                }
+            }
+
+            streamResults(session, results, includeProps ? UserMarshaller.WITH_PROPERTIES_CONFIG : 'default')
+        }
+    }
+
+    private streamResults(session, ScrollableResults results, String jsonConfig) {
+        response.contentType = 'application/json'
+        response.characterEncoding = 'UTF-8'
+        def csw = new CloseShieldWriter(new BufferedWriter(response.writer))
+        def first = true
+        csw.print('[')
+        if (jsonConfig) JSON.use(jsonConfig)
+        else JSON.use('default')
+        try {
+            int count = 0
+
+            while (results.next()) {
+                if (!first) {
+                    csw.print(',')
+                } else {
+                    first = false
+                }
+                User user = ((User)results.get()[0])
+
+                (user as JSON).render(csw)
+
+                if (count++ % 50 == 0) {
+                    session.flush()
+                    session.clear()
+                }
+
+            }
+        } finally {
+            JSON.use('default')
+        }
+        csw.print(']')
+        csw.flush()
+        response.flushBuffer()
+    }
 
     def getUserDetails() {
 

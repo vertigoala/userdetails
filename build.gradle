@@ -32,6 +32,10 @@ apply from: 'https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-bui
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 repositories {
     mavenLocal()
     maven { url "https://nexus.ala.org.au/content/groups/public/" }
@@ -63,7 +67,7 @@ dependencies {
 
     runtime "org.grails.plugins:ala-bootstrap3:3.0.4"
     compile "org.grails.plugins:ala-ws-plugin:2.0"
-    compile "org.grails.plugins:ala-auth:3.0.3"
+    compile "org.grails.plugins:ala-auth:3.1.0"
     compile "org.grails.plugins:ala-admin-plugin:2.1"
 
     compile 'org.grails.plugins:external-config:1.1.1'

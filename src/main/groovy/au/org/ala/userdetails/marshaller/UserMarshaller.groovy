@@ -12,26 +12,26 @@ class UserMarshaller {
 
     private Map toMap(User user) {
         [
-                userId:user.id.toString(),
+                userId: user.id.toString(),
                 userName: user.userName,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
                 locked: user.locked,
-                roles: user.getUserRoles()?.collect{ it.toString(); }?:[]
+                roles: user.getUserRoles()*.toString() ?: []
         ]
     }
 
     void register(){
 
         JSON.createNamedConfig(WITH_PROPERTIES_CONFIG) {
-            it.registerObjectMarshaller(User){ User user ->
+            it.registerObjectMarshaller(User) { User user ->
                 Map userMap = toMap(user)
                 userMap.props = user.propsAsMap()
                 userMap
             }
         }
-        JSON.registerObjectMarshaller(User){ User user ->
+        JSON.registerObjectMarshaller(User) { User user ->
             toMap(user)
         }
     }

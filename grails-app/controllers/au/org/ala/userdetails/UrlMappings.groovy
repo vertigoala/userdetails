@@ -25,6 +25,8 @@ class UrlMappings {
 
         "/registration/forgottenPassword"(controller:'registration', action: 'forgottenPassword')
 
+        "/userDetails/byRole"(controller: 'userDetails', action: 'byRole')
+        "/userDetails/search"(controller: 'userDetails', action: 'search')
         "/userDetails/getUserDetails"(controller:'userDetails', action: 'getUserDetails')
         "/userDetails/getUserList"(controller:'userDetails', action: 'getUserList')
         "/userDetails/getUserListFull"(controller:'userDetails', action: 'getUserListFull')

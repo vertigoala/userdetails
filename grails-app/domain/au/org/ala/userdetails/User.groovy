@@ -22,6 +22,10 @@ class User implements Serializable {
 
     String tempAuthKey
 
+    String displayName
+
+    Collection<UserRole> userRoles
+
     static mapping = {
         table 'users'
         id (generator:'identity', column:'userid', type:'long')
@@ -31,6 +35,7 @@ class User implements Serializable {
         activated sqlType: 'char'
         locked sqlType: 'char'
         lastLogin type: Timestamp, sqlType: "timestamp"
+        displayName formula: 'CONCAT_WS(" ", NULLIF(firstname,""), NULLIF(lastname,""))'
         version false
     }
 
