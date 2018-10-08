@@ -47,6 +47,7 @@ class User implements Serializable {
         locked nullable: false
         lastLogin nullable: true
         tempAuthKey nullable: true
+        displayName nullable: true
     }
 
     static List<String[]> findNameAndEmailWhereEmailIsNotNull() {
