@@ -22,7 +22,7 @@ class UserDetailsController {
                     ilike('email', "%$q%")
                     ilike('displayName', "%$q%")
                 }
-                maxResults(10)
+                maxResults(max)
             }
             streamResults(session, results, UserMarshaller.WITH_PROPERTIES_CONFIG)
         }
