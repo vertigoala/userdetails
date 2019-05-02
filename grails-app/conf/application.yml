@@ -173,6 +173,26 @@ security:
     cas:
         uriFilterPattern: '/admin/.*,/registration/editAccount,/my-profile,/my-profile/,/myprofile/,/myprofile,/profile/.*,/admin/,/admin,/registration/update,/registration/update/.*,/monitoring,/monitoring/*,/registration/disableAccount/.*,/registration/disableAccount,/admin/admin/downloadUsersCsvFile,/alaAdmin.*'
 
+oauth:
+#  debug: true
+  providers:
+    flickr:
+      enabled: true
+      api: 'com.github.scribejava.apis.FlickrApi'
+      key: "xxxxxxxxxxxxxxxxxxxxx"
+      secret: "xxxxxxxxxxxxxxxxxxxxx"
+      successUri: '/profile/flickrSuccess'
+      failureUri: '/profile/flickrFail'
+      callback: "xxxxxxxxxxxxx/yyyyyyyyyy/profile/flickrCallback"
+    inaturalist:
+      enabled: true
+      api: 'au.org.ala.oauth.apis.InaturalistApi'
+      key: 'xxxxxxxxxxxxxxxxxxxxx'
+      secret: 'xxxxxxxxxxxxxxxxxxxxx'
+      successUri: '/profile/inaturalistSuccess'
+      failureUri: '/profile/inaturalistFailure'
+      callback: 'xxxxxx/yyyyyyy/profile/inaturalistCallback'
+
 markdown:
     removeHtml: true
 
@@ -258,3 +278,14 @@ environments:
     production:
         dataSource:
             dbCreate: "validate"
+---
+spring:
+    profiles: disable-redis
+    autoconfigure:
+        exclude:
+        - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+        - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+    data:
+        redis:
+            repositories:
+                enabled: false

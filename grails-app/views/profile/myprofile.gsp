@@ -69,6 +69,7 @@
         </ul>
 
         <h3>External site linkages</h3>
+        <g:if test="${grailsApplication.config.oauth.providers.flickr.enabled}">
         <div class="well well-small">
             <h4>Flickr</h4>
             <g:if test="${props.flickrUsername}">
@@ -85,7 +86,7 @@
 
 
 
-                <g:link controller="profile" class="btn btn-default" action="removeFlickrLink" target="_blank">Remove link to flickr account</g:link>
+                <g:link controller="profile" class="btn btn-default" action="removeLink" params="[provider: 'flickr']">Remove link to flickr account</g:link>
             </g:if>
             <g:else>
                 <p>
@@ -98,6 +99,32 @@
                 </span>
             </g:else>
         </div>
+        </g:if>
+        <g:if test="${grailsApplication.config.oauth.providers.inaturalist.enabled}">
+        <div class="well well-small">
+            <h4>iNaturalist</h4>
+            <g:if test="${props.inaturalistId}">
+                <strong>You have connected to iNaturalist with username:
+                    <a href="http://www.inaturalist.org/people/${props.inaturalistId}">${props.inaturalistUsername}</a>
+                </strong>
+                <p>
+                    Linking with iNaturalist enables sharing your sightings with the ALA
+                </p>
+
+                <g:link controller="profile" class="btn btn-default" action="removeLink" params="[provider: 'inaturalist']">Remove link to iNaturalist account</g:link>
+            </g:if>
+            <g:else>
+                <p>
+                    Linking with iNaturalist enables sightings made through iNaturalist to be linked to your Atlas account
+                    so they can be attributed to you.
+                </p>
+
+                <span class="btn btn-default">
+                    <oauth:connect provider="inaturalist">Link to my iNaturalist account</oauth:connect>
+                </span>
+            </g:else>
+        </div>
+        </g:if>
     </div>
 </div>
 </body>
