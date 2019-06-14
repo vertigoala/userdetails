@@ -1,21 +1,21 @@
 package au.org.ala.userdetails
 
-import grails.test.mixin.Mock
-import grails.test.mixin.TestFor
+import grails.testing.gorm.DataTest
+import grails.testing.web.controllers.ControllerUnitTest
 import org.grails.web.servlet.mvc.SynchronizerTokensHolder
 
-/**
- * Tests the RegistrationController
- */
-@TestFor(RegistrationController)
-@Mock([User, Role, UserRole, UserProperty])
-class RegistrationControllerSpec extends UserDetailsSpec {
+//@Mock([User, Role, UserRole, UserProperty])
+class RegistrationControllerSpec extends UserDetailsSpec implements ControllerUnitTest<RegistrationController>, DataTest {
 
     def passwordService = Mock(PasswordService)
     def userService = Mock(UserService)
     void setup() {
         controller.passwordService = passwordService
         controller.userService = userService
+    }
+
+    void setupSpec() {
+        mockDomains(User, Role, UserRole, UserProperty)
     }
 
     void "A new password must be supplied"() {

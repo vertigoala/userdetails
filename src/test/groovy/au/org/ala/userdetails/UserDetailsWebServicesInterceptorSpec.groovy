@@ -1,9 +1,6 @@
 package au.org.ala.userdetails
 
-import grails.test.mixin.TestFor
-import grails.test.mixin.TestMixin
-import grails.test.mixin.support.GrailsUnitTestMixin
-import grails.test.mixin.web.InterceptorUnitTestMixin
+import grails.testing.web.interceptor.InterceptorUnitTest
 import org.apache.http.HttpStatus
 import org.grails.web.util.GrailsApplicationAttributes
 import spock.lang.Specification
@@ -11,13 +8,13 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.web.InterceptorUnitTestMixin} for usage instructions
  */
-@TestFor(UserDetailsWebServicesInterceptor)
-@TestMixin([InterceptorUnitTestMixin, GrailsUnitTestMixin])
-class UserDetailsWebServicesInterceptorSpec extends Specification {
+//@TestFor(UserDetailsWebServicesInterceptor)
+//@TestMixin([InterceptorUnitTestMixin, GrailsUnitTestMixin])
+class UserDetailsWebServicesInterceptorSpec extends Specification implements InterceptorUnitTest<UserDetailsWebServicesInterceptor> {
 
-    static doWithSpring = {
+    Closure doWithSpring(){{ ->
         authorisedSystemService(UserDetailsSpec.UnAuthorised)
-    }
+    }}
 
     def setup() {
 

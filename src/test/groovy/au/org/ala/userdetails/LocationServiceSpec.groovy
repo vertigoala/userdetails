@@ -1,13 +1,9 @@
 package au.org.ala.userdetails
 
-import grails.test.mixin.TestFor
+import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-/**
- * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
- */
-@TestFor(LocationService)
-class LocationServiceSpec extends Specification {
+class LocationServiceSpec extends Specification implements ServiceUnitTest<LocationService> {
 
     void "test resource loads"() {
         when:
