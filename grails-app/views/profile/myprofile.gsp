@@ -102,21 +102,21 @@
         </g:if>
         <g:if test="${grailsApplication.config.oauth.providers.inaturalist.enabled}">
         <div class="well well-small">
-            <h4>iNaturalist</h4>
+            <h4>iNaturalist Australia</h4>
             <g:if test="${props.inaturalistId}">
-                <strong>You have connected to iNaturalist with username:
+                <strong>You have connected to iNaturalist Australia with the username:
                     <a href="http://www.inaturalist.org/people/${props.inaturalistId}">${props.inaturalistUsername}</a>
                 </strong>
                 <p>
-                    Linking with iNaturalist enables sharing your sightings with the ALA
+                    <a href="http://www.inaturalist.ala.org.au/people/${props.inaturalistId}">View my observations in iNaturalist Australia</a><br>
+                    <a href="https://biocache.ala.org.au/occurrences/search?q=data_resource_uid:dr1411&fq=collector:${props.inaturalistId}">View my iNaturalist observations in ALA</a>
                 </p>
 
                 <g:link controller="profile" class="btn btn-default" action="removeLink" params="[provider: 'inaturalist']">Remove link to iNaturalist account</g:link>
             </g:if>
             <g:else>
                 <p>
-                    Linking with iNaturalist enables sightings made through iNaturalist to be linked to your Atlas account
-                    so they can be attributed to you.
+                    Linking your ALA account with iNaturalist will make it easier to find your observations in ALA.
                 </p>
 
                 <span class="btn btn-default">
