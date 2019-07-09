@@ -71,19 +71,16 @@ root(WARN, [TOMCAT_LOG])
         'grails.spring.BeanBuilder',
         'grails.plugin.webxml',
         'grails.plugin.cache.web.filter',
-        'grails.app.services.org.grails.plugin.resource',
-        'grails.app.taglib.org.grails.plugin.resource',
-        'grails.app.resourceMappers.org.grails.plugin.resource'
     ],
     (WARN): [
-        'au.org.ala.cas.client'
+        'au.org.ala.cas'
     ],
     (INFO): [
         'grails.plugin.externalconfig.ExternalConfig',
         'grails.app',
+        'au.org.ala'
     ],
     (DEBUG): [
-        'au.org.ala.cas',
         'au.org.ala.userdetails',
         'grails.plugin.cache'
     ],
