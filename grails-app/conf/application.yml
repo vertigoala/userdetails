@@ -115,6 +115,7 @@ grails:
 security:
     cas:
         uriFilterPattern: '/admin/.*,/registration/editAccount,/my-profile,/my-profile/,/myprofile/,/myprofile,/profile/.*,/admin/,/admin,/registration/update,/registration/update/.*,/monitoring,/monitoring/*,/registration/disableAccount/.*,/registration/disableAccount,/admin/admin/downloadUsersCsvFile,/alaAdmin.*'
+        authenticateOnlyIfLoggedInFilterPattern: '/'
     filterOrder: 0
     basic:
         enabled: true

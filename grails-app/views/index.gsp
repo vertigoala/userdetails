@@ -27,9 +27,11 @@
         </ul>
 
     </div>
-    <div style="color:white;" class="pull-right">
-        <g:link style="color:#DDDDDD; font-weight:bold;" controller="admin">Admin tools (${grailsApplication.config.skin.orgNameShort} administrators only)</g:link>
-    </div>
+    <auth:ifAllGranted roles="ROLE_ADMIN">
+        <div style="color:white;" class="pull-right">
+            <g:link style="color:#DDDDDD; font-weight:bold;" controller="admin">Admin tools (${grailsApplication.config.skin.orgNameShort} administrators only)</g:link>
+        </div>
+    </auth:ifAllGranted>
 </div>
 </body>
 </html>
