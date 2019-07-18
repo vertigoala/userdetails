@@ -102,14 +102,14 @@
         </g:if>
         <g:if test="${grailsApplication.config.oauth.providers.inaturalist.enabled}">
         <div class="well well-small">
-            <h4>iNaturalist Australia</h4>
+            <h4>${grailsApplication.config.inaturalist.name}</h4>
             <g:if test="${props.inaturalistId}">
-                <strong>You have connected to iNaturalist Australia with the username:
-                    <a href="http://www.inaturalist.org/people/${props.inaturalistId}">${props.inaturalistUsername}</a>
+                <strong>You have connected to ${grailsApplication.config.inaturalist.name} with the username:
+                    <u:link baseProperty="inaturalist.baseUrl" paths="['people', props.inaturalistId]">${props.inaturalistUsername}</u:link>
                 </strong>
                 <p>
-                    <a href="http://www.inaturalist.ala.org.au/people/${props.inaturalistId}">View my observations in iNaturalist Australia</a><br>
-                    <a href="https://biocache.ala.org.au/occurrences/search?q=data_resource_uid:dr1411&fq=collector:${props.inaturalistId}">View my iNaturalist observations in ALA</a>
+                    <u:link baseProperty="biocache.search.url" params='[q: grailsApplication.config.inaturalist.searchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername}"]'>View my iNaturalist observations in ${grailsApplication.config.skin.orgNameShort}</u:link><br>
+                    <u:link baseProperty="biocache.search.url" params='[q: grailsApplication.config.inaturalist.searchQuery + " OR " + grailsApplication.config.inaturalist.sightingsSearchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername}"]'>View my iNaturalist observations and my ${grailsApplication.config.skin.orgNameShort} Sightings in ${grailsApplication.config.skin.orgNameShort}</u:link>
                 </p>
 
                 <g:link controller="profile" class="btn btn-default" action="removeLink" params="[provider: 'inaturalist']">Remove link to iNaturalist account</g:link>
