@@ -203,7 +203,7 @@ inaturalist:
 
 biocache:
   search:
-    url: https://biocache.ala.org.au/occurrences/search
+    baseUrl: https://biocache.ala.org.au/occurrences/search
 
 markdown:
     removeHtml: true

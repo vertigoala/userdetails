@@ -108,8 +108,8 @@
                     <u:link baseProperty="inaturalist.baseUrl" paths="['people', props.inaturalistId]">${props.inaturalistUsername}</u:link>
                 </strong>
                 <p>
-                    <u:link baseProperty="biocache.search.url" params='[q: grailsApplication.config.inaturalist.searchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername}"]'>View my iNaturalist observations in ${grailsApplication.config.skin.orgNameShort}</u:link><br>
-                    <u:link baseProperty="biocache.search.url" params='[q: grailsApplication.config.inaturalist.searchQuery + " OR " + grailsApplication.config.inaturalist.sightingsSearchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername}"]'>View my iNaturalist observations and my ${grailsApplication.config.skin.orgNameShort} Sightings in ${grailsApplication.config.skin.orgNameShort}</u:link>
+                    <u:link baseProperty="biocache.search.baseUrl" params='[q: grailsApplication.config.inaturalist.searchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername}"]'>View my iNaturalist observations in ${grailsApplication.config.skin.orgNameShort}</u:link><br>
+                    <u:link baseProperty="biocache.search.baseUrl" params='[q: grailsApplication.config.inaturalist.searchQuery + " OR " + grailsApplication.config.inaturalist.sightingsSearchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername} OR collector:\"${user.firstName} ${user.lastName}\" OR alau_user_id:\"${user.id}\""]'>View my iNaturalist observations and my ${grailsApplication.config.skin.orgNameShort} Sightings in ${grailsApplication.config.skin.orgNameShort}</u:link>
                 </p>
 
                 <g:link controller="profile" class="btn btn-default" action="removeLink" params="[provider: 'inaturalist']">Remove link to iNaturalist account</g:link>
