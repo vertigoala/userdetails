@@ -1,20 +1,18 @@
 package au.org.ala.userdetails
 
 import grails.converters.JSON
-import grails.test.mixin.Mock
-import grails.test.mixin.TestFor
-import grails.test.mixin.TestMixin
-import grails.test.mixin.web.InterceptorUnitTestMixin
+import grails.testing.gorm.DataTest
+import grails.testing.web.controllers.ControllerUnitTest
 import org.apache.http.HttpStatus
 import org.grails.web.util.GrailsApplicationAttributes
 
 /**
  * Tests the UserDetailsController and the filtering behaviour associated with it.
  */
-@TestFor(UserDetailsController)
-@TestMixin(InterceptorUnitTestMixin)
-@Mock([UserDetailsWebServicesInterceptor, User, Role, UserRole, UserProperty])
-class UserDetailsControllerSpec extends UserDetailsSpec {
+//@TestFor(UserDetailsController)
+//@TestMixin(InterceptorUnitTestMixin)
+//@Mock([UserDetailsWebServicesInterceptor, User, Role, UserRole, UserProperty])
+class UserDetailsControllerSpec extends UserDetailsSpec implements ControllerUnitTest<UserDetailsController>, DataTest {
 
     static doWithSpring = {
         authorisedSystemService(UserDetailsSpec.Authorised)
@@ -22,68 +20,13 @@ class UserDetailsControllerSpec extends UserDetailsSpec {
 
     private User user
 
-    void setup() {
-        user = createUser()
+    void setupSpec() {
+        mockDomains(User, Role, UserRole, UserProperty)
     }
 
-    void "Authorised systems should be able to use the UserDetailsController web services"() {
-        setup:
+    void setup() {
         registerMarshallers()
-
-        when:
-        request.method = 'POST'
-        params.userName = Long.toString(user.id)
-        request.setAttribute(GrailsApplicationAttributes.CONTROLLER_NAME_ATTRIBUTE, 'userDetails')
-        request.setAttribute(GrailsApplicationAttributes.ACTION_NAME_ATTRIBUTE, 'getUserDetails')
-        withInterceptors(controller: 'userDetails', action:'getUserDetails') {
-            controller.getUserDetails()
-        }
-        then:
-        response.status == HttpStatus.SC_OK
-
-        when:
-        response.reset()
-        request.method = 'POST'
-        request.setAttribute(GrailsApplicationAttributes.CONTROLLER_NAME_ATTRIBUTE, 'userDetails')
-        request.setAttribute(GrailsApplicationAttributes.ACTION_NAME_ATTRIBUTE, 'getUserList')
-        withInterceptors(controller: 'userDetails', action:'getUserList') {
-            controller.getUserList()
-        }
-        then:
-        response.status == HttpStatus.SC_OK
-
-        when:
-        response.reset()
-        request.method = 'POST'
-        request.setAttribute(GrailsApplicationAttributes.CONTROLLER_NAME_ATTRIBUTE, 'userDetails')
-        request.setAttribute(GrailsApplicationAttributes.ACTION_NAME_ATTRIBUTE, 'getUserListWithIds')
-        withInterceptors(controller: 'userDetails', action:'getUserListWithIds') {
-            controller.getUserListWithIds()
-        }
-        then:
-        response.status == HttpStatus.SC_OK
-
-        when:
-        response.reset()
-        request.method = 'POST'
-        request.setAttribute(GrailsApplicationAttributes.CONTROLLER_NAME_ATTRIBUTE, 'userDetails')
-        request.setAttribute(GrailsApplicationAttributes.ACTION_NAME_ATTRIBUTE, 'getUserListFull')
-        withInterceptors(controller: 'userDetails', action:'getUserListFull') {
-            controller.getUserListFull()
-        }
-        then:
-        response.status == HttpStatus.SC_OK
-
-        when:
-        response.reset()
-        request.method = 'POST'
-        request.setAttribute(GrailsApplicationAttributes.CONTROLLER_NAME_ATTRIBUTE, 'userDetails')
-        request.setAttribute(GrailsApplicationAttributes.ACTION_NAME_ATTRIBUTE, 'getUserDetailsFromIdList')
-        withInterceptors(controller: 'userDetails', action:'getUserDetailsFromIdList') {
-            controller.getUserDetailsFromIdList()
-        }
-        then:
-        response.status == HttpStatus.SC_OK
+        user = createUser()
     }
 
     void "A user can be found by user id"() {

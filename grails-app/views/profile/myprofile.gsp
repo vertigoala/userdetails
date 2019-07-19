@@ -69,6 +69,7 @@
         </ul>
 
         <h3>External site linkages</h3>
+        <g:if test="${grailsApplication.config.oauth.providers.flickr.enabled}">
         <div class="well well-small">
             <h4>Flickr</h4>
             <g:if test="${props.flickrUsername}">
@@ -85,7 +86,7 @@
 
 
 
-                <g:link controller="profile" class="btn btn-default" action="removeFlickrLink" target="_blank">Remove link to flickr account</g:link>
+                <g:link controller="profile" class="btn btn-default" action="removeLink" params="[provider: 'flickr']">Remove link to flickr account</g:link>
             </g:if>
             <g:else>
                 <p>
@@ -98,6 +99,32 @@
                 </span>
             </g:else>
         </div>
+        </g:if>
+        <g:if test="${grailsApplication.config.oauth.providers.inaturalist.enabled}">
+        <div class="well well-small">
+            <h4>${grailsApplication.config.inaturalist.name}</h4>
+            <g:if test="${props.inaturalistId}">
+                <strong>You have connected to ${grailsApplication.config.inaturalist.name} with the username:
+                    <u:link baseProperty="inaturalist.baseUrl" paths="['people', props.inaturalistId]">${props.inaturalistUsername}</u:link>
+                </strong>
+                <p>
+                    <u:link baseProperty="biocache.search.baseUrl" params='[q: grailsApplication.config.inaturalist.searchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername}"]'>View my iNaturalist observations in ${grailsApplication.config.skin.orgNameShort}</u:link><br>
+                    <u:link baseProperty="biocache.search.baseUrl" params='[q: grailsApplication.config.inaturalist.searchQuery + " OR " + grailsApplication.config.inaturalist.sightingsSearchQuery, fq: "collector:${props.inaturalistUsername} OR _inaturalistLogin:${props.inaturalistUsername} OR collector:\"${user.firstName} ${user.lastName}\" OR alau_user_id:\"${user.id}\""]'>View my iNaturalist observations and my ${grailsApplication.config.skin.orgNameShort} Sightings in ${grailsApplication.config.skin.orgNameShort}</u:link>
+                </p>
+
+                <g:link controller="profile" class="btn btn-default" action="removeLink" params="[provider: 'inaturalist']">Remove link to iNaturalist account</g:link>
+            </g:if>
+            <g:else>
+                <p>
+                    Linking your ALA account with iNaturalist will make it easier to find your observations in ALA.
+                </p>
+
+                <span class="btn btn-default">
+                    <oauth:connect provider="inaturalist">Link to my iNaturalist account</oauth:connect>
+                </span>
+            </g:else>
+        </div>
+        </g:if>
     </div>
 </div>
 </body>

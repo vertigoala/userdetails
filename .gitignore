@@ -129,6 +129,7 @@ hs_err_pid*
 
 # Allow Grails Wrapper
 !/wrapper/*.jar
+!grails-wrapper.jar
 # Allow Gradle Wrapper
 !/gradle/wrapper/gradle-wrapper.jar
 

@@ -1,23 +1,25 @@
 package au.org.ala.userdetails
 
-import grails.test.mixin.Mock
-import grails.test.mixin.TestFor
-import grails.test.mixin.TestMixin
-import grails.test.mixin.support.GrailsUnitTestMixin
-import grails.test.mixin.web.InterceptorUnitTestMixin
+import grails.testing.gorm.DataTest
+import grails.testing.web.interceptor.InterceptorUnitTest
 import org.apache.http.HttpStatus
 import org.grails.web.util.GrailsApplicationAttributes
 
 /**
  * See the API for {@link grails.test.mixin.web.InterceptorUnitTestMixin} for usage instructions
  */
-@TestFor(RoleBasedInterceptor)
-@TestMixin([InterceptorUnitTestMixin, GrailsUnitTestMixin])
-@Mock([AuthorisedSystemService, User, Role, UserRole, UserProperty])
-class RoleBasedInterceptorSpec extends UserDetailsSpec {
+//@TestFor(RoleBasedInterceptor)
+//@TestMixin([InterceptorUnitTestMixin, GrailsUnitTestMixin])
+//@Mock([AuthorisedSystemService, User, Role, UserRole, UserProperty])
+class RoleBasedInterceptorSpec extends UserDetailsSpec implements InterceptorUnitTest<RoleBasedInterceptor>, DataTest {
 
     def controller
     private User user
+
+    def setupSpec() {
+        mockDomains(User, Role, UserRole, UserProperty)
+//        mockDataService(AuthorisedSystemService)
+    }
 
     def setup() {
         controller = new UserRoleController()

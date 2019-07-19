@@ -2,15 +2,19 @@ package au.org.ala.userdetails.marshaller
 
 import au.org.ala.userdetails.*
 import grails.converters.JSON
-import grails.test.mixin.Mock
+import grails.testing.gorm.DataTest
 
 /**
  * Tests the UserMarshaller
  */
-@Mock([User, Role, UserRole, UserProperty])
-class UserMarshallerSpec extends UserDetailsSpec {
+//@Mock([User, Role, UserRole, UserProperty])
+class UserMarshallerSpec extends UserDetailsSpec implements DataTest {
 
     private User user
+
+    void setupSpec() {
+        mockDomains(User, Role, UserRole, UserProperty)
+    }
 
     void setup() {
 
