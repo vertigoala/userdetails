@@ -1,24 +1,31 @@
 # Change Log
 
-## [V2.2.1](https://github.com/AtlasOfLivingAustralia/userdetails/tree/v2.2.1) (2019-07-19)
+## [V2.2.2](https://github.com/AtlasOfLivingAustralia/userdetails/tree/V2.2.2) (2019-07-22)
+[Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/V2.2.1...V2.2.2)
 
-[Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/v2.2.0...V2.2.1)
+**Fixed bugs:**
 
-**Features:**
-- Add user search by username, email and display name WS endpoint
-- Add user search by role endpoint
-- Support 2019 ALA UI
-- Add support for linking iNaturalist accounts
+- iNaturalist linking can not be hidden [\#74](https://github.com/AtlasOfLivingAustralia/userdetails/issues/74)
+- Flickr linking no longer working [\#73](https://github.com/AtlasOfLivingAustralia/userdetails/issues/73)
+- Creating a new role from Admin UserRoleList crashes [\#72](https://github.com/AtlasOfLivingAustralia/userdetails/issues/72)
+- New user creation error [\#19](https://github.com/AtlasOfLivingAustralia/userdetails/issues/19)
 
 **Closed issues:**
 
-- User Admin: Add comments field to user details page  [\#64](https://github.com/AtlasOfLivingAustralia/userdetails/issues/64)
+- Generated passwords are using unprintable characters [\#53](https://github.com/AtlasOfLivingAustralia/userdetails/issues/53)
+
+## [V2.2.1](https://github.com/AtlasOfLivingAustralia/userdetails/tree/V2.2.1) (2019-07-19)
+[Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/v2.2.0...V2.2.1)
+
+**Closed issues:**
+
 - Allow HTML in bulk user template [\#52](https://github.com/AtlasOfLivingAustralia/userdetails/issues/52)
 - created field shows date of last change, not account creation date [\#45](https://github.com/AtlasOfLivingAustralia/userdetails/issues/45)
 
 **Merged pull requests:**
 
 - Bugfix legacy encoder [\#62](https://github.com/AtlasOfLivingAustralia/userdetails/pull/62) ([reupost](https://github.com/reupost))
+- Updated Spanish translation. Added Catalan translation [\#59](https://github.com/AtlasOfLivingAustralia/userdetails/pull/59) ([vjrj](https://github.com/vjrj))
 
 ## [v2.2.0](https://github.com/AtlasOfLivingAustralia/userdetails/tree/v2.2.0) (2018-08-15)
 [Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/VV2.1.3...v2.2.0)
@@ -87,10 +94,6 @@
 - User details page \(admin\) add URL for reset password link [\#15](https://github.com/AtlasOfLivingAustralia/userdetails/issues/15)
 - Add "change email address" option to editAccount page [\#1](https://github.com/AtlasOfLivingAustralia/userdetails/issues/1)
 
-**Fixed bugs:**
-
-- New user creation error [\#19](https://github.com/AtlasOfLivingAustralia/userdetails/issues/19)
-
 **Closed issues:**
 
 - Admin screen - add export all users to CSV [\#27](https://github.com/AtlasOfLivingAustralia/userdetails/issues/27)
@@ -104,6 +107,7 @@
 
 **Closed issues:**
 
+- User Admin: Add comments field to user details page  [\#64](https://github.com/AtlasOfLivingAustralia/userdetails/issues/64)
 - user lookup should include user's roles [\#25](https://github.com/AtlasOfLivingAustralia/userdetails/issues/25)
 - add ability to update/create and view a property for a user [\#21](https://github.com/AtlasOfLivingAustralia/userdetails/issues/21)
 
@@ -142,7 +146,6 @@
 
 **Merged pull requests:**
 
-- Updated Spanish translation. Added Catalan translation [\#59](https://github.com/AtlasOfLivingAustralia/userdetails/pull/59) ([vjrj](https://github.com/vjrj))
 - Applies 2015 look and feel [\#12](https://github.com/AtlasOfLivingAustralia/userdetails/pull/12) ([m-r-c](https://github.com/m-r-c))
 - Fixes [\#11](https://github.com/AtlasOfLivingAustralia/userdetails/pull/11) ([m-r-c](https://github.com/m-r-c))
 
