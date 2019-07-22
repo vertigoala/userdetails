@@ -1,3 +1,4 @@
+<%@ page import="grails.util.Holders" %>
 <!doctype html>
 <html>
 <head>
@@ -69,7 +70,7 @@
         </ul>
 
         <h3>External site linkages</h3>
-        <g:if test="${grailsApplication.config.oauth.providers.flickr.enabled}">
+        <g:if test="${Holders.config.getProperty('oauth.providers.flickr.enabled', Boolean, true)}">
         <div class="well well-small">
             <h4>Flickr</h4>
             <g:if test="${props.flickrUsername}">
@@ -100,7 +101,7 @@
             </g:else>
         </div>
         </g:if>
-        <g:if test="${grailsApplication.config.oauth.providers.inaturalist.enabled}">
+        <g:if test="${Holders.config.getProperty('oauth.providers.inaturalist.enabled', Boolean, false)}">
         <div class="well well-small">
             <h4>${grailsApplication.config.inaturalist.name}</h4>
             <g:if test="${props.inaturalistId}">
