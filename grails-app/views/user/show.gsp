@@ -94,11 +94,11 @@
                 <span id="tempAuthKey-label" class="property-label"><g:message code="user.tempAuthKey.label"
                                                                                    default="Temp Auth Key"/></span>
 
-            <span class="property-value" aria-labelledby="tempAuthKey-label">
-                <a  href="${resetPasswordUrl}">   <g:fieldValue bean="${userInstance}"
-                                                              field="tempAuthKey"/></span></a>
-
-                </li>
+                <span class="property-value" aria-labelledby="tempAuthKey-label">
+                    <a  href="${resetPasswordUrl}">   <g:fieldValue bean="${userInstance}"
+                                                                  field="tempAuthKey"/></a>
+                </span>
+            </li>
         </g:if>
 
         <g:if test="${userInstance?.userProperties}">

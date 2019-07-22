@@ -2,7 +2,7 @@
 
 ## [V2.2.1](https://github.com/AtlasOfLivingAustralia/userdetails/tree/v2.2.1) (2019-07-19)
 
-[Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/v2.2.0...v2.2.1)
+[Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/v2.2.0...V2.2.1)
 
 **Features:**
 - Add user search by username, email and display name WS endpoint

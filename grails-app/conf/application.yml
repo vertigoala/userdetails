@@ -187,7 +187,7 @@ oauth:
       failureUri: '/profile/flickrFail'
       callback: "xxxxxxxxxxxxx/yyyyyyyyyy/profile/flickrCallback"
     inaturalist:
-      enabled: true
+      enabled: false
       api: 'au.org.ala.oauth.apis.InaturalistApi'
       key: 'xxxxxxxxxxxxxxxxxxxxx'
       secret: 'xxxxxxxxxxxxxxxxxxxxx'

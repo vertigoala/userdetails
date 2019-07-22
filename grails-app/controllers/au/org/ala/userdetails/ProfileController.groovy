@@ -99,19 +99,25 @@ class ProfileController {
 
     def flickrCallback() {
 
+        FlickrApi flickrApi = FlickrApi.instance()
         OAuth1RequestToken token = session.getAt("flickr:oasRequestToken")
         OAuthService service = new ServiceBuilder().
                 apiKey(grailsApplication.config.oauth.providers.flickr.key).
-                apiSecret(grailsApplication.config.oauth.providers.flickr.secret).build(FlickrApi.instance())
+                apiSecret(grailsApplication.config.oauth.providers.flickr.secret).build(flickrApi)
 
         def accessToken = service.getAccessToken(token, params.oauth_verifier)
 
         // Now let's go and ask for a protected resource!
-        OAuthRequest request = new OAuthRequest(Verb.GET, "http://www.flickr.com/services/oauth/access_token")
+        OAuthRequest request = new OAuthRequest(Verb.GET, flickrApi.accessTokenEndpoint)
         service.signRequest(accessToken, request)
         Response response = service.execute(request)
+        if (response.code == 301) {
+            request = new OAuthRequest(Verb.GET, response.headers['Location'])
+            response = service.execute(request)
+        }
         def model = [:]
-        response.getBody().split("&").each {
+        def body = response.body
+        body.split("&").each {
             def property = it.substring(0, it.indexOf("="))
             def value = it.substring(it.indexOf("=") + 1)
             model.put(property, value)
