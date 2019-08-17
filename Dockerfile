@@ -21,6 +21,10 @@ RUN wget $ARTIFACT_URL -q -O /tmp/$WAR_NAME && \
 
 EXPOSE 8080
 
+# capcha needs those
+RUN apk add --update fontconfig ttf-dejavu && \
+    rm $CATALINA_HOME/webapps/$WAR_NAME/WEB-INF/classes/logback.groovy
+
 # custom configs
 COPY ./tomcat-conf/* /usr/local/tomcat/conf/
 COPY ./config/* /data/userdetails/config/
