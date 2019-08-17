@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  userdetails:
+    build:
+      context: .
+    image: vertigoala/userdetails
+    container_name: userdetails
+    volumes:
+      - ./config/:/data/userdetails/config/
+    labels:
+      traefik.frontend.rule: "PathPrefix:/userdetails"
+      traefik.backend: "userdetails"
+      traefik.port: "8080"
+      traefik.enable: "true"
+
