@@ -11,7 +11,7 @@ def hastable="SELECT count(*) as qtd FROM information_schema.tables WHERE table_
 while (true) {
     //i++
     println "USERDETAILS CREATE ADMIN: Checking if 'user_role' table exists"
-    def qtd = sql.firstRow("select count(*) as qtd from users where username='admin@example.com'").qtd
+    def qtd = sql.firstRow(hastable).qtd
     if (qtd == 1) {
         println "USERDETAILS CREATE ADMIN: table 'user_role' found, continuing..."
         break
