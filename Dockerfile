@@ -28,16 +28,19 @@ RUN apk add --update fontconfig ttf-dejavu && \
 # custom configs
 COPY ./tomcat-conf/* /usr/local/tomcat/conf/
 COPY ./config/* /data/userdetails/config/
+COPY ./scripts/* /opt/
 
 # NON-ROOT
 RUN addgroup -g 101 tomcat && \
     adduser -G tomcat -u 101 -S tomcat && \
     chown -R tomcat:tomcat /usr/local/tomcat && \
-    chown -R tomcat:tomcat /data
+    chown -R tomcat:tomcat /data && \
+    chmod +x /opt/*.sh
 
 USER tomcat
 
-ENV CATALINA_OPTS '-Dgrails.env=production'
+ENV CATALINA_OPTS='-Dgrails.env=production' \
+    CREATE_ADMIN='true'
 
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["tini", "--", "/opt/entrypoint.sh"]
 CMD ["catalina.sh", "run"]
