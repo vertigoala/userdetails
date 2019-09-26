@@ -1,5 +1,17 @@
 # Change Log
 
+## [Unreleased](https://github.com/AtlasOfLivingAustralia/userdetails/tree/HEAD)
+
+[Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/V2.2.2...HEAD)
+
+**Implemented enhancements:**
+
+- Update iNaturalist query [\#77](https://github.com/AtlasOfLivingAustralia/userdetails/issues/77)
+
+**Closed issues:**
+
+- Custom skins [\#76](https://github.com/AtlasOfLivingAustralia/userdetails/issues/76)
+
 ## [V2.2.2](https://github.com/AtlasOfLivingAustralia/userdetails/tree/V2.2.2) (2019-07-22)
 [Full Changelog](https://github.com/AtlasOfLivingAustralia/userdetails/compare/V2.2.1...V2.2.2)
 
@@ -8,7 +20,6 @@
 - iNaturalist linking can not be hidden [\#74](https://github.com/AtlasOfLivingAustralia/userdetails/issues/74)
 - Flickr linking no longer working [\#73](https://github.com/AtlasOfLivingAustralia/userdetails/issues/73)
 - Creating a new role from Admin UserRoleList crashes [\#72](https://github.com/AtlasOfLivingAustralia/userdetails/issues/72)
-- New user creation error [\#19](https://github.com/AtlasOfLivingAustralia/userdetails/issues/19)
 
 **Closed issues:**
 
@@ -19,6 +30,7 @@
 
 **Closed issues:**
 
+- User Admin: Add comments field to user details page  [\#64](https://github.com/AtlasOfLivingAustralia/userdetails/issues/64)
 - Allow HTML in bulk user template [\#52](https://github.com/AtlasOfLivingAustralia/userdetails/issues/52)
 - created field shows date of last change, not account creation date [\#45](https://github.com/AtlasOfLivingAustralia/userdetails/issues/45)
 
@@ -94,6 +106,10 @@
 - User details page \(admin\) add URL for reset password link [\#15](https://github.com/AtlasOfLivingAustralia/userdetails/issues/15)
 - Add "change email address" option to editAccount page [\#1](https://github.com/AtlasOfLivingAustralia/userdetails/issues/1)
 
+**Fixed bugs:**
+
+- New user creation error [\#19](https://github.com/AtlasOfLivingAustralia/userdetails/issues/19)
+
 **Closed issues:**
 
 - Admin screen - add export all users to CSV [\#27](https://github.com/AtlasOfLivingAustralia/userdetails/issues/27)
@@ -107,7 +123,6 @@
 
 **Closed issues:**
 
-- User Admin: Add comments field to user details page  [\#64](https://github.com/AtlasOfLivingAustralia/userdetails/issues/64)
 - user lookup should include user's roles [\#25](https://github.com/AtlasOfLivingAustralia/userdetails/issues/25)
 - add ability to update/create and view a property for a user [\#21](https://github.com/AtlasOfLivingAustralia/userdetails/issues/21)
 
