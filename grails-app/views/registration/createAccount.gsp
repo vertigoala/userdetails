@@ -13,11 +13,19 @@
     <title>${title}</title>
     <asset:stylesheet src="application.css" />
     <asset:stylesheet src="createAccount.css" />
+    <g:if test="${grailsApplication.config.recaptcha.siteKey}">
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    </g:if>
 </head>
 <body>
 
 <div class="row">
     <h1>${title}</h1>
+    <g:if test="${flash.message}">
+        <div class="alert alert-warning">
+            ${flash.message}
+        </div>
+    </g:if>
     <g:if test="${inactiveUser}">
         <div class="row">
             <div class="col-sm-12">
@@ -166,6 +174,10 @@
                     <button id="disableAccountSubmit" class="btn btn-danger">Disable account</button>
                 </g:if>
                 <g:else>
+                    <g:if test="${grailsApplication.config.recaptcha.siteKey}">
+                        <div class="g-recaptcha" data-sitekey="${grailsApplication.config.recaptcha.siteKey}"></div>
+                        <br/>
+                    </g:if>
                     <button id="updateAccountSubmit" class="btn btn-primary">Create account</button>
                 </g:else>
             </g:form>

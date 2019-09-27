@@ -208,6 +208,11 @@ biocache:
 markdown:
     removeHtml: true
 
+recaptcha:
+  baseUrl: https://www.google.com/recaptcha/api/
+  siteKey: 
+  secretKey:
+
 environments:
     development:
         grails:
