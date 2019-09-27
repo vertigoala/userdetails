@@ -55,9 +55,17 @@
         <div class="col-md-8 col-md-push-4">
             <div class="well">
                 <g:if test="${!edit}">
-                    <p>
-                        To create your new account, fill in the fields opposite and click "Create".
-                    </p>
+                    <h2>Do I need to create an account?</h2>
+
+                    <p>If you already has an account with Facebook, Twitter or Google we highly recommend to use one of those instead as that will:
+
+                    <ul>
+                    <li>Save you typing the basic information like your name and email address that you already have with one of those accounts.
+                    <li>You don't have to set and remember yet another password.
+                    <li>Your account will be activated without going through verification emails
+                    <li>Overall you will save time
+                    </ul>
+                    <p>Of course if you don't have an account with such providers or prefer to use a different email you still can create an account with us by filling in the information on the left.
                 </g:if>
                 <p>
                     In the Primary and Secondary Usage fields you can enter your own text to describe your
