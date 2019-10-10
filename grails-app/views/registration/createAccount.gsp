@@ -65,7 +65,7 @@
                 <g:if test="${!edit}">
                     <h2>Do I need to create an account?</h2>
 
-                    <p>If you already has an account with Facebook, Twitter or Google we highly recommend to use one of those instead as that will:
+                    <p>If you already have an account with an institution that participates in the Australian Access Federation or an account with Google, Facebook or Twitter we highly recommend login using it instead as that will:
 
                     <ul>
                     <li>Save you typing the basic information like your name and email address that you already have with one of those accounts.
