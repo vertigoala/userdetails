@@ -154,6 +154,7 @@ class RegistrationControllerSpec extends UserDetailsSpec implements ControllerUn
 
     def "Account is registered when no recaptcha secret key is defined"() {
         setup:
+        grailsApplication.config.recaptcha.secretKey = ''
 
         // This is to allow the submitted token to pass validation.  Failure to do this will result in the invalidToken block being used.
         def tokenHolder = SynchronizerTokensHolder.store(session)
