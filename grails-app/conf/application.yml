@@ -173,7 +173,8 @@ skin:
     fluidLayout: false
     orgNameLong: "Atlas of Living Australia"
     orgNameShort: "ALA"
-privacyPolicy: "http://www.ala.org.au/about/terms-of-use/privacy-policy/"
+privacyPolicy: "https://www.ala.org.au/privacy-policy/"
+termsOfUse: "https://www.ala.org.au/terms-of-use/"
 
 oauth:
 #  debug: true
