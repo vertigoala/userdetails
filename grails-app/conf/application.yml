@@ -211,7 +211,7 @@ markdown:
 
 recaptcha:
   baseUrl: https://www.google.com/recaptcha/api/
-  siteKey: 
+  siteKey:
   secretKey:
 
 environments:
