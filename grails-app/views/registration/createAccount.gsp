@@ -75,7 +75,7 @@
                     </ul>
                     <p>Of course if you don't have an account with such providers or prefer to use a different email you still can create an account with us by filling in the information on the left.
                 </g:if>
-                <h2>Your Account</h2>
+                <h2>Your account</h2>
                 <p>
                     Your email address will be your ALA account login.
                 </p>
