@@ -13,11 +13,19 @@
     <title>${title}</title>
     <asset:stylesheet src="application.css" />
     <asset:stylesheet src="createAccount.css" />
+    <g:if test="${grailsApplication.config.recaptcha.siteKey}">
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    </g:if>
 </head>
 <body>
 
 <div class="row">
     <h1>${title}</h1>
+    <g:if test="${flash.message}">
+        <div class="alert alert-warning">
+            ${flash.message}
+        </div>
+    </g:if>
     <g:if test="${inactiveUser}">
         <div class="row">
             <div class="col-sm-12">
@@ -55,26 +63,36 @@
         <div class="col-md-8 col-md-push-4">
             <div class="well">
                 <g:if test="${!edit}">
-                    <p>
-                        To create your new account, fill in the fields opposite and click "Create".
-                    </p>
+                    <h2>Do I need to create an account?</h2>
+
+                    <p>If you already have an account with an institution that participates in the Australian Access Federation or an account with Google, Facebook or Twitter we highly recommend login using it instead as that will:
+
+                    <ul>
+                    <li>Save you typing the basic information like your name and email address that you already have with one of those accounts.
+                    <li>You don't have to set and remember yet another password.
+                    <li>Your account will be activated without going through verification emails
+                    <li>Overall you will save time
+                    </ul>
+                    <p>Of course if you don't have an account with such providers or prefer to use a different email you still can create an account with us by filling in the information on the left.
                 </g:if>
+                <h2>Your account</h2>
                 <p>
-                    In the Primary and Secondary Usage fields you can enter your own text to describe your
-                    intended usage of the site. Examples include: "Amateur naturalist", "Photographer", "Ecologist".
+                    Your email address will be your ALA account login.
                 </p>
+                <g:if test="${!edit}">
+                    <p>An &quot;account activation&quot; link will be
+                    emailed to the address provided. You need click this link, in order to complete the
+                    registration process. Note, you may need to check you spam/junk mail folder, as activation emails
+                    sometimes get caught by mail filters.
+                </g:if>
+                <h2>Privacy policy</h2>
                 <p>
                     For the Atlas' policy on the collection and use of personal information see our
                     <a href="${grailsApplication.config.privacyPolicy}">Privacy Policy</a>.
                 </p>
+                <h2>Terms of use</h2>
                 <p>
-                    Your email address will be your ALA account login.
-                    <g:if test="${!edit}">
-                        An &quot;account activation&quot; link will be
-                        emailed to the address provided. You need click this link, in order to complete the
-                        registration process. Note, you may need to check you spam/junk mail folder, as activation emails
-                        sometimes get caught by mail filters.
-                    </g:if>
+                    For the Atlas' terms of use see our <a href="${grailsApplication.config.termsOfUse}">Terms of Use</a>
                 </p>
             </div>
         </div>
@@ -156,6 +174,10 @@
                     <button id="disableAccountSubmit" class="btn btn-danger">Disable account</button>
                 </g:if>
                 <g:else>
+                    <g:if test="${grailsApplication.config.recaptcha.siteKey}">
+                        <div class="g-recaptcha" data-sitekey="${grailsApplication.config.recaptcha.siteKey}"></div>
+                        <br/>
+                    </g:if>
                     <button id="updateAccountSubmit" class="btn btn-primary">Create account</button>
                 </g:else>
             </g:form>

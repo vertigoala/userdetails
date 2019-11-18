@@ -1,7 +1,14 @@
 package au.org.ala.userdetails
 
 import au.org.ala.auth.UpdatePasswordCommand
+import au.org.ala.recaptcha.RecaptchaClient
 import grails.converters.JSON
+import okhttp3.OkHttpClient
+import org.springframework.beans.factory.annotation.Autowired
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+
+import javax.annotation.PostConstruct
 
 /**
  * Controller that handles the interactions with general public.
@@ -20,6 +27,8 @@ class RegistrationController {
     def passwordService
     def userService
     def locationService
+    RecaptchaClient recaptchaClient
+
 
     def index() {
         redirect(action: 'createAccount')
@@ -158,6 +167,28 @@ class RegistrationController {
 
     def register() {
         withForm {
+
+            def recaptchaKey = grailsApplication.config.getProperty('recaptcha.secretKey')
+            if (recaptchaKey) {
+                def recaptchaResponse = params['g-recaptcha-response']
+                def call = recaptchaClient.verify(recaptchaKey, recaptchaResponse, request.remoteAddr)
+                def response = call.execute()
+                if (response.isSuccessful()) {
+                    def verifyResponse = response.body()
+                    if (!verifyResponse.success) {
+                        log.warn('Recaptcha verify reported an error: {}', verifyResponse)
+                        flash.message = 'There was an error with the captcha, please try again'
+                        render(view: 'createAccount', model: [edit: false, user: params, props: params])
+                        return
+                    }
+                } else {
+                    log.warn("error from recaptcha {}", response)
+                    flash.message = 'There was an error with the captcha, please try again'
+                    render(view: 'createAccount', model: [edit: false, user: params, props: params])
+                    return
+                }
+            }
+
             //create user account...
             if (!params.email || userService.isEmailRegistered(params.email)) {
                 def inactiveUser = !userService.isActive(params.email)
