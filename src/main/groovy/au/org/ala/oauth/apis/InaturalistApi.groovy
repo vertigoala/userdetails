@@ -1,10 +1,11 @@
 package au.org.ala.oauth.apis
 
 import com.github.scribejava.core.builder.api.DefaultApi20
+import grails.util.Holders
 
 class InaturalistApi extends DefaultApi20 {
 
-    static final String BASE_URL = 'https://www.inaturalist.org/'
+    private static final String DEFAULT_BASE_URL = 'https://www.inaturalist.org/'
 
     private static class InstanceHolder {
         private static final InaturalistApi INSTANCE = new InaturalistApi()
@@ -14,13 +15,17 @@ class InaturalistApi extends DefaultApi20 {
         return InstanceHolder.INSTANCE
     }
 
+    static String getBaseUrl() {
+        Holders.config.getProperty("inaturalist.baseUrl", String, DEFAULT_BASE_URL)
+    }
+
     @Override
     String getAccessTokenEndpoint() {
-        return "${BASE_URL}oauth/token"
+        return "${baseUrl}oauth/token"
     }
 
     @Override
     protected String getAuthorizationBaseUrl() {
-        return "${BASE_URL}oauth/authorize"
+        return "${baseUrl}oauth/authorize"
     }
 }
